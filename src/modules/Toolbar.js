@@ -2,9 +2,10 @@ import IconAlignLeft from 'quill/assets/icons/float-left.svg';
 import IconAlignCenter from 'quill/assets/icons/float-center.svg';
 import IconAlignRight from 'quill/assets/icons/float-right.svg';
 import IconFloatFull from 'quill/assets/icons/float-full.svg';
+import * as Quill from 'quill';
 import { BaseModule } from './BaseModule';
 
-const Parchment = window.Quill.imports.parchment;
+const Parchment = Quill.imports.parchment;
 const FloatStyle = new Parchment.Attributor.Style('float', 'float');
 const MarginStyle = new Parchment.Attributor.Style('margin', 'margin');
 const DisplayStyle = new Parchment.Attributor.Style('display', 'display');
@@ -13,6 +14,7 @@ const FloatClass = new Parchment.Attributor.Class('float', 'float', {
     scope: Parchment.Scope.INLINE,
     className: 'float'
 });
+
 const FullWidth = new Parchment.Attributor.Class('fullwidth', 'full-width', {
     scope: Parchment.Scope.BLOCK,
     className: 'full-width'
