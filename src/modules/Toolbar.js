@@ -69,7 +69,8 @@ export class Toolbar extends BaseModule {
                 icon: IconFloatFull,
                 apply: () => {
                     console.log("Apply full width class");
-                }
+                },
+                isApplied: () => true,
             }
         ];
     };
