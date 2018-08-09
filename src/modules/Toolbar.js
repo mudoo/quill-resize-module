@@ -70,9 +70,9 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconFloatFull,
                 apply: () => {
-                    Quill.format(this.img, 'float', 'full');
+                    FullWidth.add(this.img, '');
                 },
-                isApplied: () => false,
+                isApplied: () => FullWidth.value(this.img) == '',
             }
         ];
     };
