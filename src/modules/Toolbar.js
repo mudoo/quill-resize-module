@@ -9,6 +9,7 @@ const Parchment = Quill.imports.parchment;
 const FloatStyle = new Parchment.Attributor.Style('float', 'float');
 const MarginStyle = new Parchment.Attributor.Style('margin', 'margin');
 const DisplayStyle = new Parchment.Attributor.Style('display', 'display');
+const WidthStyle = new Parchment.Attributor.Style('width', 'width');
 
 const FloatClass = new Parchment.Attributor.Class('float', 'float', {
     scope: Parchment.Scope.INLINE,
@@ -46,6 +47,7 @@ export class Toolbar extends BaseModule {
                     DisplayStyle.add(this.img, 'inline');
                     FloatStyle.add(this.img, 'left');
                     MarginStyle.add(this.img, '0 1em 1em 0');
+                    FloatClass.add(this.img, 'left');
                 },
                 isApplied: () => FloatStyle.value(this.img) == 'left',
             },
@@ -70,7 +72,7 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconFloatFull,
                 apply: () => {
-                    FullWidth.add(this.img, '');
+                    WidthStyle.add(this.img, '120%');
                 },
                 isApplied: () => FullWidth.value(this.img) == '',
             }
