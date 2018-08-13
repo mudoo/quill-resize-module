@@ -17,7 +17,7 @@ const FloatClass = new Parchment.Attributor.Class('float', 'float', {
 });
 
 const FullWidth = new Parchment.Attributor.Class('fullwidth', 'full-width', {
-    scope: Parchment.Scope.BLOCK,
+    scope: Parchment.Scope.INLINE,
     className: 'full-width'
 });
 
