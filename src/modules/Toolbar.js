@@ -74,10 +74,9 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconFloatFull,
                 apply: () => {
-                    WidthStyle.add(this.img, '120%');
-                    MarginStyle.add(this.img, '-10% 0 1em 1em');
+                    FullWidth.add(this.img, 'on');
                 },
-                isApplied: () => WidthStyle.value(this.img) == '120%',
+                isApplied: () => FullWidth.value(this.img) == 'on',
             }
         ];
     };
