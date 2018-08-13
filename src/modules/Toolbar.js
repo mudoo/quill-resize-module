@@ -49,7 +49,7 @@ export class Toolbar extends BaseModule {
                     MarginStyle.add(this.img, '0 1em 1em 0');
                     FloatClass.add(this.img, 'left');
                 },
-                isApplied: () => FloatStyle.value(this.img) == 'left',
+                isApplied: () => FloatClass.value(this.img) == 'left',
             },
             {
                 icon: IconAlignCenter,
@@ -57,6 +57,7 @@ export class Toolbar extends BaseModule {
                     DisplayStyle.add(this.img, 'block');
                     FloatStyle.remove(this.img);
                     MarginStyle.add(this.img, 'auto');
+                    FloatClass.remove(this.img);
                 },
                 isApplied: () => MarginStyle.value(this.img) == 'auto',
             },
@@ -66,6 +67,7 @@ export class Toolbar extends BaseModule {
                     DisplayStyle.add(this.img, 'inline');
                     FloatStyle.add(this.img, 'right');
                     MarginStyle.add(this.img, '0 0 1em 1em');
+                    FloatClass.add(this.img, 'right');
                 },
                 isApplied: () => FloatStyle.value(this.img) == 'right',
             },
