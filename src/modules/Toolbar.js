@@ -5,7 +5,7 @@ import IconFloatFull from 'quill/assets/icons/float-full.svg';
 import * as Quill from 'quill';
 import { BaseModule } from './BaseModule';
 
-const Parchment = Quill.imports.parchment;
+const Parchment = window.Quill ? window.Quill.imports.parchment : Quill.imports.parchment;
 const FloatStyle = new Parchment.Attributor.Style('float', 'float');
 const MarginStyle = new Parchment.Attributor.Style('margin', 'margin');
 const DisplayStyle = new Parchment.Attributor.Style('display', 'display');
@@ -73,6 +73,7 @@ export class Toolbar extends BaseModule {
                 icon: IconFloatFull,
                 apply: () => {
                     WidthStyle.add(this.img, '120%');
+                    MarginStyle.add(this.img, '-10% 0 1em 1em');
                 },
                 isApplied: () => WidthStyle.value(this.img) == '120%',
             }
