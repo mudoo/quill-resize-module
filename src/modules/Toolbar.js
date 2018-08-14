@@ -16,9 +16,9 @@ const FloatClass = new Parchment.Attributor.Class('float', 'float', {
     className: 'float'
 });
 
-const FullWidth = new Parchment.Attributor.Class('fullwidth', 'full-width', {
+const FullWidth = new Parchment.Attributor.Class('fullwidth', 'full', {
     scope: Parchment.Scope.INLINE,
-    className: 'full-width'
+    className: 'full'
 });
 
 export class Toolbar extends BaseModule {
@@ -74,9 +74,9 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconFloatFull,
                 apply: () => {
-                    FullWidth.add(this.img, 'on');
+                    FullWidth.add(this.img, 'width');
                 },
-                isApplied: () => FullWidth.value(this.img) == 'on',
+                isApplied: () => FullWidth.value(this.img) == 'width',
             }
         ];
     };
