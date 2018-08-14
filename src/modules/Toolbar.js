@@ -76,7 +76,7 @@ export class Toolbar extends BaseModule {
                 apply: () => {
                     FullWidthClass.add(this.img, 'width');
                 },
-                isApplied: () => FullWidth.value(this.img) == 'width',
+                isApplied: () => FullWidthClass.value(this.img) == 'width',
             }
         ];
     };
