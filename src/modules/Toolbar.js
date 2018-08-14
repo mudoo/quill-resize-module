@@ -6,10 +6,11 @@ import * as Quill from 'quill';
 import { BaseModule } from './BaseModule';
 
 const Parchment = window.Quill ? window.Quill.imports.parchment : Quill.imports.parchment;
-const FloatStyle = new Parchment.Attributor.Style('float', 'float');
-const MarginStyle = new Parchment.Attributor.Style('margin', 'margin');
-const DisplayStyle = new Parchment.Attributor.Style('display', 'display');
-const WidthStyle = new Parchment.Attributor.Style('width', 'width');
+
+const MarginClass = new Parchment.Attributor.Class('margin', 'margin', {
+    scope: Parchment.Scope.INLINE,
+    className: 'margin'
+});
 
 const FloatClass = new Parchment.Attributor.Class('float', 'float', {
     scope: Parchment.Scope.INLINE,
@@ -58,10 +59,10 @@ export class Toolbar extends BaseModule {
                 icon: IconAlignCenter,
                 apply: () => {
                     DisplayClass.add(this.img, 'block');
-                    MarginStyle.add(this.img, 'auto');
+                    MarginClass.add(this.img, 'auto');
                     FloatClass.remove(this.img);
                 },
-                isApplied: () => MarginStyle.value(this.img) == 'auto',
+                isApplied: () => MarginClass.value(this.img) == 'auto',
             },
             {
                 icon: IconAlignRight,
@@ -69,7 +70,7 @@ export class Toolbar extends BaseModule {
                     DisplayClass.add(this.img, 'inline');
                     FloatClass.add(this.img, 'right');
                 },
-                isApplied: () => FloatStyle.value(this.img) == 'right',
+                isApplied: () => FloatClass.value(this.img) == 'right',
             },
             {
                 icon: IconFloatFull,
@@ -92,7 +93,7 @@ export class Toolbar extends BaseModule {
 				buttons.forEach(button => button.style.filter = '');
 				if (alignment.isApplied()) {
 						// If applied, unapply
-					MarginStyle.remove(this.img);
+					MarginClass.remove(this.img);
                     DisplayClass.remove(this.img);
                     FullWidthClass.remove(this.img);
                     FloatClass.remove(this.img);
