@@ -16,9 +16,14 @@ const FloatClass = new Parchment.Attributor.Class('float', 'float', {
     className: 'float'
 });
 
-const FullWidth = new Parchment.Attributor.Class('fullwidth', 'full', {
+const FullWidthClass = new Parchment.Attributor.Class('fullwidth', 'full', {
     scope: Parchment.Scope.INLINE,
     className: 'full'
+});
+
+const DisplayClass = new Parchment.Attributor.Class('display', 'display', {
+    scope: Parchment.Scope.INLINE,
+    className: 'display'
 });
 
 export class Toolbar extends BaseModule {
@@ -44,9 +49,7 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconAlignLeft,
                 apply: () => {
-                    DisplayStyle.add(this.img, 'inline');
-                    FloatStyle.add(this.img, 'left');
-                    MarginStyle.add(this.img, '0 1em 1em 0');
+                    DisplayClass.add(this.img, 'inline');
                     FloatClass.add(this.img, 'left');
                 },
                 isApplied: () => FloatClass.value(this.img) == 'left',
@@ -54,8 +57,7 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconAlignCenter,
                 apply: () => {
-                    DisplayStyle.add(this.img, 'block');
-                    FloatStyle.remove(this.img);
+                    DisplayClass.add(this.img, 'block');
                     MarginStyle.add(this.img, 'auto');
                     FloatClass.remove(this.img);
                 },
@@ -64,9 +66,7 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconAlignRight,
                 apply: () => {
-                    DisplayStyle.add(this.img, 'inline');
-                    FloatStyle.add(this.img, 'right');
-                    MarginStyle.add(this.img, '0 0 1em 1em');
+                    DisplayClass.add(this.img, 'inline');
                     FloatClass.add(this.img, 'right');
                 },
                 isApplied: () => FloatStyle.value(this.img) == 'right',
@@ -74,7 +74,7 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconFloatFull,
                 apply: () => {
-                    FullWidth.add(this.img, 'width');
+                    FullWidthClass.add(this.img, 'width');
                 },
                 isApplied: () => FullWidth.value(this.img) == 'width',
             }
@@ -92,9 +92,10 @@ export class Toolbar extends BaseModule {
 				buttons.forEach(button => button.style.filter = '');
 				if (alignment.isApplied()) {
 						// If applied, unapply
-					FloatStyle.remove(this.img);
 					MarginStyle.remove(this.img);
-					DisplayStyle.remove(this.img);
+                    DisplayClass.remove(this.img);
+                    FullWidthClass.remove(this.img);
+                    FloatClass.remove(this.img);
 				}				else {
 						// otherwise, select button and apply
 					this._selectButton(button);
