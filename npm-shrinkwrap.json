@@ -1210,9 +1210,9 @@
       }
     },
     "clone": {
-      "version": "2.1.1",
-      "resolved": "https://registry.npmjs.org/clone/-/clone-2.1.1.tgz",
-      "integrity": "sha1-0hfR6WERjjrJpLi7oyhVU79kfNs="
+      "version": "2.1.2",
+      "resolved": "https://registry.npmjs.org/clone/-/clone-2.1.2.tgz",
+      "integrity": "sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18="
     },
     "co": {
       "version": "4.6.0",
@@ -1881,9 +1881,9 @@
       }
     },
     "eventemitter3": {
-      "version": "2.0.3",
-      "resolved": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-2.0.3.tgz",
-      "integrity": "sha1-teEHm1n7XhuidxwKmTvgYKWMmbo="
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-3.1.0.tgz",
+      "integrity": "sha512-ivIvhpq/Y0uSjcHDcOIccjmYjGLcP09MFGE7ysAwkAvkXfpZlC985pH2/ui64DKazbTW/4kN3yqozUxlXzI6cA=="
     },
     "events": {
       "version": "1.1.1",
@@ -1925,9 +1925,9 @@
       }
     },
     "extend": {
-      "version": "3.0.0",
-      "resolved": "https://registry.npmjs.org/extend/-/extend-3.0.0.tgz",
-      "integrity": "sha1-WkdDU7nzNT3dgXbf03uRyDpG8dQ="
+      "version": "3.0.2",
+      "resolved": "https://registry.npmjs.org/extend/-/extend-3.0.2.tgz",
+      "integrity": "sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g=="
     },
     "extglob": {
       "version": "0.3.2",
@@ -1939,9 +1939,9 @@
       }
     },
     "fast-diff": {
-      "version": "1.1.1",
-      "resolved": "https://registry.npmjs.org/fast-diff/-/fast-diff-1.1.1.tgz",
-      "integrity": "sha1-CuoOTmBbaiGJ8Ok21Lf7rxt8/Zs="
+      "version": "1.1.2",
+      "resolved": "https://registry.npmjs.org/fast-diff/-/fast-diff-1.1.2.tgz",
+      "integrity": "sha512-KaJUt+M9t1qaIteSvjc6P3RbMdXsNhK61GRftR6SNxqmhthcd9MGIi4T+o0jD8LUSpSnSKXE20nLtJ3fOHxQig=="
     },
     "fast-levenshtein": {
       "version": "2.0.6",
@@ -2099,8 +2099,8 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "delegates": "^1.0.0",
-            "readable-stream": "^2.0.0 || ^1.1.13"
+            "delegates": "1.0.0",
+            "readable-stream": "2.2.2"
           }
         },
         "asn1": {
@@ -2151,7 +2151,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "tweetnacl": "^0.14.3"
+            "tweetnacl": "0.14.5"
           }
         },
         "block-stream": {
@@ -2160,7 +2160,7 @@
           "integrity": "sha1-E+v+d4oDIFz+A3UUgeu0szAMEmo=",
           "dev": true,
           "requires": {
-            "inherits": "~2.0.0"
+            "inherits": "2.0.3"
           }
         },
         "boom": {
@@ -2169,7 +2169,7 @@
           "integrity": "sha1-OciRjO/1eZ+D+UkqhI9iWt0Mdm8=",
           "dev": true,
           "requires": {
-            "hoek": "2.x.x"
+            "hoek": "2.16.3"
           }
         },
         "brace-expansion": {
@@ -2178,7 +2178,7 @@
           "integrity": "sha1-cZfX6qm4fmSDkOph/GbIRCdCDfk=",
           "dev": true,
           "requires": {
-            "balanced-match": "^0.4.1",
+            "balanced-match": "0.4.2",
             "concat-map": "0.0.1"
           }
         },
@@ -2202,11 +2202,11 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "ansi-styles": "^2.2.1",
-            "escape-string-regexp": "^1.0.2",
-            "has-ansi": "^2.0.0",
-            "strip-ansi": "^3.0.0",
-            "supports-color": "^2.0.0"
+            "ansi-styles": "2.2.1",
+            "escape-string-regexp": "1.0.5",
+            "has-ansi": "2.0.0",
+            "strip-ansi": "3.0.1",
+            "supports-color": "2.0.0"
           }
         },
         "code-point-at": {
@@ -2221,7 +2221,7 @@
           "integrity": "sha1-k4NwpXtKUd6ix3wV1cX9+JUWQAk=",
           "dev": true,
           "requires": {
-            "delayed-stream": "~1.0.0"
+            "delayed-stream": "1.0.0"
           }
         },
         "commander": {
@@ -2231,7 +2231,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "graceful-readlink": ">= 1.0.0"
+            "graceful-readlink": "1.0.1"
           }
         },
         "concat-map": {
@@ -2259,7 +2259,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "boom": "2.x.x"
+            "boom": "2.10.1"
           }
         },
         "dashdash": {
@@ -2269,7 +2269,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "assert-plus": "^1.0.0"
+            "assert-plus": "1.0.0"
           },
           "dependencies": {
             "assert-plus": {
@@ -2318,7 +2318,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "jsbn": "~0.1.0"
+            "jsbn": "0.1.1"
           }
         },
         "escape-string-regexp": {
@@ -2355,9 +2355,9 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "asynckit": "^0.4.0",
-            "combined-stream": "^1.0.5",
-            "mime-types": "^2.1.12"
+            "asynckit": "0.4.0",
+            "combined-stream": "1.0.5",
+            "mime-types": "2.1.14"
           }
         },
         "fs.realpath": {
@@ -2372,10 +2372,10 @@
           "integrity": "sha1-YE6Kkv4m/9n2+uMDmdSYThqyKCI=",
           "dev": true,
           "requires": {
-            "graceful-fs": "^4.1.2",
-            "inherits": "~2.0.0",
-            "mkdirp": ">=0.5 0",
-            "rimraf": "2"
+            "graceful-fs": "4.1.11",
+            "inherits": "2.0.3",
+            "mkdirp": "0.5.1",
+            "rimraf": "2.5.4"
           }
         },
         "fstream-ignore": {
@@ -2385,9 +2385,9 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "fstream": "^1.0.0",
-            "inherits": "2",
-            "minimatch": "^3.0.0"
+            "fstream": "1.0.10",
+            "inherits": "2.0.3",
+            "minimatch": "3.0.3"
           }
         },
         "gauge": {
@@ -2397,14 +2397,14 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "aproba": "^1.0.3",
-            "console-control-strings": "^1.0.0",
-            "has-unicode": "^2.0.0",
-            "object-assign": "^4.1.0",
-            "signal-exit": "^3.0.0",
-            "string-width": "^1.0.1",
-            "strip-ansi": "^3.0.1",
-            "wide-align": "^1.1.0"
+            "aproba": "1.1.1",
+            "console-control-strings": "1.1.0",
+            "has-unicode": "2.0.1",
+            "object-assign": "4.1.1",
+            "signal-exit": "3.0.2",
+            "string-width": "1.0.2",
+            "strip-ansi": "3.0.1",
+            "wide-align": "1.1.0"
           }
         },
         "generate-function": {
@@ -2421,7 +2421,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "is-property": "^1.0.0"
+            "is-property": "1.0.2"
           }
         },
         "getpass": {
@@ -2431,7 +2431,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "assert-plus": "^1.0.0"
+            "assert-plus": "1.0.0"
           },
           "dependencies": {
             "assert-plus": {
@@ -2449,12 +2449,12 @@
           "integrity": "sha1-gFIR3wT6rxxjo2ADBs31reULLsg=",
           "dev": true,
           "requires": {
-            "fs.realpath": "^1.0.0",
-            "inflight": "^1.0.4",
-            "inherits": "2",
-            "minimatch": "^3.0.2",
-            "once": "^1.3.0",
-            "path-is-absolute": "^1.0.0"
+            "fs.realpath": "1.0.0",
+            "inflight": "1.0.6",
+            "inherits": "2.0.3",
+            "minimatch": "3.0.3",
+            "once": "1.4.0",
+            "path-is-absolute": "1.0.1"
           }
         },
         "graceful-fs": {
@@ -2477,10 +2477,10 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "chalk": "^1.1.1",
-            "commander": "^2.9.0",
-            "is-my-json-valid": "^2.12.4",
-            "pinkie-promise": "^2.0.0"
+            "chalk": "1.1.3",
+            "commander": "2.9.0",
+            "is-my-json-valid": "2.15.0",
+            "pinkie-promise": "2.0.1"
           }
         },
         "has-ansi": {
@@ -2490,7 +2490,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "ansi-regex": "^2.0.0"
+            "ansi-regex": "2.1.1"
           }
         },
         "has-unicode": {
@@ -2507,10 +2507,10 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "boom": "2.x.x",
-            "cryptiles": "2.x.x",
-            "hoek": "2.x.x",
-            "sntp": "1.x.x"
+            "boom": "2.10.1",
+            "cryptiles": "2.0.5",
+            "hoek": "2.16.3",
+            "sntp": "1.0.9"
           }
         },
         "hoek": {
@@ -2526,9 +2526,9 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "assert-plus": "^0.2.0",
-            "jsprim": "^1.2.2",
-            "sshpk": "^1.7.0"
+            "assert-plus": "0.2.0",
+            "jsprim": "1.3.1",
+            "sshpk": "1.10.2"
           }
         },
         "inflight": {
@@ -2537,8 +2537,8 @@
           "integrity": "sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=",
           "dev": true,
           "requires": {
-            "once": "^1.3.0",
-            "wrappy": "1"
+            "once": "1.4.0",
+            "wrappy": "1.0.2"
           }
         },
         "inherits": {
@@ -2560,7 +2560,7 @@
           "integrity": "sha1-754xOG8DGn8NZDr4L95QxFfvAMs=",
           "dev": true,
           "requires": {
-            "number-is-nan": "^1.0.0"
+            "number-is-nan": "1.0.1"
           }
         },
         "is-my-json-valid": {
@@ -2570,10 +2570,10 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "generate-function": "^2.0.0",
-            "generate-object-property": "^1.1.0",
-            "jsonpointer": "^4.0.0",
-            "xtend": "^4.0.0"
+            "generate-function": "2.0.0",
+            "generate-object-property": "1.2.0",
+            "jsonpointer": "4.0.1",
+            "xtend": "4.0.1"
           }
         },
         "is-property": {
@@ -2610,7 +2610,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "jsbn": "~0.1.0"
+            "jsbn": "0.1.1"
           }
         },
         "jsbn": {
@@ -2665,7 +2665,7 @@
           "integrity": "sha1-9+99l1g/yvO30oK2+LVnnaselO4=",
           "dev": true,
           "requires": {
-            "mime-db": "~1.26.0"
+            "mime-db": "1.26.0"
           }
         },
         "minimatch": {
@@ -2674,7 +2674,7 @@
           "integrity": "sha1-Kk5AkLlrLbBqnX3wEFWmKnfJt3Q=",
           "dev": true,
           "requires": {
-            "brace-expansion": "^1.0.0"
+            "brace-expansion": "1.1.6"
           }
         },
         "minimist": {
@@ -2706,15 +2706,15 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "mkdirp": "~0.5.1",
-            "nopt": "~3.0.6",
-            "npmlog": "^4.0.1",
-            "rc": "~1.1.6",
-            "request": "^2.79.0",
-            "rimraf": "~2.5.4",
-            "semver": "~5.3.0",
-            "tar": "~2.2.1",
-            "tar-pack": "~3.3.0"
+            "mkdirp": "0.5.1",
+            "nopt": "3.0.6",
+            "npmlog": "4.0.2",
+            "rc": "1.1.7",
+            "request": "2.79.0",
+            "rimraf": "2.5.4",
+            "semver": "5.3.0",
+            "tar": "2.2.1",
+            "tar-pack": "3.3.0"
           }
         },
         "nopt": {
@@ -2724,7 +2724,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "abbrev": "1"
+            "abbrev": "1.1.0"
           }
         },
         "npmlog": {
@@ -2734,10 +2734,10 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "are-we-there-yet": "~1.1.2",
-            "console-control-strings": "~1.1.0",
-            "gauge": "~2.7.1",
-            "set-blocking": "~2.0.0"
+            "are-we-there-yet": "1.1.2",
+            "console-control-strings": "1.1.0",
+            "gauge": "2.7.3",
+            "set-blocking": "2.0.0"
           }
         },
         "number-is-nan": {
@@ -2766,7 +2766,7 @@
           "integrity": "sha1-WDsap3WWHUsROsF9nFC6753Xa9E=",
           "dev": true,
           "requires": {
-            "wrappy": "1"
+            "wrappy": "1.0.2"
           }
         },
         "path-is-absolute": {
@@ -2789,7 +2789,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "pinkie": "^2.0.0"
+            "pinkie": "2.0.4"
           }
         },
         "process-nextick-args": {
@@ -2819,10 +2819,10 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "deep-extend": "~0.4.0",
-            "ini": "~1.3.0",
-            "minimist": "^1.2.0",
-            "strip-json-comments": "~2.0.1"
+            "deep-extend": "0.4.1",
+            "ini": "1.3.4",
+            "minimist": "1.2.0",
+            "strip-json-comments": "2.0.1"
           },
           "dependencies": {
             "minimist": {
@@ -2841,13 +2841,13 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "buffer-shims": "^1.0.0",
-            "core-util-is": "~1.0.0",
-            "inherits": "~2.0.1",
-            "isarray": "~1.0.0",
-            "process-nextick-args": "~1.0.6",
-            "string_decoder": "~0.10.x",
-            "util-deprecate": "~1.0.1"
+            "buffer-shims": "1.0.0",
+            "core-util-is": "1.0.2",
+            "inherits": "2.0.3",
+            "isarray": "1.0.0",
+            "process-nextick-args": "1.0.7",
+            "string_decoder": "0.10.31",
+            "util-deprecate": "1.0.2"
           }
         },
         "request": {
@@ -2857,26 +2857,26 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "aws-sign2": "~0.6.0",
-            "aws4": "^1.2.1",
-            "caseless": "~0.11.0",
-            "combined-stream": "~1.0.5",
-            "extend": "~3.0.0",
-            "forever-agent": "~0.6.1",
-            "form-data": "~2.1.1",
-            "har-validator": "~2.0.6",
-            "hawk": "~3.1.3",
-            "http-signature": "~1.1.0",
-            "is-typedarray": "~1.0.0",
-            "isstream": "~0.1.2",
-            "json-stringify-safe": "~5.0.1",
-            "mime-types": "~2.1.7",
-            "oauth-sign": "~0.8.1",
-            "qs": "~6.3.0",
-            "stringstream": "~0.0.4",
-            "tough-cookie": "~2.3.0",
-            "tunnel-agent": "~0.4.1",
-            "uuid": "^3.0.0"
+            "aws-sign2": "0.6.0",
+            "aws4": "1.6.0",
+            "caseless": "0.11.0",
+            "combined-stream": "1.0.5",
+            "extend": "3.0.0",
+            "forever-agent": "0.6.1",
+            "form-data": "2.1.2",
+            "har-validator": "2.0.6",
+            "hawk": "3.1.3",
+            "http-signature": "1.1.1",
+            "is-typedarray": "1.0.0",
+            "isstream": "0.1.2",
+            "json-stringify-safe": "5.0.1",
+            "mime-types": "2.1.14",
+            "oauth-sign": "0.8.2",
+            "qs": "6.3.1",
+            "stringstream": "0.0.5",
+            "tough-cookie": "2.3.2",
+            "tunnel-agent": "0.4.3",
+            "uuid": "3.0.1"
           }
         },
         "rimraf": {
@@ -2885,7 +2885,7 @@
           "integrity": "sha1-loAAk8vxoMhr2VtGJUZ1NcKd+gQ=",
           "dev": true,
           "requires": {
-            "glob": "^7.0.5"
+            "glob": "7.1.1"
           }
         },
         "semver": {
@@ -2916,7 +2916,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "hoek": "2.x.x"
+            "hoek": "2.16.3"
           }
         },
         "sshpk": {
@@ -2926,15 +2926,15 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "asn1": "~0.2.3",
-            "assert-plus": "^1.0.0",
-            "bcrypt-pbkdf": "^1.0.0",
-            "dashdash": "^1.12.0",
-            "ecc-jsbn": "~0.1.1",
-            "getpass": "^0.1.1",
-            "jodid25519": "^1.0.0",
-            "jsbn": "~0.1.0",
-            "tweetnacl": "~0.14.0"
+            "asn1": "0.2.3",
+            "assert-plus": "1.0.0",
+            "bcrypt-pbkdf": "1.0.1",
+            "dashdash": "1.14.1",
+            "ecc-jsbn": "0.1.1",
+            "getpass": "0.1.6",
+            "jodid25519": "1.0.2",
+            "jsbn": "0.1.1",
+            "tweetnacl": "0.14.5"
           },
           "dependencies": {
             "assert-plus": {
@@ -2952,9 +2952,9 @@
           "integrity": "sha1-EYvfW4zcUaKn5w0hHgfisLmxB9M=",
           "dev": true,
           "requires": {
-            "code-point-at": "^1.0.0",
-            "is-fullwidth-code-point": "^1.0.0",
-            "strip-ansi": "^3.0.0"
+            "code-point-at": "1.1.0",
+            "is-fullwidth-code-point": "1.0.0",
+            "strip-ansi": "3.0.1"
           }
         },
         "string_decoder": {
@@ -2976,7 +2976,7 @@
           "integrity": "sha1-ajhfuIU9lS1f8F0Oiq+UJ43GPc8=",
           "dev": true,
           "requires": {
-            "ansi-regex": "^2.0.0"
+            "ansi-regex": "2.1.1"
           }
         },
         "strip-json-comments": {
@@ -2999,9 +2999,9 @@
           "integrity": "sha1-jk0qJWwOIYXGsYrWlK7JaLg8sdE=",
           "dev": true,
           "requires": {
-            "block-stream": "*",
-            "fstream": "^1.0.2",
-            "inherits": "2"
+            "block-stream": "0.0.9",
+            "fstream": "1.0.10",
+            "inherits": "2.0.3"
           }
         },
         "tar-pack": {
@@ -3011,14 +3011,14 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "debug": "~2.2.0",
-            "fstream": "~1.0.10",
-            "fstream-ignore": "~1.0.5",
-            "once": "~1.3.3",
-            "readable-stream": "~2.1.4",
-            "rimraf": "~2.5.1",
-            "tar": "~2.2.1",
-            "uid-number": "~0.0.6"
+            "debug": "2.2.0",
+            "fstream": "1.0.10",
+            "fstream-ignore": "1.0.5",
+            "once": "1.3.3",
+            "readable-stream": "2.1.5",
+            "rimraf": "2.5.4",
+            "tar": "2.2.1",
+            "uid-number": "0.0.6"
           },
           "dependencies": {
             "once": {
@@ -3028,7 +3028,7 @@
               "dev": true,
               "optional": true,
               "requires": {
-                "wrappy": "1"
+                "wrappy": "1.0.2"
               }
             },
             "readable-stream": {
@@ -3038,13 +3038,13 @@
               "dev": true,
               "optional": true,
               "requires": {
-                "buffer-shims": "^1.0.0",
-                "core-util-is": "~1.0.0",
-                "inherits": "~2.0.1",
-                "isarray": "~1.0.0",
-                "process-nextick-args": "~1.0.6",
-                "string_decoder": "~0.10.x",
-                "util-deprecate": "~1.0.1"
+                "buffer-shims": "1.0.0",
+                "core-util-is": "1.0.2",
+                "inherits": "2.0.3",
+                "isarray": "1.0.0",
+                "process-nextick-args": "1.0.7",
+                "string_decoder": "0.10.31",
+                "util-deprecate": "1.0.2"
               }
             }
           }
@@ -3056,7 +3056,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "punycode": "^1.4.1"
+            "punycode": "1.4.1"
           }
         },
         "tunnel-agent": {
@@ -3110,7 +3110,7 @@
           "dev": true,
           "optional": true,
           "requires": {
-            "string-width": "^1.0.1"
+            "string-width": "1.0.2"
           }
         },
         "wrappy": {
@@ -4013,9 +4013,7 @@
       "dev": true
     },
     "parchment": {
-      "version": "1.0.8",
-      "resolved": "https://registry.npmjs.org/parchment/-/parchment-1.0.8.tgz",
-      "integrity": "sha1-E+xr7M5sFnSB8Xcr1RpZBt51oDg="
+      "version": "github:quilljs/parchment#487850f7eb030a6c4e750ba809e58b09444e0bdb"
     },
     "parse-asn1": {
       "version": "5.1.0",
@@ -4223,26 +4221,31 @@
       "dev": true
     },
     "quill": {
-      "version": "1.2.3",
-      "resolved": "https://registry.npmjs.org/quill/-/quill-1.2.3.tgz",
-      "integrity": "sha1-j8Yu1m2Bc+35vB2ft3fddOsGMu4=",
+      "version": "2.0.0-dev.2",
+      "resolved": "https://registry.npmjs.org/quill/-/quill-2.0.0-dev.2.tgz",
+      "integrity": "sha512-jqP2ar0EaPZLLyeYmyJ01l07+l3NKjUiq79i7OQiYv7Rm3wHTaejgq2oIqmXUCZjGQd2f5jlFUABkf8quZVcIw==",
       "requires": {
-        "clone": "2.1.1",
+        "clone": "2.1.2",
         "deep-equal": "1.0.1",
-        "eventemitter3": "2.0.3",
-        "extend": "3.0.0",
-        "parchment": "1.0.8",
-        "quill-delta": "3.5.0"
+        "eventemitter3": "3.1.0",
+        "extend": "3.0.2",
+        "parchment": "github:quilljs/parchment#487850f7eb030a6c4e750ba809e58b09444e0bdb",
+        "quill-delta": "3.6.3"
+      },
+      "dependencies": {
+        "parchment": {
+          "version": "github:quilljs/parchment#487850f7eb030a6c4e750ba809e58b09444e0bdb"
+        }
       }
     },
     "quill-delta": {
-      "version": "3.5.0",
-      "resolved": "https://registry.npmjs.org/quill-delta/-/quill-delta-3.5.0.tgz",
-      "integrity": "sha1-W2fmhdpgw06r7URJxBbHSquJFXs=",
+      "version": "3.6.3",
+      "resolved": "https://registry.npmjs.org/quill-delta/-/quill-delta-3.6.3.tgz",
+      "integrity": "sha512-wdIGBlcX13tCHOXGMVnnTVFtGRLoP0imqxM696fIPwIf5ODIYUHIvHbZcyvGlZFiFhK5XzDC2lpjbxRhnM05Tg==",
       "requires": {
         "deep-equal": "1.0.1",
-        "extend": "3.0.0",
-        "fast-diff": "1.1.1"
+        "extend": "3.0.2",
+        "fast-diff": "1.1.2"
       }
     },
     "randomatic": {
@@ -5006,7 +5009,7 @@
     },
     "wrap-ansi": {
       "version": "2.1.0",
-      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-2.1.0.tgz",
+      "resolved": "http://registry.npmjs.org/wrap-ansi/-/wrap-ansi-2.1.0.tgz",
       "integrity": "sha1-2Pw9KE3QV5T+hJc8rs3Rz4JP3YU=",
       "dev": true,
       "requires": {

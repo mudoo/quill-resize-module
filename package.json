@@ -5,7 +5,7 @@
   "main": "image-resize.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "webpack -p --progress --colors",
+    "release": "webpack --progress --colors",
     "dev": "webpack --progress --colors --watch",
     "lint": "eslint --ext js,es6 src",
     "fixlint": "eslint --fix --ext js,es6 src"
@@ -49,7 +49,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "quill": "^1.2.2",
+    "quill": "^v2.0.0-dev.0",
+    "parchment": "quilljs/parchment#487850f7eb030a6c4e750ba809e58b09444e0bd",
     "raw-loader": "^0.5.1"
   }
 }

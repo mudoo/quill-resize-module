@@ -2,28 +2,28 @@ import IconAlignLeft from 'quill/assets/icons/float-left.svg';
 import IconAlignCenter from 'quill/assets/icons/float-center.svg';
 import IconAlignRight from 'quill/assets/icons/float-right.svg';
 import IconFloatFull from 'quill/assets/icons/float-full.svg';
-import * as Quill from 'quill';
+// import * as Quill from 'quill';
+import { Scope, ClassAttributor } from 'parchment';
+
 import { BaseModule } from './BaseModule';
 
-const Parchment = window.Quill ? window.Quill.imports.parchment : Quill.imports.parchment;
-
-const MarginClass = new Parchment.Attributor.Class('margin', 'margin', {
-    scope: Parchment.Scope.INLINE,
+const MarginClass = new ClassAttributor('margin', 'margin', {
+    scope: Scope.INLINE,
     className: 'margin'
 });
 
-const FloatClass = new Parchment.Attributor.Class('float', 'float', {
-    scope: Parchment.Scope.INLINE,
+const FloatClass = new ClassAttributor('float', 'float', {
+    scope: Scope.INLINE,
     className: 'float'
 });
 
-const FullWidthClass = new Parchment.Attributor.Class('fullwidth', 'full', {
-    scope: Parchment.Scope.INLINE,
+const FullWidthClass = new ClassAttributor('fullwidth', 'full', {
+    scope: Scope.INLINE,
     className: 'full'
 });
 
-const DisplayClass = new Parchment.Attributor.Class('display', 'display', {
-    scope: Parchment.Scope.INLINE,
+const DisplayClass = new ClassAttributor('display', 'display', {
+    scope: Scope.INLINE,
     className: 'display'
 });
 
