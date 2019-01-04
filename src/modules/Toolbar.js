@@ -2,6 +2,7 @@ import IconAlignLeft from 'quill/assets/icons/float-left.svg';
 import IconAlignCenter from 'quill/assets/icons/float-center.svg';
 import IconAlignRight from 'quill/assets/icons/float-right.svg';
 import IconFloatFull from 'quill/assets/icons/float-full.svg';
+import IconPencil from '../assets/pencil.svg';
 // import * as Quill from 'quill';
 import { Scope, ClassAttributor } from 'parchment';
 
@@ -98,6 +99,16 @@ export class Toolbar extends BaseModule {
 			}
 			this.toolbar.appendChild(button);
 		});
+
+    // Edit button
+    const button = document.createElement('span');
+    button.innerHTML = IconPencil;
+		Object.assign(button.style, this.options.toolbarButtonStyles);
+		button.style.borderLeftWidth = '0';
+		button.addEventListener('click', () => {
+      this.quill.emitter.emit('edit-image', this.img);
+    })
+		this.toolbar.appendChild(button);
     };
 
     _selectButton = (button) => {
