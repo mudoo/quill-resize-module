@@ -49,8 +49,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "quill": "^v2.0.0-dev.0",
-    "parchment": "quilljs/parchment#487850f7eb030a6c4e750ba809e58b09444e0bd",
+    "quill": "^v2.0.0-dev.3",
+    "parchment": "^v2.0.0-dev.0",
     "raw-loader": "^0.5.1"
   }
 }
