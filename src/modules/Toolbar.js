@@ -7,25 +7,11 @@ import { Scope, ClassAttributor } from 'parchment';
 
 import { BaseModule } from './BaseModule';
 
-const MarginClass = new ClassAttributor('margin', 'margin', {
+const ImageFormatClass = new ClassAttributor('imagestyle', 'imagestyle', {
     scope: Scope.INLINE,
-    className: 'margin'
+    className: 'imagestyle'
 });
 
-const FloatClass = new ClassAttributor('float', 'float', {
-    scope: Scope.INLINE,
-    className: 'float'
-});
-
-const FullWidthClass = new ClassAttributor('fullwidth', 'full', {
-    scope: Scope.INLINE,
-    className: 'full'
-});
-
-const DisplayClass = new ClassAttributor('display', 'display', {
-    scope: Scope.INLINE,
-    className: 'display'
-});
 
 export class Toolbar extends BaseModule {
     onCreate = () => {
@@ -50,34 +36,30 @@ export class Toolbar extends BaseModule {
             {
                 icon: IconAlignLeft,
                 apply: () => {
-                    DisplayClass.add(this.img, 'inline');
-                    FloatClass.add(this.img, 'left');
+                    ImageFormatClass.add(this.img, 'left');
                 },
-                isApplied: () => FloatClass.value(this.img) == 'left',
+                isApplied: () => ImageFormatClass.value(this.img) == 'left',
             },
             {
                 icon: IconAlignCenter,
                 apply: () => {
-                    DisplayClass.add(this.img, 'block');
-                    MarginClass.add(this.img, 'auto');
-                    FloatClass.remove(this.img);
+                    ImageFormatClass.add(this.img, 'center');
                 },
-                isApplied: () => MarginClass.value(this.img) == 'auto',
+                isApplied: () => ImageFormatClass.value(this.img) == 'center',
             },
             {
                 icon: IconAlignRight,
                 apply: () => {
-                    DisplayClass.add(this.img, 'inline');
-                    FloatClass.add(this.img, 'right');
+                    ImageFormatClass.add(this.img, 'right');
                 },
-                isApplied: () => FloatClass.value(this.img) == 'right',
+                isApplied: () => ImageFormatClass.value(this.img) == 'right',
             },
             {
                 icon: IconFloatFull,
                 apply: () => {
-                    FullWidthClass.add(this.img, 'width');
+                    ImageFormatClass.add(this.img, 'full');
                 },
-                isApplied: () => FullWidthClass.value(this.img) == 'width',
+                isApplied: () => ImageFormatClass.value(this.img) == 'full',
             }
         ];
     };
