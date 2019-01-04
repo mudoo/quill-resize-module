@@ -3,6 +3,7 @@ import DefaultOptions from './DefaultOptions';
 import { DisplaySize } from './modules/DisplaySize';
 import { Toolbar } from './modules/Toolbar';
 import { Resize } from './modules/Resize';
+import { Registry } from 'parchment';
 
 const knownModules = { DisplaySize, Toolbar, Resize };
 
@@ -81,6 +82,15 @@ export default class ImageResize {
         this.modules = [];
     };
 
+    overlayDoubleClick = (evt) => {
+      let figure = this.img.closest('figure');
+      let blot = Registry.find(figure);
+      const index = blot.offset(this.quill.scroll);
+      const selectionLength = figure.getElementsByTagName('figcaption').length === 0 ? 1 : 2;
+      this.hide();
+      this.quill.setSelection(index - 1, selectionLength);
+    }
+
     handleClick = (evt) => {
         if (evt.target && evt.target.tagName && evt.target.closest('figure')) {
             if(evt.target.closest('a')) {
@@ -127,7 +137,9 @@ export default class ImageResize {
 
         // Create and add the overlay
         this.overlay = document.createElement('div');
+        this.overlay.setAttribute('title', "Double-click to select image");
         Object.assign(this.overlay.style, this.options.overlayStyles);
+        this.overlay.addEventListener('dblclick', this.overlayDoubleClick, false)
 
         this.quill.root.parentNode.appendChild(this.overlay);
 
@@ -141,6 +153,7 @@ export default class ImageResize {
 
         // Remove the overlay
         this.quill.root.parentNode.removeChild(this.overlay);
+        this.overlay.removeEventListener('doubleclk', this.overlayDoubleClick);
         this.overlay = undefined;
 
         // stop listening for image deletion or movement
