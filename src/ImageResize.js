@@ -83,6 +83,9 @@ export default class ImageResize {
 
     handleClick = (evt) => {
         if (evt.target && evt.target.tagName && evt.target.closest('figure')) {
+            if(evt.target.closest('a')) {
+                evt.preventDefault()
+            }
             if (this.img === evt.target) {
                 // we are already focused on this image
                 return;
