@@ -82,7 +82,7 @@ export default class ImageResize {
     };
 
     handleClick = (evt) => {
-        if (evt.target && evt.target.tagName && evt.target.tagName.toUpperCase() === 'IMG') {
+        if (evt.target && evt.target.tagName && evt.target.closest('figure')) {
             if (this.img === evt.target) {
                 // we are already focused on this image
                 return;
@@ -92,7 +92,7 @@ export default class ImageResize {
                 this.hide();
             }
             // clicked on an image inside the editor
-            this.show(evt.target);
+            this.show(evt.target.closest('figure'));
         } else if (this.img) {
             // clicked on a non image
             this.hide();
@@ -198,3 +198,20 @@ export default class ImageResize {
 if (window.Quill) {
     window.Quill.register('modules/imageResize', ImageResize);
 }
+
+
+// Polyfill for IE and Element.closest
+if (!Element.prototype.matches)
+    Element.prototype.matches = Element.prototype.msMatchesSelector ||
+                                Element.prototype.webkitMatchesSelector;
+
+if (!Element.prototype.closest)
+    Element.prototype.closest = function(s) {
+        var el = this;
+        if (!document.documentElement.contains(el)) return null;
+        do {
+            if (el.matches(s)) return el;
+            el = el.parentElement || el.parentNode;
+        } while (el !== null && el.nodeType === 1);
+        return null;
+    };
