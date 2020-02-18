@@ -1,13 +1,10 @@
-# Quill ImageResize Module
+# Quill Resize Module
 
-A module for Quill rich text editor to allow images to be resized.
-
-Also see [quill-image-drop-module](https://github.com/kensnyder/quill-image-drop-module),
-a module that enables copy-paste and drag/drop for Quill.
+A module for Quill rich text editor to allow images and custom element to be resized.
 
 ## Demo
 
-[Plunker](https://plnkr.co/edit/gq708AOrSBOWSlHcFslG?p=preview)
+[JSFiddle](https://fiddle.jshell.net/7ahqcumr/show/)
 
 ## Usage
 
@@ -15,15 +12,14 @@ a module that enables copy-paste and drag/drop for Quill.
 
 ```javascript
 import Quill from 'quill';
-import { ImageResize } from 'quill-image-resize-module';
-
-Quill.register('modules/imageResize', ImageResize);
+import QuillResize from 'quill-resize-module';
+Quill.register('modules/resize', QuillResize);
 
 const quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        imageResize: {
+        resize: {
             // See optional "config" below
         }
     }
@@ -32,10 +28,10 @@ const quill = new Quill(editor, {
 
 ### Script Tag
 
-Copy image-resize.min.js into your web root or include from node_modules
+Copy resize.js into your web root or include from node_modules
 
 ```html
-<script src="/node_modules/quill-image-resize-module/image-resize.min.js"></script>
+<script src="/node_modules/quill-resize-module/dist/resize.js"></script>
 ```
 
 ```javascript
@@ -43,7 +39,7 @@ var quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {
+        resize: {
             // See optional "config" below
         }
     }
@@ -58,7 +54,7 @@ var quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {}
+        resize: {}
     }
 });
 ```
@@ -71,7 +67,7 @@ const quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {
+        resize: {
             modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
         }
     }
@@ -80,9 +76,9 @@ const quill = new Quill(editor, {
 
 Each module is described below.
 
-#### `Resize` - Resize the image
+#### `Resize` - Resize the element
 
-Adds handles to the image's corners which can be dragged with the mouse to resize the image.
+Adds handles to the element's corners which can be dragged with the mouse to resize the element.
 
 The look and feel can be controlled with options:
 
@@ -91,8 +87,21 @@ var quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {
+        resize: {
             // ...
+            // set parchment key to enable resize module
+            parchment: {
+                image: {
+                    attribute: ['width'],  // ['width', 'height']
+                    limit: {
+                        minWidth: 200,
+                        maxWidth: 600,
+                        minHeight: 200,
+                        maxHeight: 450,
+                        ratio: .5625  // keep width/height ratio. (ratio=height/width)
+                    }
+                }
+            },
             handleStyles: {
                 backgroundColor: 'black',
                 border: 'none',
@@ -115,7 +124,7 @@ var quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {
+        resize: {
             // ...
             displayStyles: {
                 backgroundColor: 'black',
@@ -139,7 +148,7 @@ var quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {
+        resize: {
             // ...
             toolbarStyles: {
                 backgroundColor: 'black',
@@ -166,7 +175,7 @@ the module setup.
 For example,
 
 ```javascript
-import { Resize, BaseModule } from 'quill-image-resize-module';
+import { Resize, BaseModule } from 'quill-resize-module';
 
 class MyModule extends BaseModule {
     // See src/modules/BaseModule.js for documentation on the various lifecycle callbacks
@@ -176,7 +185,7 @@ var quill = new Quill(editor, {
     // ...
     modules: {
         // ...
-        ImageResize: {
+        resize: {
             modules: [ MyModule, Resize ],
             // ...
         }

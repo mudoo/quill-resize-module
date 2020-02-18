@@ -1,18 +1,19 @@
 {
-  "name": "quill-image-resize-module",
-  "version": "3.0.1",
+  "name": "quill-resize-module",
+  "version": "1.0.0",
   "description": "A module for Quill rich text editor to allow images to be resized.",
-  "main": "image-resize.min.js",
+  "main": "dist/resize.js",
+  "module": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "webpack --progress --colors",
-    "dev": "webpack --progress --colors --watch",
+    "start": "webpack-dev-server --hot --open --mode development",
+    "release": "webpack --mode production",
     "lint": "eslint --ext js,es6 src",
-    "fixlint": "eslint --fix --ext js,es6 src"
+    "fixlint": "eslint --fix --ext js,es6 src",
+    "prepublishOnly": "npm run release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/capashilli/quill-image-resize-module.git"
+    "url": "git+https://github.com/mudoo/quill-resize-module.git"
   },
   "keywords": [
     "quill",
@@ -21,7 +22,13 @@
     "resize",
     "sizer"
   ],
-  "author": "@capashilli",
+  "files": [
+    "docs",
+    "lib",
+    "dist",
+    "src"
+  ],
+  "author": "mudoo <mudoo@qq.com>",
   "contributors": [
     {
       "name": "Wikia",
@@ -30,27 +37,28 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/capashilli/quill-image-resize-module/issues"
+    "url": "https://github.com/mudoo/quill-resize-module/issues"
   },
-  "homepage": "https://github.com/capashilli/quill-image-resize-module#readme",
+  "homepage": "https://github.com/mudoo/quill-resize-module#readme",
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-eslint": "^7.2.1",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-transform-class-properties": "^6.23.0",
-    "babel-preset-env": "^1.2.2",
-    "babel-preset-es2015": "^6.24.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.3",
-    "webpack": "^2.3.3"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^2.1.0",
+    "eslint": "^5.12.0",
+    "eslint-plugin-import": "^2.14.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.2",
+    "raw-loader": "^1.0.0",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "quill": "^v2.0.0-dev.3",
-    "parchment": "^v2.0.0-dev.0",
-    "raw-loader": "^0.5.1"
+    "extend": "^3.0.2",
+    "quill": "^2.0.0-dev.3"
   }
 }

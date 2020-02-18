@@ -1,7 +1,7 @@
 import { BaseModule } from './BaseModule';
 
 export class DisplaySize extends BaseModule {
-    onCreate = () => {
+    onCreate() {
         // Create the container to hold the size display
         this.display = document.createElement('div');
 
@@ -10,12 +10,10 @@ export class DisplaySize extends BaseModule {
 
         // Attach it
         this.overlay.appendChild(this.display);
-    };
+    }
 
-    onDestroy = () => {};
-
-    onUpdate = () => {
-        if (!this.display || !this.img) {
+    onUpdate() {
+        if (!this.display || !this.activeEle) {
             return;
         }
 
@@ -26,34 +24,31 @@ export class DisplaySize extends BaseModule {
             Object.assign(this.display.style, {
                 right: '4px',
                 bottom: '4px',
-                left: 'auto',
+                left: 'auto'
             });
-        }
-        else if (this.img.style.float == 'right') {
-			// position off bottom left
+        } else if (this.activeEle.style.float == 'right') {
+            // position off bottom left
             const dispRect = this.display.getBoundingClientRect();
             Object.assign(this.display.style, {
                 right: 'auto',
                 bottom: `-${dispRect.height + 4}px`,
-                left: `-${dispRect.width + 4}px`,
+                left: `-${dispRect.width + 4}px`
             });
-        }
-        else {
+        } else {
             // position off bottom right
             const dispRect = this.display.getBoundingClientRect();
             Object.assign(this.display.style, {
                 right: `-${dispRect.width + 4}px`,
                 bottom: `-${dispRect.height + 4}px`,
-                left: 'auto',
+                left: 'auto'
             });
         }
-    };
+    }
 
-    getCurrentSize = () => {
-      const imgTag = this.img.querySelector('img')
-      return [
-              imgTag.width,
-              Math.round((imgTag.width / imgTag.naturalWidth) * imgTag.naturalHeight),
-      ];
+    getCurrentSize() {
+        return [
+            this.activeEle.offsetWidth,
+            this.activeEle.offsetHeight
+        ];
     }
 }
