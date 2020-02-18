@@ -15,7 +15,7 @@ import { BaseModule } from './BaseModule';
 const ClassAttributor = Parchment.ClassAttributor
     ? Parchment.ClassAttributor
     : Parchment.Attributor.Class;
-const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-embedstyle', {
+const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
     scope: Parchment.Scope.INLINE
 });
 

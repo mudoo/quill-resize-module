@@ -6,6 +6,13 @@ export default {
             limit: {
                 minWidth: 100
             }
+        },
+        'embed-placeholder': {
+            attribute: ['width', 'height'],
+            limit: {
+                minWidth: 200,
+                ratio: .5625
+            }
         }
     },
     overlayStyles: {

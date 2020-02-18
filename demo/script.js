@@ -1,12 +1,16 @@
 import 'quill/dist/quill.snow.css';
+import '../src/assets/resize.css';
 
 import _Quill from 'quill';
 const Quill = window.Quill || _Quill;
 
 import Resize from '../src/index';
-Quill.register('modules/resize', Resize);
+import PlaceholderRegister from '../src/formats/placeholder'
 
-const editorDemo = new Quill('#editor', {
+Quill.register('modules/resize', Resize);
+PlaceholderRegister();
+
+const demoEditor = new Quill('#editor', {
     theme: 'snow',
     modules: {
         toolbar: [
@@ -26,3 +30,8 @@ const editorDemo = new Quill('#editor', {
         resize: {}
     }
 });
+
+document.querySelector('.btn-save').addEventListener('click', function (e) {
+    const result = demoEditor.getText();
+    document.querySelector('#result').value = result
+})

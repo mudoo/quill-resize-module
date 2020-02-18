@@ -1,10 +1,14 @@
+import _Quill from 'quill';
 import extend from 'extend';
 import DefaultOptions from './DefaultOptions';
 import { DisplaySize } from './modules/DisplaySize';
 import { Toolbar } from './modules/Toolbar';
 import { Resize } from './modules/Resize';
 
-import './assets/resize.css';
+import { ImageFormat } from './formats/image'
+
+const Quill = window.Quill || _Quill;
+Quill.register(ImageFormat, true);
 
 const knownModules = { DisplaySize, Toolbar, Resize };
 
