@@ -35,6 +35,7 @@
     content: "<" attr(data-type) ">";
     font-size: 1.5em;
     margin-bottom: .5em;
+    text-transform: uppercase;
 }
 .ql-embed-placeholder::after {
     content: attr(data-src);

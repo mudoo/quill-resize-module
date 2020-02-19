@@ -5,7 +5,7 @@ const Quill = window.Quill || _Quill;
 const ATTRIBUTES = ['alt', 'height', 'width', 'style', 'data-size'];
 
 var BaseImageFormat = Quill.import('formats/image');
-class ImageFormat extends BaseImageFormat {
+class Image extends BaseImageFormat {
     static formats(domNode) {
         return ATTRIBUTES.reduce(function(formats, attribute) {
             if (domNode.hasAttribute(attribute)) {
@@ -27,4 +27,4 @@ class ImageFormat extends BaseImageFormat {
     }
 }
 
-export { ImageFormat, ATTRIBUTES }
+export { Image, ATTRIBUTES }

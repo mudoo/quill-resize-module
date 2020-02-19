@@ -85,9 +85,12 @@ TagPlaceholder.tagName = ['video', 'iframe']
 class ClassNamePlaceholder extends EmbedPlaceholder { }
 ClassNamePlaceholder.className = 'ql-embed-placeholder'
 
-export default function register () {
-    Quill.register(TagPlaceholder, true)
-    Quill.register(ClassNamePlaceholder, true)
+export default function register (formats = [TagPlaceholder]) {
+    if (!Array.isArray(formats)) formats = [formats]
+    formats.push(ClassNamePlaceholder)
+    formats.forEach(fmt => {
+        Quill.register(fmt, true)
+    })
 }
 
 export { EmbedPlaceholder, TagPlaceholder, ClassNamePlaceholder }
