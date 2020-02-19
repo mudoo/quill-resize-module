@@ -92,7 +92,7 @@ export default class QuillResize {
         const index = this.blot.offset(this.quill.scroll);
         this.hide();
         this.quill.focus();
-        this.quill.setSelection(index - 1, 1);
+        this.quill.setSelection(index, 1);
     }
 
     handleClick(evt) {
@@ -163,7 +163,7 @@ export default class QuillResize {
         // Create and add the overlay
         this.overlay = document.createElement('div');
         // this.overlay.setAttribute('title', "Double-click to select image");
-        Object.assign(this.overlay.style, this.options.overlayStyles);
+        Object.assign(this.overlay.style, this.options.styles.overlay);
         this.overlay.addEventListener(
             'dblclick',
             this.handleEdit.bind(this),
