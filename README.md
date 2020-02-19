@@ -7,7 +7,7 @@ This module is original forked from <https://github.com/whatcould/quill-image-re
 
 ## Demo
 
-<https://run.plnkr.co/preview/ck6t0c44800073b62ffyp95v5/>
+<https://run.plnkr.co/plunks/9YXbATSKGHY0JvPv/>
 
 ## Usage
 
