@@ -4,7 +4,7 @@ const Quill = window.Quill || _Quill;
 const Container = Quill.import('blots/container');
 const Scroll = Quill.import('blots/scroll');
 
-const ATTRIBUTES = ['data-embed-source', 'data-size', 'style'];
+const ATTRIBUTES = ['data-embed-source', 'data-type', 'data-src', 'data-size', 'style'];
 const Embed = Quill.import('blots/block/embed');
 
 class EmbedPlaceholder extends Embed {
@@ -12,10 +12,16 @@ class EmbedPlaceholder extends Embed {
         let node = super.create();
         if (typeof value === 'string') {
             node.setAttribute(ATTRIBUTES[0], value);
+        } else {
+            for (const key in value) {
+                if (!Object.prototype.hasOwnProperty.call(value, key)) continue
+                node.setAttribute(key, value[key])
+            }
         }
+
         node.setAttribute('contenteditable', false);
-        node.setAttribute('unselectable', 'on');
-        node.setAttribute('title', node.textContent);
+        // node.setAttribute('unselectable', 'on');
+        // node.setAttribute('title', node.textContent);
         return node;
     }
 
@@ -29,15 +35,33 @@ class EmbedPlaceholder extends Embed {
     }
 
     static value(domNode) {
-        if (domNode.hasAttribute(ATTRIBUTES[0])) {
-            return domNode.getAttribute(ATTRIBUTES[0]);
-        } else {
-            return encodeURIComponent(domNode.outerHTML);
-        }
+        const attrs = ATTRIBUTES.slice(0, 3)
+        const value = {}
+        attrs.forEach(attr => {
+            let res = ''
+            if (domNode.hasAttribute(attr)) {
+                res = domNode.getAttribute(attr);
+            } else {
+                switch (attr) {
+                    case ATTRIBUTES[0]:
+                        res = encodeURIComponent(domNode.outerHTML)
+                        break
+                    case ATTRIBUTES[1]:
+                        res = domNode.tagName
+                        break
+                    case ATTRIBUTES[2]:
+                        res = domNode.getAttribute('src')
+                        break
+                }
+            }
+
+            value[attr] = res
+        })
+
+        return value
     }
 
     format(name, value) {
-        debugger
         if (ATTRIBUTES.indexOf(name) > -1) {
             if (value) {
                 this.domNode.setAttribute(name, value);
@@ -66,4 +90,4 @@ export default function register () {
     Quill.register(ClassNamePlaceholder, true)
 }
 
-export { EmbedPlaceholder, TagPlaceholder, ClassNamePlaceholder, ATTRIBUTES }
+export { EmbedPlaceholder, TagPlaceholder, ClassNamePlaceholder }

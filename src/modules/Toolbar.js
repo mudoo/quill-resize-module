@@ -15,9 +15,7 @@ import { BaseModule } from './BaseModule';
 const ClassAttributor = Parchment.ClassAttributor
     ? Parchment.ClassAttributor
     : Parchment.Attributor.Class;
-const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
-    scope: Parchment.Scope.INLINE
-});
+const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style');
 
 export class Toolbar extends BaseModule {
     onCreate() {
