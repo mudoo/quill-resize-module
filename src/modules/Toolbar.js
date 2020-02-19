@@ -23,7 +23,7 @@ export class Toolbar extends BaseModule {
     onCreate() {
         // Setup Toolbar
         this.toolbar = document.createElement('div');
-        Object.assign(this.toolbar.style, this.options.toolbarStyles);
+        Object.assign(this.toolbar.style, this.options.styles.toolbar);
         this.overlay.appendChild(this.toolbar);
 
         // Setup Buttons
@@ -88,13 +88,13 @@ export class Toolbar extends BaseModule {
                 // image may change position; redraw drag handles
                 this.requestUpdate();
             });
-            Object.assign(button.style, this.options.toolbarButtonStyles);
+            Object.assign(button.style, this.options.styles.toolbarButton);
             if (idx > 0) {
                 button.style.borderLeftWidth = '0';
             }
             Object.assign(
                 button.children[0].style,
-                this.options.toolbarButtonSvgStyles
+                this.options.styles.toolbarButtonSvg
             );
             if (alignment.isApplied()) {
                 // select button if previously applied
@@ -106,7 +106,7 @@ export class Toolbar extends BaseModule {
         // Edit button
         const button = document.createElement('span');
         button.innerHTML = IconPencil;
-        Object.assign(button.style, this.options.toolbarButtonStyles);
+        Object.assign(button.style, this.options.styles.toolbarButton);
         button.style.borderLeftWidth = '0';
         button.addEventListener('click', () => {
             this.quill.emitter.emit('resize-edit', this.activeEle, this.blot);

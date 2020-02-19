@@ -6,7 +6,7 @@ export class DisplaySize extends BaseModule {
         this.display = document.createElement('div');
 
         // Apply styles
-        Object.assign(this.display.style, this.options.displayStyles);
+        Object.assign(this.display.style, this.options.styles.display);
 
         // Attach it
         this.overlay.appendChild(this.display);

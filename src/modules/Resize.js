@@ -20,9 +20,9 @@ export class Resize extends BaseModule {
     }
 
     positionBoxes() {
-        const handleXOffset = `${-parseFloat(this.options.handleStyles.width) /
+        const handleXOffset = `${-parseFloat(this.options.styles.handle.width) /
             2}px`;
-        const handleYOffset = `${-parseFloat(this.options.handleStyles.height) /
+        const handleYOffset = `${-parseFloat(this.options.styles.handle.height) /
             2}px`;
 
         // set the top and left for each drag handle
@@ -41,12 +41,12 @@ export class Resize extends BaseModule {
         const box = document.createElement('div');
 
         // Star with the specified styles
-        Object.assign(box.style, this.options.handleStyles);
+        Object.assign(box.style, this.options.styles.handle);
         box.style.cursor = cursor;
 
         // Set the width/height to use 'px'
-        box.style.width = `${this.options.handleStyles.width}px`;
-        box.style.height = `${this.options.handleStyles.height}px`;
+        box.style.width = `${this.options.styles.handle.width}px`;
+        box.style.height = `${this.options.styles.handle.height}px`;
 
         // listen for mousedown on each box
         box.addEventListener(
