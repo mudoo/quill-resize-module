@@ -6,10 +6,10 @@
   "module": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --open --mode development",
-    "release": "webpack --mode production",
+    "build": "webpack --mode production",
     "lint": "eslint --ext js,es6 src",
     "fixlint": "eslint --fix --ext js,es6 src",
-    "prepublishOnly": "npm run release"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,8 +23,7 @@
     "sizer"
   ],
   "files": [
-    "docs",
-    "lib",
+    "demo",
     "dist",
     "src"
   ],

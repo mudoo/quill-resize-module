@@ -1,10 +1,13 @@
 # Quill Resize Module
 
-A module for Quill rich text editor to allow images and custom element to be resized.
+A module for Quill rich text editor to allow images and custom elements to be resized.
+Limit resize minWidth/maxWidth/minHeight/maxHeight and width/height ratio support.
+
+This module is original forked from <https://github.com/whatcould/quill-image-resize-module>.
 
 ## Demo
 
-[JSFiddle](https://fiddle.jshell.net/7ahqcumr/show/)
+<https://run.plnkr.co/preview/ck6t0c44800073b62ffyp95v5/>
 
 ## Usage
 
@@ -26,6 +29,57 @@ const quill = new Quill(editor, {
 });
 ```
 
+**use placeholder for iframe/video**
+
+```javascript
+import Quill from 'quill';
+import QuillResize, { PlaceholderRegister } from 'quill-resize-module';
+
+Quill.register('modules/resize', QuillResize);
+// default to iframe/video tag
+PlaceholderRegister();
+
+const quill = new Quill(editor, {
+    // ...
+    modules: {
+        // ...
+        resize: {
+            // See optional "config" below
+        }
+    }
+});
+```
+
+**use placeholder for custom element**
+
+```javascript
+import Quill from 'quill';
+import QuillResize, { PlaceholderRegister, EmbedPlaceholder } from 'quill-resize-module';
+
+Quill.register('modules/resize', QuillResize);
+
+class TagPlaceholder extends EmbedPlaceholder { }
+// default to ['iframe', 'video']
+TagPlaceholder.tagName = ['iframe', 'video', 'embed']
+// Important!!! must be null or don't set it
+// TagPlaceholder.className = null
+
+class ClassPlaceholder extends EmbedPlaceholder { }
+ClassPlaceholder.className = '.ql-embed'
+
+PlaceholderRegister([TagPlaceholder, ClassPlaceholder])
+
+const quill = new Quill(editor, {
+    // ...
+    modules: {
+        // ...
+        resize: {
+            // See optional "config" below
+        }
+    }
+});
+```
+
 ### Script Tag
 
 Copy resize.js into your web root or include from node_modules
@@ -35,6 +89,20 @@ Copy resize.js into your web root or include from node_modules
 ```
 
 ```javascript
+var quill = new Quill(editor, {
+    // ...
+    modules: {
+        // ...
+        resize: {
+            // See optional "config" below
+        }
+    }
+});
+```
+**use placeholder for iframe/video**
+
+```javascript
+QuillResize.PlaceholderRegister()
 var quill = new Quill(editor, {
     // ...
     modules: {
@@ -102,11 +170,13 @@ var quill = new Quill(editor, {
                     }
                 }
             },
-            handleStyles: {
-                backgroundColor: 'black',
-                border: 'none',
-                color: white
-                // other camelCase styles for size display
+            styles: {
+                handle: {
+                    backgroundColor: 'black',
+                    border: 'none',
+                    color: white
+                    // other camelCase styles for size display
+                }
             }
         }
     }
@@ -126,11 +196,13 @@ var quill = new Quill(editor, {
         // ...
         resize: {
             // ...
-            displayStyles: {
-                backgroundColor: 'black',
-                border: 'none',
-                color: white
-                // other camelCase styles for size display
+            styles: {
+                display: {
+                    backgroundColor: 'black',
+                    border: 'none',
+                    color: white
+                    // other camelCase styles for size display
+                }
             }
         }
     }
@@ -149,19 +221,21 @@ var quill = new Quill(editor, {
     modules: {
         // ...
         resize: {
-            // ...
-            toolbarStyles: {
-                backgroundColor: 'black',
-                border: 'none',
-                color: white
-                // other camelCase styles for size display
-            },
-            toolbarButtonStyles: {
+            styles: {
                 // ...
-            },
-            toolbarButtonSvgStyles: {
-                // ...
-            },
+                toolbar: {
+                    backgroundColor: 'black',
+                    border: 'none',
+                    color: white
+                    // other camelCase styles for size display
+                },
+                toolbarButton: {
+                    // ...
+                },
+                toolbarButtonSvg: {
+                    // ...
+                },
+            }
         }
     }
 });

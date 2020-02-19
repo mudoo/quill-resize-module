@@ -19,6 +19,10 @@
     .editor-box .ql-editor img {
         cursor: default !important;
     }
+
+    .ql-embed-placeholder[data-type="ql-embed"] {
+        background-color: #fff;
+    }
     </style>
 </head>
 
@@ -31,6 +35,8 @@
         <p>Some initial <strong>bold</strong> text</p>
         <iframe src="https://vjs.zencdn.net/" frameborder="0"></iframe>
         <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto" poster="https://vjs.zencdn.net/v/oceans.png"></video>
+        <embed src="test://embed"></embed>
+        <span class="ql-embed" data-type="ql-embed" data-src="test://ql-embed">ddd</span>
         <div>test</div>
     </div>
     <button class="btn-save">Save</button>
