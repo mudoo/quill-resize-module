@@ -14,14 +14,31 @@ Quill.register('modules/resize', Resize)
 
 class TagPlaceholder extends EmbedPlaceholder {}
 // default to ['iframe', 'video']
-TagPlaceholder.tagName = ['iframe', 'video', 'embed']
+TagPlaceholder.tagName = ['iframe', 'embed']
 // important!!! must be null or don't set it
 // TagPlaceholder.className = null
+
+// replace default video blot
+class VideoPlaceholder extends EmbedPlaceholder {
+    static create(value) {
+        let video = value
+        if (typeof value === 'string') {
+            video = {
+                'data-embed-source': encodeURIComponent(`<video src="${value}" controls preload="auto"></video>`),
+                'data-type': 'video',
+                'data-src': value,
+            }
+        }
+        return super.create(video)
+    }
+}
+VideoPlaceholder.blotName = 'video'
+VideoPlaceholder.tagName = 'video'
 
 class ClassPlaceholder extends EmbedPlaceholder {}
 ClassPlaceholder.className = 'ql-embed'
 
-PlaceholderRegister([TagPlaceholder, ClassPlaceholder])
+PlaceholderRegister([TagPlaceholder, VideoPlaceholder, ClassPlaceholder])
 
 const demoEditor = new Quill('#editor', {
     theme: 'snow',

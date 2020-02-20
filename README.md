@@ -80,6 +80,8 @@ const quill = new Quill(editor, {
 });
 ```
 
+**if you went to replace default video blot, see <demo/script.js>**
+
 ### Script Tag
 
 Copy resize.js into your web root or include from node_modules
