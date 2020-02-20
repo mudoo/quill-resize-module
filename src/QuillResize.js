@@ -133,9 +133,11 @@ export default class QuillResize {
 
     show(ele) {
         if (!ele.getAttribute('data-size')) {
+            const width = ele.naturalWidth || ele.offsetWidth
+            const height = ele.naturalHeight || ele.offsetHeight
             ele.setAttribute(
                 'data-size',
-                ele.offsetWidth + ',' + ele.offsetHeight
+                width + ',' + height
             );
         }
 
@@ -253,6 +255,7 @@ export default class QuillResize {
         if (this.activeEle) {
             if (evt.keyCode == 46 || evt.keyCode == 8) {
                 this.quill.constructor.find(this.activeEle).deleteAt(0);
+                this.quill.focus()
             }
             this.hide();
         }
