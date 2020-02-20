@@ -33,6 +33,10 @@ class EmbedPlaceholder extends Embed {
     }
 
     static formats (domNode) {
+        if (domNode.__handling && domNode.__formats) {
+            return domNode.__formats
+        }
+
         const attrList = ATTRIBUTES.slice(3)
         return attrList.reduce(function (formats, attribute) {
             if (domNode.hasAttribute(attribute)) {
@@ -91,6 +95,11 @@ class EmbedPlaceholder extends Embed {
         } else {
             this.domNode.removeAttribute(name);
         }
+    }
+
+    handling(handling) {
+        this.domNode.__formats = this.constructor.formats(this.domNode)
+        this.domNode.__handling = handling
     }
 }
 EmbedPlaceholder.blotName = 'embed-placeholder'

@@ -5,7 +5,7 @@ export class BaseModule {
         this.blot = resizer.blot;
         this.options = resizer.options;
         this.requestUpdate = () => {
-            resizer.onUpdate();
+            resizer.onUpdate(true);
         };
         this.quill = resizer.quill;
     }

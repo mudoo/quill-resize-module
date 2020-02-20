@@ -61,6 +61,7 @@ export class Resize extends BaseModule {
     }
 
     handleMousedown(evt) {
+        this.blot.handling && this.blot.handling(true)
         // note which box
         this.dragBox = evt.target;
         // note starting mousedown position
@@ -86,6 +87,7 @@ export class Resize extends BaseModule {
     handleMouseup() {
         // reset cursor everywhere
         this.setCursor('');
+        this.blot.handling && this.blot.handling(false)
         // stop listening for movement and mouseup
         document.removeEventListener('mousemove', this.handleDragProxy);
         document.removeEventListener('mouseup', this.handleMouseupProxy);
@@ -163,7 +165,17 @@ export class Resize extends BaseModule {
     }
 
     getNaturalSize() {
-        const size = this.activeEle.getAttribute('data-size').split(',')
+        const ele = this.activeEle
+        let size = [0,0]
+        if (!ele.getAttribute('data-size')) {
+            size = [
+                ele.naturalWidth || ele.offsetWidth,
+                ele.naturalHeight || ele.offsetHeight
+            ]
+            ele.setAttribute('data-size', size[0] + ',' + size[1])
+        } else {
+            size = ele.getAttribute('data-size').split(',')
+        }
         return {
             width: parseInt(size[0]),
             height: parseInt(size[1])

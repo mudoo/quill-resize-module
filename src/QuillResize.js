@@ -41,6 +41,8 @@ export default class QuillResize {
             false
         );
 
+        this.quill.on('text-change', this.handleChange.bind(this))
+
         this.quill.emitter.on('resize-edit', this.handleEdit.bind(this));
 
         this.quill.root.parentNode.style.position =
@@ -66,7 +68,8 @@ export default class QuillResize {
         this.onUpdate();
     }
 
-    onUpdate() {
+    onUpdate(fromModule) {
+        this.updateFromModule = fromModule
         this.repositionElements();
         this.modules.forEach(module => {
             module.onUpdate();
@@ -131,18 +134,38 @@ export default class QuillResize {
         }
     }
 
-    show(ele) {
-        if (!ele.getAttribute('data-size')) {
-            const width = ele.naturalWidth || ele.offsetWidth
-            const height = ele.naturalHeight || ele.offsetHeight
-            ele.setAttribute(
-                'data-size',
-                width + ',' + height
-            );
+    handleChange (delta, oldDelta, source) {
+        if (this.updateFromModule) {
+            this.updateFromModule = false
+            return
         }
 
-        this.showOverlay();
+        if (source !== 'user' || !this.overlay || !this.activeEle) return
 
+        console.log('update', delta, source)
+
+        const detail = delta.ops.reduce(
+            (info, op) => {
+                info.index += op.retain || op.insert.length || 1
+                Object.assign(info.attrs, op.attributes)
+                return info
+            },
+            {
+                index: 0,
+                attrs: {}
+            }
+        )
+
+        if (detail.attrs.style === undefined) return
+        const [blot] = this.quill.getLeaf(detail.index)
+        if (blot !== this.blot) return
+
+        console.log(blot, detail)
+        this.onUpdate()
+    }
+
+    show() {
+        this.showOverlay();
         this.initializeModules();
     }
 
