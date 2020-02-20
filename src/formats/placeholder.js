@@ -11,6 +11,7 @@ const ATTRIBUTES = [
     'data-size',
     'style'
 ]
+const Parchment = Quill.import('parchment')
 const Embed = Quill.import('blots/block/embed')
 
 class EmbedPlaceholder extends Embed {
@@ -93,7 +94,8 @@ class EmbedPlaceholder extends Embed {
     }
 }
 EmbedPlaceholder.blotName = 'embed-placeholder'
-EmbedPlaceholder.tagName = 'div'
+EmbedPlaceholder.tagName = 'span'
+EmbedPlaceholder.scope = Parchment.Scope.INLINE_BLOT
 
 Container.allowedChildren.push(EmbedPlaceholder)
 Scroll.allowedChildren.push(EmbedPlaceholder)
@@ -156,6 +158,8 @@ export default function register (formats = [TagPlaceholder]) {
     formats.push(ClassNamePlaceholder)
     formats.forEach(fmt => {
         Quill.register(fmt, true)
+        fmt.tagName = EmbedPlaceholder.tagName
+        fmt.className = ClassNamePlaceholder.className
     })
 }
 
