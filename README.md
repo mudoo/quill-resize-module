@@ -37,6 +37,7 @@ import QuillResize, { PlaceholderRegister } from 'quill-resize-module';
 
 Quill.register('modules/resize', QuillResize);
 // default to iframe/video tag
+// if you went to replace default video blot, see 'demo/script.js'
 PlaceholderRegister();
 
 const quill = new Quill(editor, {
@@ -64,6 +65,8 @@ TagPlaceholder.tagName = ['iframe', 'video', 'embed']
 // Important!!! must be null or don't set it
 // TagPlaceholder.className = null
 
+// if you went to replace default video blot, see 'demo/script.js'
+
 class ClassPlaceholder extends EmbedPlaceholder { }
 ClassPlaceholder.className = '.ql-embed'
 
@@ -79,8 +82,6 @@ const quill = new Quill(editor, {
     }
 });
 ```
-
-**if you went to replace default video blot, see <demo/script.js>**
 
 ### Script Tag
 
@@ -104,6 +105,7 @@ var quill = new Quill(editor, {
 **use placeholder for iframe/video**
 
 ```javascript
+// if you went to replace default video blot, see 'demo/script.js'
 QuillResize.PlaceholderRegister()
 var quill = new Quill(editor, {
     // ...
