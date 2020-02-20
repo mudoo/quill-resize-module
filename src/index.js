@@ -1,7 +1,7 @@
 import _Quill from 'quill'
 import './assets/resize.css'
 
-import QuillResize from './QuillResize'
+import Resize from './QuillResize'
 import { Image } from './formats/image'
 import PlaceholderRegister from './formats/placeholder'
 
@@ -15,8 +15,9 @@ export {
     convertPlaceholderHTML
 } from './formats/placeholder'
 
-export default QuillResize
+export default Resize
 export {
+    Resize,
     Image,
     PlaceholderRegister
 }
