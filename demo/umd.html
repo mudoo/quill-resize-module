@@ -49,14 +49,19 @@
         <p>Click on the Image Below to resize</p>
         <p><img src="http://n.sinaimg.cn/sinacn10101/486/w2048h1638/20190518/9909-hwzkfpv0668515.jpg"></p>
         <p>Some initial <strong>bold</strong> text</p>
-        <iframe src="https://vjs.zencdn.net/" frameborder="0" style="background-color: transparent; width: 500px; height: 281px;"></iframe>
-        <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto" poster="https://vjs.zencdn.net/v/oceans.png"></video>
+        <div>
+            <iframe src="https://vjs.zencdn.net/" frameborder="0" style="background-color: transparent; width: 500px; height: 281px;"></iframe>
+            <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto" poster="https://vjs.zencdn.net/v/oceans.png"></video>
+        </div>
         <div>test</div>
     </div>
     <div class="buttons">
         <button class="btn btn-html">getHtml</button>
         <button class="btn btn-content">getContent</button>
         <button class="btn btn-text">getText</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-undo">undo</button>
+        <button class="btn btn-redo">redo</button>
     </div>
     <textarea id="result" rows="10"></textarea>
 </div>
@@ -84,6 +89,13 @@
     document.querySelector('.btn-text').addEventListener('click', function () {
         $result.value = demoEditor.getText()
     })
+    document.querySelector('.btn-undo').addEventListener('click', function () {
+        demoEditor.history.undo()
+    })
+    document.querySelector('.btn-redo').addEventListener('click', function () {
+        demoEditor.history.redo()
+    })
+
 </script>
 </body>
 

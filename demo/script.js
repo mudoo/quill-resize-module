@@ -64,7 +64,6 @@ const demoEditor = new Quill('#editor', {
 const $result = document.querySelector('#result')
 document.querySelector('.btn-html').addEventListener('click', function () {
     const html = convertPlaceholderHTML(demoEditor.root.innerHTML)
-    debugger
     $result.value = html
 })
 document.querySelector('.btn-content').addEventListener('click', function () {
@@ -73,4 +72,10 @@ document.querySelector('.btn-content').addEventListener('click', function () {
 })
 document.querySelector('.btn-text').addEventListener('click', function () {
     $result.value = demoEditor.getText()
+})
+document.querySelector('.btn-undo').addEventListener('click', function () {
+    demoEditor.history.undo()
+})
+document.querySelector('.btn-redo').addEventListener('click', function () {
+    demoEditor.history.redo()
 })
