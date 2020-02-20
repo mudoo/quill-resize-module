@@ -15,7 +15,7 @@
 }
 
 .ql-embed-placeholder {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
