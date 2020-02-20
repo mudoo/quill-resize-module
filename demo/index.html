@@ -4,25 +4,39 @@
     <meta charset="utf-8">
     <title>Quill Resize Module Demo</title>
     <style>
-    .editor-box {
-        width: 800px;
-        height: 500px;
-        padding-top: 42px;
-        margin: 0 auto;
-    }
-    .editor-box .ql-toolbar {
-        margin-top: -42px;
-    }
-    .editor-box .ql-container {
-        overflow: hidden;
-    }
-    .editor-box .ql-editor img {
-        cursor: default !important;
-    }
+        body {
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .editor-box {
+            height: 500px;
+            padding-top: 42px;
+            margin: 0 auto;
+        }
+        .editor-box .ql-toolbar {
+            margin-top: -42px;
+        }
+        .editor-box .ql-container {
+            overflow: hidden;
+        }
+        .editor-box .ql-editor img {
+            cursor: default !important;
+        }
 
-    .ql-embed-placeholder[data-type="ql-embed"] {
-        background-color: #fff;
-    }
+        .ql-embed-placeholder[data-type="ql-embed"] {
+            background-color: #fff;
+        }
+
+        .buttons {
+            margin: 1em 0 2em;
+        }
+        .btn {
+            padding: 3px .5em;
+        }
+
+        #result {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -36,11 +50,15 @@
         <iframe src="https://vjs.zencdn.net/" frameborder="0"></iframe>
         <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto" poster="https://vjs.zencdn.net/v/oceans.png"></video>
         <embed src="test://embed"></embed>
-        <span class="ql-embed" data-type="ql-embed" data-src="test://ql-embed">ddd</span>
+        <span class="ql-embed" data-type="ql-embed" data-src="test://ql-embed" style="background-color: beige;">ddd</span>
         <div>test</div>
     </div>
-    <button class="btn-save">Save</button>
-    <textarea id="result" cols="30" rows="10"></textarea>
+    <div class="buttons">
+        <button class="btn btn-html">getHtml</button>
+        <button class="btn btn-content">getContent</button>
+        <button class="btn btn-text">getText</button>
+    </div>
+    <textarea id="result" rows="10"></textarea>
 </div>
 </body>
 

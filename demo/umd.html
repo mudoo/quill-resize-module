@@ -6,21 +6,39 @@
     <link href="http://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link href="../dist/resize.css" rel="stylesheet">
     <style>
-    .editor-box {
-        width: 800px;
-        height: 500px;
-        padding-top: 42px;
-        margin: 0 auto;
-    }
-    .editor-box .ql-toolbar {
-        margin-top: -42px;
-    }
-    .editor-box .ql-container {
-        overflow: hidden;
-    }
-    .editor-box .ql-editor img {
-        cursor: default !important;
-    }
+        body {
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .editor-box {
+            height: 500px;
+            padding-top: 42px;
+            margin: 0 auto;
+        }
+        .editor-box .ql-toolbar {
+            margin-top: -42px;
+        }
+        .editor-box .ql-container {
+            overflow: hidden;
+        }
+        .editor-box .ql-editor img {
+            cursor: default !important;
+        }
+
+        .ql-embed-placeholder[data-type="ql-embed"] {
+            background-color: #fff;
+        }
+
+        .buttons {
+            margin: 1em 0 2em;
+        }
+        .btn {
+            padding: 3px .5em;
+        }
+
+        #result {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -31,21 +49,41 @@
         <p>Click on the Image Below to resize</p>
         <p><img src="http://n.sinaimg.cn/sinacn10101/486/w2048h1638/20190518/9909-hwzkfpv0668515.jpg"></p>
         <p>Some initial <strong>bold</strong> text</p>
-        <iframe src="https://vjs.zencdn.net/" frameborder="0"></iframe>
+        <iframe src="https://vjs.zencdn.net/" frameborder="0" style="background-color: transparent; width: 500px; height: 281px;"></iframe>
         <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto" poster="https://vjs.zencdn.net/v/oceans.png"></video>
         <div>test</div>
     </div>
+    <div class="buttons">
+        <button class="btn btn-html">getHtml</button>
+        <button class="btn btn-content">getContent</button>
+        <button class="btn btn-text">getText</button>
+    </div>
+    <textarea id="result" rows="10"></textarea>
 </div>
 <script src="http://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script src="../dist/resize.js"></script>
 <script>
     QuillResize.PlaceholderRegister()
-    new Quill('#editor', {
+    var demoEditor = new Quill('#editor', {
         theme: 'snow',
         modules: {
             resize: {}
         }
     });
+
+    var $result = document.querySelector('#result')
+    document.querySelector('.btn-html').addEventListener('click', function () {
+        // call convertPlaceholderHTML to replace source element style
+        var html = QuillResize.convertPlaceholderHTML(demoEditor.root.innerHTML)
+        $result.value = html
+    })
+    document.querySelector('.btn-content').addEventListener('click', function () {
+        var result = demoEditor.getContents()
+        $result.value = JSON.stringify(result)
+    })
+    document.querySelector('.btn-text').addEventListener('click', function () {
+        $result.value = demoEditor.getText()
+    })
 </script>
 </body>
 
