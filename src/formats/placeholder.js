@@ -1,17 +1,23 @@
-import _Quill from 'quill';
-const Quill = window.Quill || _Quill;
+import _Quill from 'quill'
+const Quill = window.Quill || _Quill
 
-const Container = Quill.import('blots/container');
-const Scroll = Quill.import('blots/scroll');
+const Container = Quill.import('blots/container')
+const Scroll = Quill.import('blots/scroll')
 
-const ATTRIBUTES = ['data-embed-source', 'data-type', 'data-src', 'data-size', 'style'];
-const Embed = Quill.import('blots/block/embed');
+const ATTRIBUTES = [
+    'data-embed-source',
+    'data-type',
+    'data-src',
+    'data-size',
+    'style'
+]
+const Embed = Quill.import('blots/block/embed')
 
 class EmbedPlaceholder extends Embed {
-    static create(value) {
-        let node = super.create();
+    static create (value) {
+        let node = super.create()
         if (typeof value === 'string') {
-            node.setAttribute(ATTRIBUTES[0], value);
+            node.setAttribute(ATTRIBUTES[0], value)
         } else {
             for (const key in value) {
                 if (!Object.prototype.hasOwnProperty.call(value, key)) continue
@@ -19,28 +25,31 @@ class EmbedPlaceholder extends Embed {
             }
         }
 
-        node.setAttribute('contenteditable', false);
-        // node.setAttribute('unselectable', 'on');
+        node.setAttribute('contenteditable', false)
+        node.setAttribute('unselectable', 'on')
         // node.setAttribute('title', node.textContent);
-        return node;
+        return node
     }
 
-    static formats(domNode) {
-        return ATTRIBUTES.reduce(function(formats, attribute) {
+    static formats (domNode) {
+        const attrList = ATTRIBUTES.slice(3)
+        return attrList.reduce(function (formats, attribute) {
             if (domNode.hasAttribute(attribute)) {
-                formats[attribute] = domNode.getAttribute(attribute);
+                formats[attribute] = domNode.getAttribute(attribute)
             }
-            return formats;
-        }, {});
+            return formats
+        }, {})
     }
 
-    static value(domNode) {
+    static value (domNode) {
         const attrs = ATTRIBUTES.slice(0, 3)
-        const value = {}
+
+        const result = {}
+
         attrs.forEach(attr => {
             let res = ''
             if (domNode.hasAttribute(attr)) {
-                res = domNode.getAttribute(attr);
+                res = domNode.getAttribute(attr)
             } else {
                 switch (attr) {
                     case ATTRIBUTES[0]:
@@ -52,38 +61,95 @@ class EmbedPlaceholder extends Embed {
                     case ATTRIBUTES[2]:
                         res = domNode.getAttribute('src')
                         break
+                    case 'style':
+                        res = domNode.style.cssText
+                        break
+                    default:
+                        res = domNode[attr] || ''
                 }
             }
 
-            value[attr] = res
+            if (res) result[attr] = res
         })
 
-        return value
+        return result
     }
 
     format(name, value) {
-        if (ATTRIBUTES.indexOf(name) > -1) {
-            if (value) {
-                this.domNode.setAttribute(name, value);
-            } else {
-                this.domNode.removeAttribute(name);
-            }
-        } else {
+        if (name === 'style') {
+            this.domNode.style.cssText = value
+            return
+        }
+        if (ATTRIBUTES.indexOf(name) === -1) {
             super.format(name, value);
+            return
+        }
+
+        if (value) {
+            this.domNode.setAttribute(name, value);
+        } else {
+            this.domNode.removeAttribute(name);
         }
     }
 }
-EmbedPlaceholder.blotName = 'embed-placeholder';
-EmbedPlaceholder.tagName = 'div';
+EmbedPlaceholder.blotName = 'embed-placeholder'
+EmbedPlaceholder.tagName = 'div'
 
-Container.allowedChildren.push(EmbedPlaceholder);
-Scroll.allowedChildren.push(EmbedPlaceholder);
+Container.allowedChildren.push(EmbedPlaceholder)
+Scroll.allowedChildren.push(EmbedPlaceholder)
 
-class TagPlaceholder extends EmbedPlaceholder { }
+class TagPlaceholder extends EmbedPlaceholder {}
 TagPlaceholder.tagName = ['video', 'iframe']
 
-class ClassNamePlaceholder extends EmbedPlaceholder { }
+class ClassNamePlaceholder extends EmbedPlaceholder {}
 ClassNamePlaceholder.className = 'ql-embed-placeholder'
+
+const tagReg = /<([\w-]+)((?:\s+[\w-:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*>([^<]*?)<\/\1>/g
+const attrReg = /([\w-:.]+)(?:\s*=\s*(?:"((?:\\.|[^"])*)"|'((?:\\.|[^'])*)'))?/g
+function convertPlaceholderHTML (html = '') {
+    if (!html) return ''
+
+    const matchReg = new RegExp(`class\\s*=\\s*(?:"[^"]*\\b(${ClassNamePlaceholder.className})\\b[^"]*"|'[^']*\\b(${ClassNamePlaceholder.className})\\b[^']*')`)
+    return html.replace(tagReg, (m, tag, attrs = '') => {
+        if (!tag || tag.toLowerCase() !== EmbedPlaceholder.tagName || !matchReg.test(attrs)) return m
+
+        const attributes = getAttributes(attrs)
+        const source = decodeURIComponent(attributes[ATTRIBUTES[0]])
+        // if (!attributes.style) return source
+
+        return replaceHTMLAttr(source, {
+            style: attributes.style,
+            'data-size': attributes['data-size']
+        })
+    })
+}
+
+function getAttributes(str) {
+    const attributes = {}
+    str.replace(attrReg, (m, name, attr1, attr2) => {
+        let attr = (attr1 || attr2 || '').trim()
+        attributes[name] = attr
+    })
+
+    return attributes
+}
+
+const sourceTagReg = /<([\w-]+)((?:\s+[\w-:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*>/
+function replaceHTMLAttr(html = '', attrs = {}) {
+    return html.replace(sourceTagReg, (m, tag, attr = '') => {
+        const attributes = getAttributes(attr)
+        Object.assign(attributes, attrs)
+
+        const attrsStr = Object.keys(attributes).reduce((str, key) => {
+            const val = attributes[key]
+            if (val == null) return str
+            str += val === "" ? ` ${key}` : ` ${key}="${val}"`
+            return str
+        }, '')
+
+        return `<${tag}${attrsStr}>`
+    })
+}
 
 export default function register (formats = [TagPlaceholder]) {
     if (!Array.isArray(formats)) formats = [formats]
@@ -93,4 +159,9 @@ export default function register (formats = [TagPlaceholder]) {
     })
 }
 
-export { EmbedPlaceholder, TagPlaceholder, ClassNamePlaceholder }
+export {
+    EmbedPlaceholder,
+    TagPlaceholder,
+    ClassNamePlaceholder,
+    convertPlaceholderHTML
+}
