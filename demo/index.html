@@ -1,72 +1,80 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Quill Resize Module Demo</title>
-    <style>
-        body {
-            width: 1000px;
-            margin: 0 auto;
-        }
-        .editor-box {
-            height: 500px;
-            padding-top: 42px;
-            margin: 0 auto;
-        }
-        .editor-box .ql-toolbar {
-            margin-top: -42px;
-        }
-        .editor-box .ql-container {
-            overflow: hidden;
-        }
-        .editor-box .ql-editor img {
-            cursor: default !important;
-        }
+  <meta charset="utf-8">
+  <title>Quill Resize Module Demo</title>
+  <style>
+    body {
+      width: 1000px;
+      margin: 0 auto;
+    }
 
-        .ql-embed-placeholder[data-type="ql-embed"] {
-            background-color: #fff;
-        }
+    .editor-box {
+      height: 500px;
+      padding-top: 42px;
+      margin: 0 auto;
+    }
 
-        .buttons {
-            margin: 1em 0 2em;
-        }
-        .btn {
-            padding: 3px .5em;
-        }
+    .editor-box .ql-toolbar {
+      margin-top: -42px;
+    }
 
-        #result {
-            width: 100%;
-        }
-    </style>
+    .editor-box .ql-container {
+      overflow: hidden;
+    }
+
+    .editor-box .ql-editor img {
+      cursor: default !important;
+    }
+
+    .ql-embed-placeholder[data-type="ql-embed"] {
+      background-color: #fff;
+    }
+
+    .buttons {
+      margin: 1em 0 2em;
+    }
+
+    .btn {
+      padding: 3px .5em;
+    }
+
+    #result {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-<h1>Quill Resize Module Demo</h1>
-<div class="editor-box">
+  <h1>Quill Resize Module Demo</h1>
+  <div class="editor-box">
     <div id="editor">
-        <p>Click on the Image Below to resize</p>
-        <p><img src="http://n.sinaimg.cn/sinacn10101/486/w2048h1638/20190518/9909-hwzkfpv0668515.jpg"></p>
-        <p>Some initial <strong>bold</strong> text</p>
-        <div>
-            <iframe src="https://vjs.zencdn.net/" frameborder="0"></iframe>
-        </div>
-        <div>
-            <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto" poster="https://vjs.zencdn.net/v/oceans.png"></video>
-            <embed src="test://embed"></embed>
-            <span class="ql-embed" data-type="ql-embed" data-src="test://ql-embed" style="background-color: beige;">ddd</span>
-        </div>
-        <p>test</p>
+      <p>Click on the Image Below to resize</p>
+      <p><img src="http://n.sinaimg.cn/sinacn10101/486/w2048h1638/20190518/9909-hwzkfpv0668515.jpg"></p>
+      <p>Some initial <strong>bold</strong> text</p>
+      <div>
+        <iframe src="https://vjs.zencdn.net/" frameborder="0"></iframe>
+      </div>
+      <div>
+        <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto"
+          poster="https://vjs.zencdn.net/v/oceans.png"></video>
+        <embed src="test://embed"></embed>
+        <span class="ql-embed" data-type="ql-embed" data-src="test://ql-embed"
+          style="background-color: beige;">ddd</span>
+      </div>
+      <p>test</p>
     </div>
     <div class="buttons">
-        <button class="btn btn-html">getHtml</button>
-        <button class="btn btn-content">getContent</button>
-        <button class="btn btn-text">getText</button>
-        &nbsp;&nbsp;
-        <button class="btn btn-undo">undo</button>
-        <button class="btn btn-redo">redo</button>
+      <button class="btn btn-html">getHtml</button>
+      <button class="btn btn-content">getContent</button>
+      <button class="btn btn-text">getText</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-undo">undo</button>
+      <button class="btn btn-redo">redo</button>
     </div>
     <textarea id="result" rows="10"></textarea>
-</div>
+  </div>
 </body>
 
 </html>
