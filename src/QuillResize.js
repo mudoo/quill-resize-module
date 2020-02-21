@@ -142,8 +142,6 @@ export default class QuillResize {
 
         if (source !== 'user' || !this.overlay || !this.activeEle) return
 
-        console.log('update', delta, source)
-
         const detail = delta.ops.reduce(
             (info, op) => {
                 info.index += op.retain || op.insert.length || 1
@@ -160,7 +158,6 @@ export default class QuillResize {
         const [blot] = this.quill.getLeaf(detail.index)
         if (blot !== this.blot) return
 
-        console.log(blot, detail)
         this.onUpdate()
     }
 
