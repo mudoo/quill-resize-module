@@ -1,6 +1,6 @@
 # Quill Resize Module
 
-A module for Quill rich text editor to allow images and custom elements to be resized.
+A module for Quill rich text editor to allow images/iframe/video and custom elements to be resized.
 Limit resize minWidth/maxWidth/minHeight/maxHeight and width/height ratio support.
 
 This module is original forked from <https://github.com/whatcould/quill-image-resize-module>.
