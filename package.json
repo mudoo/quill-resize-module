@@ -6,6 +6,7 @@
   "module": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --open --mode development",
+    "start:public": "webpack-dev-server --hot --host 0.0.0.0 --mode development",
     "build": "webpack --mode production",
     "lint": "eslint --ext js,es6 src",
     "fixlint": "eslint --fix --ext js,es6 src",
