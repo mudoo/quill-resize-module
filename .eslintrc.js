@@ -12,6 +12,9 @@ module.exports = {
   env: {
     browser: true
   },
+  plugins: [
+    'html'
+  ],
   // add your custom rules here
   rules: {
     "no-console": "warn",
