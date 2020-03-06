@@ -49,7 +49,8 @@ export default {
       border: '1px solid #777',
       boxSizing: 'border-box',
       opacity: '0.80',
-      cursor: 'default'
+      cursor: 'default',
+      lineHeight: '1'
     },
     toolbar: {
       position: 'absolute',
