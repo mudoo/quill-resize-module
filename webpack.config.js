@@ -1,6 +1,16 @@
 const path = require('path')
+const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PKG = require('./package.json')
+
+const bannerPack = new webpack.BannerPlugin({
+  banner: [
+    `Quill Resize Module v${PKG.version}`,
+    'https://github.com/mudoo/quill-resize-module'
+  ].join('\n'),
+  entryOnly: true
+})
 
 module.exports = (env, argv) => {
   const PROD = argv.mode === 'production'
@@ -37,7 +47,10 @@ module.exports = (env, argv) => {
         }
       ]
     },
-    plugins: [new ExtractTextPlugin('dist/resize.css')]
+    plugins: [
+      bannerPack,
+      new ExtractTextPlugin('dist/resize.css')
+    ]
   }
 
   if (!PROD) {
