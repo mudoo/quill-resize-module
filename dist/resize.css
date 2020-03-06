@@ -41,3 +41,16 @@
     content: attr(data-src);
     color: #666;
 }
+
+.ql-embed-placeholder.active {
+  border-color: #abc9e9;
+  background-color: #d2e5f9;
+}
+.ql-embed-placeholder.selected {
+  color: #fff;
+  border-color: #4185d2;
+  background-color: #5f9de2;
+}
+.ql-embed-placeholder.selected::after {
+  color: #fff;
+}
