@@ -1,10 +1,11 @@
 import extend from 'extend'
 import DefaultOptions from './DefaultOptions'
-import { DisplaySize } from './modules/DisplaySize'
-import { Toolbar } from './modules/Toolbar'
-import { Resize } from './modules/Resize'
+import DisplaySize from './modules/DisplaySize'
+import Toolbar from './modules/Toolbar'
+import Resize from './modules/Resize'
+import Keyboard from './modules/Keyboard'
 
-const knownModules = { DisplaySize, Toolbar, Resize }
+const knownModules = { DisplaySize, Toolbar, Resize, Keyboard }
 
 /**
  * Custom module for quilljs to allow user to resize elements
@@ -13,6 +14,7 @@ const knownModules = { DisplaySize, Toolbar, Resize }
  */
 export default class QuillResize {
   constructor (quill, options = {}) {
+    quill.resizer = this
     // save the quill reference and options
     this.quill = quill
 
@@ -36,12 +38,10 @@ export default class QuillResize {
 
     // respond to clicks inside the editor
     this.quill.root.addEventListener(
-      'click',
+      'mousedown',
       this.handleClick.bind(this),
       false
     )
-
-    this.quill.on('text-change', this.handleChange.bind(this))
 
     this.quill.emitter.on('resize-edit', this.handleEdit.bind(this))
 
@@ -52,6 +52,11 @@ export default class QuillResize {
     this.moduleClasses = this.options.modules
 
     this.modules = []
+
+    // inject keyboard event
+    if (this.options.keyboardSelect) {
+      Keyboard.injectInit(this.quill)
+    }
   }
 
   initializeModules () {
@@ -100,26 +105,36 @@ export default class QuillResize {
     if (target && target.tagName) {
       blot = this.quill.constructor.find(target)
       if (blot) {
-        const options = this.options.parchment[blot.statics.blotName]
-        if (options) {
-          const limit = options.limit || {}
-          if (
-            !limit.minWidth ||
-            (limit.minWidth && target.offsetWidth >= limit.minWidth)
-          ) {
-            show = true
-          }
-        }
+        show = this.judgeShow(blot, target)
       }
     }
     if (show) {
-      if (target.closest('a')) {
-        evt.preventDefault()
-      }
-      if (this.activeEle === target) {
-        // we are already focused on this image
-        return
-      }
+      evt.preventDefault()
+      // evt.stopPropagation()
+      return
+    }
+    if (this.activeEle) {
+      // clicked on a non image
+      this.hide()
+    }
+  }
+
+  judgeShow (blot, target) {
+    let res = false
+    if (!blot) return res
+
+    if (!target && blot.domNode) target = blot.domNode
+    const options = this.options.parchment[blot.statics.blotName]
+    if (!options) return res
+    if (this.activeEle === target) return true
+
+    const limit = options.limit || {}
+    if (
+      !limit.minWidth ||
+      (limit.minWidth && target.offsetWidth >= limit.minWidth)
+    ) {
+      res = true
+
       if (this.activeEle) {
         // we were just focused on another image
         this.hide()
@@ -129,10 +144,9 @@ export default class QuillResize {
       this.blot = blot
       // clicked on an image inside the editor
       this.show(target)
-    } else if (this.activeEle) {
-      // clicked on a non image
-      this.hide()
     }
+
+    return res
   }
 
   handleChange (delta, oldDelta, source) {
@@ -185,10 +199,12 @@ export default class QuillResize {
 
     this.quill.root.parentNode.appendChild(this.overlay)
 
-    this.checkImageProxy = evt => this.checkImage(evt)
+    this.hideProxy = evt => {
+      if (!this.activeEle) return
+      this.hide()
+    }
     // listen for the image being deleted or moved
-    document.addEventListener('keyup', this.checkImageProxy, true)
-    this.quill.root.addEventListener('input', this.checkImageProxy, true)
+    this.quill.root.addEventListener('input', this.hideProxy, true)
 
     this.updateOverlayPositionProxy = this.updateOverlayPosition.bind(this)
     this.quill.root.addEventListener('scroll', this.updateOverlayPositionProxy)
@@ -206,12 +222,9 @@ export default class QuillResize {
     this.overlay = undefined
 
     // stop listening for image deletion or movement
-    document.removeEventListener('keyup', this.checkImageProxy)
-    this.quill.root.removeEventListener('input', this.checkImageProxy)
-    this.quill.root.removeEventListener(
-      'scroll',
-      this.updateOverlayPositionProxy
-    )
+    document.removeEventListener('keydown', this.keyboardProxy, true)
+    this.quill.root.removeEventListener('input', this.hideProxy, true)
+    this.quill.root.removeEventListener('scroll', this.updateOverlayPositionProxy)
 
     // reset user-select
     this.setUserSelect('')
@@ -258,16 +271,6 @@ export default class QuillResize {
       this.quill.root.style[prop] = value
       document.documentElement.style[prop] = value
     })
-  }
-
-  checkImage (evt) {
-    if (this.activeEle) {
-      if (evt.keyCode === 46 || evt.keyCode === 8) {
-        this.quill.constructor.find(this.activeEle).deleteAt(0)
-        this.quill.focus()
-      }
-      this.hide()
-    }
   }
 }
 

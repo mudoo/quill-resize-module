@@ -1,5 +1,7 @@
 export default {
-  modules: ['DisplaySize', 'Toolbar', 'Resize'],
+  modules: ['DisplaySize', 'Toolbar', 'Resize', 'Keyboard'],
+  keyboardSelect: true,
+
   parchment: {
     image: {
       attribute: ['width'],
