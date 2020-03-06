@@ -1,4 +1,4 @@
-import { BaseModule } from './BaseModule'
+import BaseModule from './BaseModule'
 
 import IconAlignLeft from 'quill/assets/icons/float-left.svg'
 import IconAlignCenter from 'quill/assets/icons/float-center.svg'
@@ -9,7 +9,7 @@ import IconPencil from '../assets/pencil.svg'
 import _Quill from 'quill'
 const Quill = window.Quill || _Quill
 
-const Parchment = Quill.imports.parchment
+const Parchment = Quill.import('parchment')
 
 // Quill.js 2.x support
 const ClassAttributor = Parchment.ClassAttributor
@@ -17,7 +17,7 @@ const ClassAttributor = Parchment.ClassAttributor
   : Parchment.Attributor.Class
 const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style')
 
-export class Toolbar extends BaseModule {
+export default class Toolbar extends BaseModule {
   onCreate () {
     // Setup Toolbar
     this.toolbar = document.createElement('div')

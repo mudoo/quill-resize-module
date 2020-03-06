@@ -1,5 +1,7 @@
-export class BaseModule {
+export default class BaseModule {
   constructor (resizer) {
+    this.resizer = resizer
+    this.quill = resizer.quill
     this.overlay = resizer.overlay
     this.activeEle = resizer.activeEle
     this.blot = resizer.blot
@@ -7,7 +9,6 @@ export class BaseModule {
     this.requestUpdate = () => {
       resizer.onUpdate(true)
     }
-    this.quill = resizer.quill
   }
   /*
     requestUpdate (passed in by the library during construction, above) can be used to let the library know that

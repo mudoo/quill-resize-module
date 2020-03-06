@@ -1,6 +1,6 @@
-import { BaseModule } from './BaseModule'
+import BaseModule from './BaseModule'
 
-export class Resize extends BaseModule {
+export default class Resize extends BaseModule {
   onCreate () {
     // track resize handles
     this.boxes = []

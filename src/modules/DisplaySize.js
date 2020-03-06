@@ -1,6 +1,6 @@
-import { BaseModule } from './BaseModule'
+import BaseModule from './BaseModule'
 
-export class DisplaySize extends BaseModule {
+export default class DisplaySize extends BaseModule {
   onCreate () {
     // Create the container to hold the size display
     this.display = document.createElement('div')
