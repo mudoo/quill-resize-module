@@ -41,3 +41,12 @@
     content: attr(data-src);
     color: #666;
 }
+
+.ql-embed-placeholder.selected {
+  color: #fff !important;
+  border-color: #4185d2 !important;
+  background-color: #5f9de2 !important;
+}
+.ql-embed-placeholder.selected::after {
+  color: #fff !important;
+}

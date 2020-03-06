@@ -1,9 +1,12 @@
-import extend from 'extend'
 import DefaultOptions from './DefaultOptions'
 import DisplaySize from './modules/DisplaySize'
 import Toolbar from './modules/Toolbar'
 import Resize from './modules/Resize'
 import Keyboard from './modules/Keyboard'
+
+import _Quill from 'quill'
+const Quill = window.Quill || _Quill
+const Parchment = Quill.import('parchment')
 
 const knownModules = { DisplaySize, Toolbar, Resize, Keyboard }
 
@@ -26,7 +29,8 @@ export default class QuillResize {
     }
 
     // Apply options to default options
-    this.options = extend({}, DefaultOptions, options)
+    this.options = Object.assign({}, DefaultOptions, options)
+    this.options.styles = Object.assign({}, DefaultOptions.styles, options.styles)
 
     // (see above about moduleClasses)
     if (moduleClasses !== false) {
@@ -47,6 +51,12 @@ export default class QuillResize {
 
     this.quill.root.parentNode.style.position =
       this.quill.root.parentNode.style.position || 'relative'
+
+    // add class to selected parchment
+    this.selectedBlots = []
+    if (this.options.selectedClass) {
+      this.quill.on('selection-change', this.addBlotsSelectedClass.bind(this))
+    }
 
     // setup modules
     this.moduleClasses = this.options.modules
@@ -251,6 +261,32 @@ export default class QuillResize {
 
   updateOverlayPosition () {
     this.overlay.style.marginTop = -1 * this.quill.root.scrollTop + 'px'
+  }
+
+  addBlotsSelectedClass (range, oldRange) {
+    if (!range) {
+      this.removeBlotsSelectedClass()
+      this.selectedBlots = []
+      return
+    }
+    const leaves = this.quill.scroll.descendants(Parchment.Leaf, range.index, range.length)
+    const blots = leaves.filter(blot => {
+      const canBeHandle = !!this.options.parchment[blot.statics.blotName]
+      if (canBeHandle) blot.domNode.classList.add(this.options.selectedClass)
+      return canBeHandle
+    })
+    this.removeBlotsSelectedClass(blots)
+    this.selectedBlots = blots
+  }
+
+  removeBlotsSelectedClass (ignoreBlots = []) {
+    if (!Array.isArray(ignoreBlots)) ignoreBlots = [ignoreBlots]
+
+    this.selectedBlots.forEach(blot => {
+      if (ignoreBlots.indexOf(blot) === -1) {
+        blot.domNode.classList.remove(this.options.selectedClass)
+      }
+    })
   }
 
   hide () {
