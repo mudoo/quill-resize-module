@@ -47,6 +47,8 @@ export default class QuillResize {
       false
     )
 
+    this.quill.on('text-change', this.handleChange.bind(this))
+
     this.quill.emitter.on('resize-edit', this.handleEdit.bind(this))
 
     this.quill.root.parentNode.style.position =
@@ -166,23 +168,6 @@ export default class QuillResize {
     }
 
     if (source !== 'user' || !this.overlay || !this.activeEle) return
-
-    const detail = delta.ops.reduce(
-      (info, op) => {
-        info.index += op.retain || op.insert.length || 1
-        Object.assign(info.attrs, op.attributes)
-        return info
-      },
-      {
-        index: 0,
-        attrs: {}
-      }
-    )
-
-    if (detail.attrs.style === undefined) return
-    const [blot] = this.quill.getLeaf(detail.index)
-    if (blot !== this.blot) return
-
     this.onUpdate()
   }
 
