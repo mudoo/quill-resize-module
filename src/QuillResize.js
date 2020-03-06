@@ -189,6 +189,7 @@ export default class QuillResize {
   show () {
     this.showOverlay()
     this.initializeModules()
+    if (this.options.activeClass) this.activeEle.classList.add(this.options.activeClass)
   }
 
   showOverlay () {
@@ -292,6 +293,7 @@ export default class QuillResize {
   hide () {
     this.hideOverlay()
     this.removeModules()
+    if (this.options.activeClass) this.activeEle.classList.remove(this.options.activeClass)
     this.activeEle = undefined
     this.blot = undefined
   }

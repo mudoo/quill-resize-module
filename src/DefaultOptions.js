@@ -2,6 +2,7 @@ export default {
   modules: ['DisplaySize', 'Toolbar', 'Resize', 'Keyboard'],
   keyboardSelect: true,
   selectedClass: 'selected',
+  activeClass: 'active',
 
   parchment: {
     image: {
