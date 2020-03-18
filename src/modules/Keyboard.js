@@ -90,7 +90,8 @@ export default class Keyboard extends BaseModule {
 
     // delete
     if (code === Keyboard.keys.BACKSPACE || code === Keyboard.keys.DELETE) {
-      this.quill.constructor.find(this.activeEle).deleteAt(0)
+      this.blot.deleteAt(0)
+      this.blot.parent.optimize()
       handled = true
 
     // direction key
