@@ -1,5 +1,5 @@
 /*!
- * Quill Resize Module v1.2.4
+ * Quill Resize Module v1.0.0
  * https://github.com/mudoo/quill-resize-module
  */
 .ql-resize-style-left {
@@ -58,3 +58,4 @@
 .ql-embed-placeholder.selected::after {
   color: #fff;
 }
+

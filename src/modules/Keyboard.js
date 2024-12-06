@@ -1,3 +1,5 @@
+import _Quill from 'quill'
+const Quill = window.Quill || _Quill
 import BaseModule from './BaseModule'
 
 export default class Keyboard extends BaseModule {
@@ -10,21 +12,6 @@ export default class Keyboard extends BaseModule {
     bindings[this.keys.RIGHT].unshift(
       this.makeArrowHandler(this.keys.RIGHT, false)
     )
-
-    // // up
-    // const upBinding = this.makeArrowHandler(this.keys.UP, false)
-    // if (bindings[this.keys.UP]) {
-    //   bindings[this.keys.UP].unshift(upBinding)
-    // } else {
-    //   quill.keyboard.addBinding(upBinding)
-    // }
-    // // down
-    // const downBinding = this.makeArrowHandler(this.keys.DOWN, false)
-    // if (bindings[this.keys.DOWN]) {
-    //   bindings[this.keys.DOWN].unshift(downBinding)
-    // } else {
-    //   quill.keyboard.addBinding(downBinding)
-    // }
   }
 
   static makeArrowHandler (key, shiftKey) {
@@ -143,14 +130,28 @@ export default class Keyboard extends BaseModule {
   }
 }
 
-Keyboard.keys = {
-  BACKSPACE: 8,
-  TAB: 9,
-  ENTER: 13,
-  ESCAPE: 27,
-  LEFT: 37,
-  UP: 38,
-  RIGHT: 39,
-  DOWN: 40,
-  DELETE: 46
+if (/^2\./.test(Quill.version)) {
+  Keyboard.keys = {
+    BACKSPACE: 'Backspace',
+    TAB: 'Tab',
+    ENTER: 'Enter',
+    ESCAPE: 'Escape',
+    LEFT: 'ArrowLeft',
+    UP: 'ArrowUp',
+    RIGHT: 'ArrowRight',
+    DOWN: 'ArrowDown',
+    DELETE: 'Delete'
+  }
+} else {
+  Keyboard.keys = {
+    BACKSPACE: 8,
+    TAB: 9,
+    ENTER: 13,
+    ESCAPE: 27,
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+    DELETE: 46
+  }
 }

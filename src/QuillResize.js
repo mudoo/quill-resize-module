@@ -8,14 +8,13 @@ import _Quill from 'quill'
 const Quill = window.Quill || _Quill
 const Parchment = Quill.import('parchment')
 
-const knownModules = { DisplaySize, Toolbar, Resize, Keyboard }
-
 /**
  * Custom module for quilljs to allow user to resize elements
  * (Works on Chrome, Edge, Safari and replaces Firefox's native resize behavior)
  * @see https://quilljs.com/blog/building-a-custom-module/
  */
 export default class QuillResize {
+  static Modules = { DisplaySize, Toolbar, Resize, Keyboard }
   constructor (quill, options = {}) {
     quill.resizer = this
     // save the quill reference and options
@@ -75,7 +74,7 @@ export default class QuillResize {
     this.removeModules()
 
     this.modules = this.moduleClasses.map(
-      ModuleClass => new (knownModules[ModuleClass] || ModuleClass)(this)
+      ModuleClass => new (this.constructor.Modules[ModuleClass] || ModuleClass)(this)
     )
 
     this.modules.forEach(module => {
@@ -218,7 +217,6 @@ export default class QuillResize {
     this.overlay = undefined
 
     // stop listening for image deletion or movement
-    document.removeEventListener('keydown', this.keyboardProxy, true)
     this.quill.root.removeEventListener('input', this.hideProxy, true)
     this.quill.root.removeEventListener('scroll', this.updateOverlayPositionProxy)
 
@@ -255,7 +253,7 @@ export default class QuillResize {
       this.selectedBlots = []
       return
     }
-    const leaves = this.quill.scroll.descendants(Parchment.Leaf, range.index, range.length)
+    const leaves = this.quill.scroll.descendants(Parchment.LeafBlot, range.index, range.length)
     const blots = leaves.filter(blot => {
       const canBeHandle = !!this.options.parchment[blot.statics.blotName]
       if (canBeHandle) blot.domNode.classList.add(this.options.selectedClass)

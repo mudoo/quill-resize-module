@@ -3,6 +3,7 @@ const Quill = window.Quill || _Quill
 
 const Container = Quill.import('blots/container')
 const Scroll = Quill.import('blots/scroll')
+const Block = Quill.import('blots/block')
 
 const ATTRIBUTES = [
   'data-embed-source',
@@ -12,9 +13,9 @@ const ATTRIBUTES = [
   'style'
 ]
 const Parchment = Quill.import('parchment')
-const Embed = Quill.import('blots/block/embed')
+const EmbedBlot = Quill.import('blots/embed')
 
-class EmbedPlaceholder extends Embed {
+class EmbedPlaceholder extends EmbedBlot {
   static create (value) {
     const node = super.create()
     if (typeof value === 'string') {
@@ -106,8 +107,12 @@ EmbedPlaceholder.blotName = 'embed-placeholder'
 EmbedPlaceholder.tagName = 'span'
 EmbedPlaceholder.scope = Parchment.Scope.INLINE_BLOT
 
+if (!Container.allowedChildren) Container.allowedChildren = []
+if (!Scroll.allowedChildren) Scroll.allowedChildren = []
+if (!Block.allowedChildren) Block.allowedChildren = []
 Container.allowedChildren.push(EmbedPlaceholder)
 Scroll.allowedChildren.push(EmbedPlaceholder)
+Block.allowedChildren.push(EmbedPlaceholder)
 
 class TagPlaceholder extends EmbedPlaceholder {}
 TagPlaceholder.tagName = ['video', 'iframe']
