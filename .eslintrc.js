@@ -4,11 +4,6 @@ module.exports = {
     'standard',
     'eslint:recommended'
   ],
-  parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 2018,
-    sourceType: 'module'
-  },
   env: {
     browser: true
   },
@@ -17,10 +12,10 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    "no-console": "warn",
-    "no-debugger": isDev ? "off" : "error",
+    'no-console': 'warn',
+    'no-debugger': isDev ? 'off' : 'error',
     'arrow-parens': 0,
     'generator-star-spacing': 0,
-    "linebreak-style": ["error", "unix"],
+    'linebreak-style': ['error', 'unix']
   }
 }

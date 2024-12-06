@@ -1,18 +1,23 @@
 # Quill Resize Module
 
-A module for Quill rich text editor to allow images/iframe/video and custom elements(convert to placeholder) to be resized.
+A module for Quill rich text editor to allow images/iframe/video and custom elements to be resized.
 
 This module is original forked from <https://github.com/whatcould/quill-image-resize-module>.
 
-## Features
- - Image resize.
- - Embed placeholder resize (Default to convert iframe/video tag).
- - Custom any elements resize.
+## Changed V2
+1. Support Quill2
+2. Removed formats/image formats/placeholder
+3. Add `embedTags` option for custom embed element
 
- - Limit minWidth/maxWidth/minHeight/maxHeight.
- - Limit Width/Height ratio.
- - Selected placeholder style.
- - Direction key support.
+## Features
+ - Image resize
+ - Embed resize (Default to iframe/video tag)
+ - Custom any elements resize
+
+ - Limit minWidth/maxWidth/minHeight/maxHeight
+ - Limit Width/Height ratio
+ - Selected embed element style
+ - Direction key support
 
 ## Demo
 
@@ -39,60 +44,6 @@ const quill = new Quill(editor, {
 });
 ```
 
-**use placeholder for iframe/video**
-
-```javascript
-import Quill from 'quill';
-import QuillResize, { PlaceholderRegister } from 'quill-resize-module';
-
-Quill.register('modules/resize', QuillResize);
-// default to iframe/video tag
-// if you went to replace default video blot, see 'demo/script.js'
-PlaceholderRegister();
-
-const quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            // See optional "config" below
-        }
-    }
-});
-```
-
-**use placeholder for custom element**
-
-```javascript
-import Quill from 'quill';
-import QuillResize, { PlaceholderRegister, EmbedPlaceholder } from 'quill-resize-module';
-
-Quill.register('modules/resize', QuillResize);
-
-class TagPlaceholder extends EmbedPlaceholder { }
-// default to ['iframe', 'video']
-TagPlaceholder.tagName = ['iframe', 'video', 'embed']
-// Important!!! must be null or don't set it
-// TagPlaceholder.className = null
-
-// if you went to replace default video blot, see 'demo/script.js'
-
-class ClassPlaceholder extends EmbedPlaceholder { }
-ClassPlaceholder.className = '.ql-embed'
-
-PlaceholderRegister([TagPlaceholder, ClassPlaceholder])
-
-const quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            // See optional "config" below
-        }
-    }
-});
-```
-
 ### Script Tag
 
 Copy resize.js into your web root or include from node_modules
@@ -102,21 +53,6 @@ Copy resize.js into your web root or include from node_modules
 ```
 
 ```javascript
-var quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            // See optional "config" below
-        }
-    }
-});
-```
-**use placeholder for iframe/video**
-
-```javascript
-// if you went to replace default video blot, see 'demo/script.js'
-QuillResize.PlaceholderRegister()
 var quill = new Quill(editor, {
     // ...
     modules: {
@@ -263,9 +199,10 @@ the module setup.
 For example,
 
 ```javascript
-import { Resize, BaseModule } from 'quill-resize-module';
+import QuillResize from 'quill-resize-module';
+Quill.register('modules/resize', QuillResize);
 
-class MyModule extends BaseModule {
+class MyModule extends QuillResize.Modules.Base {
     // See src/modules/BaseModule.js for documentation on the various lifecycle callbacks
 }
 
@@ -274,7 +211,7 @@ var quill = new Quill(editor, {
     modules: {
         // ...
         resize: {
-            modules: [ MyModule, Resize ],
+            modules: [ MyModule, QuillResize.Modules.Resize ],
             // ...
         }
     }

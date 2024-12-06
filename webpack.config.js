@@ -1,8 +1,15 @@
+// Generated using webpack-cli https://github.com/webpack/webpack-cli
+
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const PKG = require('./package.json')
+
+const isProduction = process.env.NODE_ENV === 'production'
+
+const stylesHandler = MiniCssExtractPlugin.loader
 
 const bannerPack = new webpack.BannerPlugin({
   banner: [
@@ -12,60 +19,94 @@ const bannerPack = new webpack.BannerPlugin({
   entryOnly: true
 })
 
-module.exports = (env, argv) => {
-  const PROD = argv.mode === 'production'
+const config = {
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    library: 'QuillResize',
+    libraryTarget: 'umd',
+    filename: '[name].js'
+  },
+  devServer: {
+    open: true,
+    host: 'localhost'
+  },
+  plugins: [
+    bannerPack,
+    // new HtmlWebpackPlugin({
+    //   template: "index.html",
+    // }),
 
-  const CFG = {
-    entry: PROD ? './src/index.js' : './demo/script.js',
-    output: {
-      path: __dirname,
-      library: 'QuillResize',
-      libraryTarget: 'umd',
-      filename: 'dist/resize.js'
-    },
-    devServer: {
-      contentBase: './demo'
-    },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          include: path.join(__dirname, 'src'),
-          exclude: /(node_modules|bower_components)/,
-          use: 'babel-loader'
-        },
-        {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: 'css-loader',
-            fallback: 'style-loader'
-          })
-        },
-        {
-          test: /\.svg$/,
-          use: 'raw-loader'
-        }
-      ]
-    },
-    plugins: [
-      bannerPack,
-      new ExtractTextPlugin('dist/resize.css')
+    new MiniCssExtractPlugin({
+      filename: 'resize.css'
+    })
+
+    // Add your plugins here
+    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/i,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.css$/i,
+        use: [stylesHandler, 'css-loader']
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [stylesHandler, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
+        type: 'asset'
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/source'
+      }
+
+      // Add your rules for custom modules here
+      // Learn more about loaders from https://webpack.js.org/loaders/
+    ]
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false // 不将注释提取到单独的文件中
+      })
     ]
   }
+}
 
-  if (!PROD) {
-    CFG.plugins.push(
+module.exports = () => {
+  if (isProduction) {
+    Object.assign(config, {
+      mode: 'production',
+      entry: {
+        resize: './src/index.js'
+      },
+      // 发布排除quill库
+      externals: {
+        quill: 'Quill'
+      }
+    })
+  } else {
+    Object.assign(config, {
+      mode: 'development',
+      entry: {
+        index: './demo/index.js'
+      }
+    })
+    config.mode = 'development'
+    config.plugins.push(
       new HtmlWebpackPlugin({
+        chunks: ['index'],
         filename: 'index.html',
-        template: './demo/index.html' // 模板地址
+        template: './demo/index.html'
       })
     )
-  } else {
-    // 发布排除quill库
-    CFG.externals = {
-      quill: 'Quill'
-    }
   }
-
-  return CFG
+  return config
 }

@@ -1,14 +1,14 @@
 import DefaultOptions from './DefaultOptions'
+import Base from './modules/BaseModule.js'
 import DisplaySize from './modules/DisplaySize'
 import Toolbar from './modules/Toolbar'
 import Resize from './modules/Resize'
 import Keyboard from './modules/Keyboard'
 
 import _Quill from 'quill'
+import { randomString } from './Util.js'
 const Quill = window.Quill || _Quill
 const Parchment = Quill.import('parchment')
-
-const knownModules = { DisplaySize, Toolbar, Resize, Keyboard }
 
 /**
  * Custom module for quilljs to allow user to resize elements
@@ -16,6 +16,7 @@ const knownModules = { DisplaySize, Toolbar, Resize, Keyboard }
  * @see https://quilljs.com/blog/building-a-custom-module/
  */
 export default class QuillResize {
+  static Modules = { Base, DisplaySize, Toolbar, Resize, Keyboard }
   constructor (quill, options = {}) {
     quill.resizer = this
     // save the quill reference and options
@@ -51,8 +52,7 @@ export default class QuillResize {
 
     this.quill.emitter.on('resize-edit', this.handleEdit.bind(this))
 
-    this.quill.root.parentNode.style.position =
-      this.quill.root.parentNode.style.position || 'relative'
+    this.quill.container.style.position = this.quill.container.style.position || 'relative'
 
     // add class to selected parchment
     this.selectedBlots = []
@@ -69,20 +69,37 @@ export default class QuillResize {
     if (this.options.keyboardSelect) {
       Keyboard.injectInit(this.quill)
     }
+
+    // create embed elements style
+    if (this.options.embedTags) {
+      this.initializeEmbed()
+    }
   }
 
   initializeModules () {
     this.removeModules()
 
     this.modules = this.moduleClasses.map(
-      ModuleClass => new (knownModules[ModuleClass] || ModuleClass)(this)
+      ModuleClass => new (this.constructor.Modules[ModuleClass] || ModuleClass)(this)
     )
 
     this.modules.forEach(module => {
-      module.onCreate()
+      module.onCreate(this)
     })
 
     this.onUpdate()
+  }
+
+  initializeEmbed () {
+    if (!this.options.embedTags.length) return
+    this.embedClassName = `ql-${randomString()}`
+    let cssText = [''].concat(this.options.embedTags).join(`, .${this.embedClassName} `).slice(2)
+    cssText += '{pointer-events: none;}'
+
+    const style = document.createElement('style')
+    style.textContent = cssText
+    this.quill.container.appendChild(style)
+    this.quill.root.classList.add(this.embedClassName)
   }
 
   onUpdate (fromModule) {
@@ -112,8 +129,15 @@ export default class QuillResize {
   handleClick (evt) {
     let show = false
     let blot
-    const target = evt.target
+    let target = evt.target
 
+    // 如果是根元素，意味着可能是embed元素事件穿透，需要根据光标位置获取元素
+    if (target === this.quill.root && this.options.embedTags) {
+      const root = this.quill.root
+      root.classList.remove(this.embedClassName)
+      target = document.elementFromPoint(evt.clientX, evt.clientY)
+      root.classList.add(this.embedClassName)
+    }
     if (target && target.tagName) {
       blot = this.quill.constructor.find(target)
       if (blot) {
@@ -193,7 +217,7 @@ export default class QuillResize {
     Object.assign(this.overlay.style, this.options.styles.overlay)
     this.overlay.addEventListener('dblclick', this.handleEdit.bind(this), false)
 
-    this.quill.root.parentNode.appendChild(this.overlay)
+    this.quill.container.appendChild(this.overlay)
 
     this.hideProxy = evt => {
       if (!this.activeEle) return
@@ -214,11 +238,10 @@ export default class QuillResize {
     }
 
     // Remove the overlay
-    this.quill.root.parentNode.removeChild(this.overlay)
+    this.quill.container.removeChild(this.overlay)
     this.overlay = undefined
 
     // stop listening for image deletion or movement
-    document.removeEventListener('keydown', this.keyboardProxy, true)
     this.quill.root.removeEventListener('input', this.hideProxy, true)
     this.quill.root.removeEventListener('scroll', this.updateOverlayPositionProxy)
 
@@ -232,7 +255,7 @@ export default class QuillResize {
     }
 
     // position the overlay over the image
-    const parent = this.quill.root.parentNode
+    const parent = this.quill.container
     const eleRect = this.activeEle.getBoundingClientRect()
     const containerRect = parent.getBoundingClientRect()
 
@@ -255,7 +278,7 @@ export default class QuillResize {
       this.selectedBlots = []
       return
     }
-    const leaves = this.quill.scroll.descendants(Parchment.Leaf, range.index, range.length)
+    const leaves = this.quill.scroll.descendants(Parchment.Leaf || Parchment.LeafBlot, range.index, range.length)
     const blots = leaves.filter(blot => {
       const canBeHandle = !!this.options.parchment[blot.statics.blotName]
       if (canBeHandle) blot.domNode.classList.add(this.options.selectedClass)

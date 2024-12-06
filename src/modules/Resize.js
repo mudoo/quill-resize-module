@@ -2,6 +2,7 @@ import BaseModule from './BaseModule'
 
 export default class Resize extends BaseModule {
   onCreate () {
+    this.blotOptions = this.options.parchment[this.blot.statics.blotName]
     // track resize handles
     this.boxes = []
 
@@ -80,7 +81,12 @@ export default class Resize extends BaseModule {
     document.addEventListener('mouseup', this.handleMouseupProxy, false)
   }
 
-  handleMouseup () {
+  handleMouseup (evt) {
+    // save size, clear style
+    const calcSize = this.calcSize(evt, this.blotOptions.limit)
+    Object.assign(this.activeEle, calcSize)
+    Object.assign(this.activeEle.style, { width: null, height: null })
+
     // reset cursor everywhere
     this.setCursor('')
     this.blot.handling && this.blot.handling(false)
@@ -94,15 +100,25 @@ export default class Resize extends BaseModule {
       // activeEle not set yet
       return
     }
+
+    const limit = {
+      ...this.blotOptions.limit,
+      unit: true
+    }
+    Object.assign(this.activeEle.style, this.calcSize(evt, limit))
+
+    this.requestUpdate()
+  }
+
+  calcSize (evt, limit = {}) {
     // update size
     const deltaX = evt.clientX - this.dragStartX
     const deltaY = evt.clientY - this.dragStartY
 
-    const options = this.options.parchment[this.blot.statics.blotName]
     const size = {}
     let direction = 1
 
-    ;(options.attribute || ['width']).forEach(key => {
+    ;(this.blotOptions.attribute || ['width']).forEach(key => {
       size[key] = this.preDragSize[key]
     })
 
@@ -118,11 +134,6 @@ export default class Resize extends BaseModule {
       size.height = Math.round(this.preDragSize.height + deltaY * direction)
     }
 
-    Object.assign(this.activeEle.style, this.calcSize(size, options.limit))
-    this.requestUpdate()
-  }
-
-  calcSize (size, limit = {}) {
     let { width, height } = size
 
     // keep ratio
@@ -156,10 +167,15 @@ export default class Resize extends BaseModule {
       }
     }
 
-    if (width) size.width = width + 'px'
-    if (height) size.height = height + 'px'
+    if (limit.unit) {
+      if (width) width = width + 'px'
+      if (height) height = height + 'px'
+    }
 
-    return size
+    const res = {}
+    if (width) res.width = width
+    if (height) res.height = height
+    return res
   }
 
   getNaturalSize () {

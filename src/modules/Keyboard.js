@@ -1,5 +1,22 @@
 import BaseModule from './BaseModule'
 
+import _Quill from 'quill'
+const Quill = window.Quill || _Quill
+
+const Parchment = Quill.import('parchment')
+
+const keyCodes = {
+  BACKSPACE: 8,
+  TAB: 9,
+  ENTER: 13,
+  ESCAPE: 27,
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40,
+  DELETE: 46
+}
+
 export default class Keyboard extends BaseModule {
   static injectInit (quill) {
     // left/right
@@ -10,21 +27,6 @@ export default class Keyboard extends BaseModule {
     bindings[this.keys.RIGHT].unshift(
       this.makeArrowHandler(this.keys.RIGHT, false)
     )
-
-    // // up
-    // const upBinding = this.makeArrowHandler(this.keys.UP, false)
-    // if (bindings[this.keys.UP]) {
-    //   bindings[this.keys.UP].unshift(upBinding)
-    // } else {
-    //   quill.keyboard.addBinding(upBinding)
-    // }
-    // // down
-    // const downBinding = this.makeArrowHandler(this.keys.DOWN, false)
-    // if (bindings[this.keys.DOWN]) {
-    //   bindings[this.keys.DOWN].unshift(downBinding)
-    // } else {
-    //   quill.keyboard.addBinding(downBinding)
-    // }
   }
 
   static makeArrowHandler (key, shiftKey) {
@@ -38,24 +40,29 @@ export default class Keyboard extends BaseModule {
         if (!this.quill.resizer) return true
 
         let index = range.index
+        const isLeft = key === Keyboard.keys.LEFT
+        const isRight = key === Keyboard.keys.RIGHT
 
         // check end of line
-        const [line] = this.quill.getLine(range.index)
+        const [line] = this.quill.getLine(index + (isLeft ? -1 : 0))
+        if (this.quill.resizer.judgeShow(line)) return false
         const lineIndex = this.quill.getIndex(line)
-        if (key === Keyboard.keys.RIGHT && lineIndex + line.length() - 1 === index) return true
+
+        if (isRight && lineIndex + line.length() - 1 === index) return true
 
         // get leaf/offset
-        if (key === Keyboard.keys.RIGHT) {
+        if (isRight) {
           index += (range.length + 1)
         }
         let [leaf] = this.quill.getLeaf(index)
         const offset = leaf.offset(leaf.parent)
+        const isBlock = leaf.constructor.scope === Parchment.Scope.BLOCK_BLOT
 
         // check start of line
-        if (key === Keyboard.keys.LEFT && (index === 0 || index === lineIndex)) return true
+        if (isLeft && ((isBlock && index === offset) || (index === 0 || index === lineIndex))) return true
 
         // get previous leaf
-        if (key === Keyboard.keys.LEFT) {
+        if (isLeft) {
           if (offset === 0) {
             index -= 1
             leaf = this.quill.getLeaf(index)[0]
@@ -89,19 +96,19 @@ export default class Keyboard extends BaseModule {
     let handled = false
 
     // delete
-    if (code === Keyboard.keys.BACKSPACE || code === Keyboard.keys.DELETE) {
+    if (code === keyCodes.BACKSPACE || code === keyCodes.DELETE) {
       this.blot.deleteAt(0)
       this.blot.parent.optimize()
       handled = true
 
     // direction key
-    } else if (code >= Keyboard.keys.LEFT && code <= Keyboard.keys.DOWN) {
-      if (code === Keyboard.keys.RIGHT) {
-        index++
-      } else if (code === Keyboard.keys.UP) {
+    } else if (code >= keyCodes.LEFT && code <= keyCodes.DOWN) {
+      if (code === keyCodes.RIGHT) {
+        index += this.blot.length() || 1
+      } else if (code === keyCodes.UP) {
         index = this.getOtherLineIndex(-1)
         nextBlot = this.quill.getLeaf(index)[0]
-      } else if (code === Keyboard.keys.DOWN) {
+      } else if (code === keyCodes.DOWN) {
         index = this.getOtherLineIndex(1)
         nextBlot = this.quill.getLeaf(index)[0]
       }
@@ -143,14 +150,18 @@ export default class Keyboard extends BaseModule {
   }
 }
 
-Keyboard.keys = {
-  BACKSPACE: 8,
-  TAB: 9,
-  ENTER: 13,
-  ESCAPE: 27,
-  LEFT: 37,
-  UP: 38,
-  RIGHT: 39,
-  DOWN: 40,
-  DELETE: 46
+if (/^2\./.test(Quill.version)) {
+  Keyboard.keys = {
+    BACKSPACE: 'Backspace',
+    TAB: 'Tab',
+    ENTER: 'Enter',
+    ESCAPE: 'Escape',
+    LEFT: 'ArrowLeft',
+    UP: 'ArrowUp',
+    RIGHT: 'ArrowRight',
+    DOWN: 'ArrowDown',
+    DELETE: 'Delete'
+  }
+} else {
+  Keyboard.keys = keyCodes
 }

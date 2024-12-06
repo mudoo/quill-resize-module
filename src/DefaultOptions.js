@@ -3,19 +3,13 @@ export default {
   keyboardSelect: true,
   selectedClass: 'selected',
   activeClass: 'active',
+  embedTags: ['VIDEO', 'IFRAME'],
 
   parchment: {
     image: {
       attribute: ['width'],
       limit: {
         minWidth: 100
-      }
-    },
-    'embed-placeholder': {
-      attribute: ['width', 'height'],
-      limit: {
-        minWidth: 200,
-        ratio: 0.5625
       }
     },
     video: {
@@ -31,7 +25,8 @@ export default {
     overlay: {
       position: 'absolute',
       boxSizing: 'border-box',
-      border: '1px dashed #444'
+      border: '1px dashed #444',
+      pointerEvents: 'none'
     },
     handle: {
       position: 'absolute',
@@ -40,7 +35,8 @@ export default {
       backgroundColor: 'white',
       border: '1px solid #777',
       boxSizing: 'border-box',
-      opacity: '0.80'
+      opacity: '0.80',
+      pointerEvents: 'all'
     },
     display: {
       position: 'absolute',
@@ -64,7 +60,8 @@ export default {
       textAlign: 'center',
       color: '#333',
       boxSizing: 'border-box',
-      cursor: 'default'
+      cursor: 'default',
+      pointerEvents: 'all'
     },
     toolbarButton: {
       display: 'inline-block',

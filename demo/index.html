@@ -11,7 +11,7 @@
     }
 
     .editor-box {
-      height: 500px;
+      height: 600px;
       padding-top: 42px;
       margin: 0 auto;
     }
@@ -28,16 +28,22 @@
       cursor: default !important;
     }
 
-    .ql-embed-placeholder[data-type="ql-embed"] {
-      background-color: #fff;
-    }
-
     .buttons {
       margin: 1em 0 2em;
     }
 
     .btn {
       padding: 3px .5em;
+    }
+
+    /* for active resize element */
+    .ql-editor .active {
+      outline: 2px solid rgba(5, 145, 255, 0.4);
+    }
+
+    /* for selected element */
+    .ql-editor .selected {
+      opacity: .5;
     }
 
     #result {
@@ -50,21 +56,11 @@
   <h1>Quill Resize Module Demo</h1>
   <div class="editor-box">
     <div id="editor">
-      <p>Click on the Image to resize.</p>
-      <p><img src="http://n.sinaimg.cn/sinacn10101/486/w2048h1638/20190518/9909-hwzkfpv0668515.jpg"></p>
+      <p>Click target to resize.</p>
+      <p><img src="https://i.ytimg.com/vi/Fp5ghKduTK8/hq720.jpg" width="450"></p>
       <p><br></p>
-      <p>And you can custom any element to be resized.</p>
-      <div>
-        <iframe src="https://vjs.zencdn.net/" frameborder="0"></iframe>
-        <iframe src="https://22222/" frameborder="0"></iframe>
-      </div>
-      <div>
-        <video src="https://vjs.zencdn.net/v/oceans.mp4" controls preload="auto"
-          poster="https://vjs.zencdn.net/v/oceans.png"></video>
-        <embed src="test://embed"></embed>
-        <span class="ql-embed" data-type="ql-embed" data-src="test://ql-embed"
-          style="background-color: beige;">ddd</span>
-      </div>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/vYD1cSQ8jAY?si=DZYEYsGyDlciQRBP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <p><br></p>
       <p>Try to press left/right key around the placeholder.</p>
     </div>
   </div>
