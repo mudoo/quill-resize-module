@@ -21,8 +21,8 @@ This module is original forked from <https://github.com/whatcould/quill-image-re
 
 ## Demo
 
-<https://run.plnkr.co/plunks/9YXbATSKGHY0JvPv/>
-![demo](./demo/demo.png)
+<https://codesandbox.io/p/sandbox/9m9vl8>
+![demo](./demo/demo.jpg)
 
 ## Usage
 
