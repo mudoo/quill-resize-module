@@ -132,11 +132,14 @@ export default class QuillResize {
     let target = evt.target
 
     // 如果是根元素，意味着可能是embed元素事件穿透，需要根据光标位置获取元素
-    if (target === this.quill.root && this.options.embedTags) {
+    const embedTags = this.options.embedTags?.join()
+    if (embedTags) {
       const root = this.quill.root
-      root.classList.remove(this.embedClassName)
-      target = document.elementFromPoint(evt.clientX, evt.clientY)
-      root.classList.add(this.embedClassName)
+      if (target === root || target.querySelectorAll(embedTags).length) {
+        root.classList.remove(this.embedClassName)
+        target = document.elementFromPoint(evt.clientX, evt.clientY)
+        root.classList.add(this.embedClassName)
+      }
     }
     if (target && target.tagName) {
       blot = this.quill.constructor.find(target)
