@@ -85,6 +85,7 @@ export default class Toolbar extends BaseModule {
       if (tool.verify && tool.verify.call(this, this.activeEle) === false) return
 
       const button = document.createElement('button')
+      button.type = 'button'
       buttons.push(button)
       button.innerHTML = ((tool.icon || '') + (tool.text || '')) || Icons[t]
       button.addEventListener('click', (evt) => {
