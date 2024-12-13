@@ -1,10 +1,10 @@
 import BaseModule from './BaseModule'
 
-import IconAlignLeft from 'quill/assets/icons/float-left.svg'
-import IconAlignCenter from 'quill/assets/icons/float-center.svg'
-import IconAlignRight from 'quill/assets/icons/float-right.svg'
-import IconFloatFull from 'quill/assets/icons/float-full.svg'
-import IconPencil from '../assets/pencil.svg'
+import IconAlignLeft from 'quill/assets/icons/float-left.svg?raw'
+import IconAlignCenter from 'quill/assets/icons/float-center.svg?raw'
+import IconAlignRight from 'quill/assets/icons/float-right.svg?raw'
+import IconFloatFull from 'quill/assets/icons/float-full.svg?raw'
+import IconPencil from '../assets/pencil.svg?raw'
 
 import _Quill from 'quill'
 const Quill = window.Quill || _Quill
@@ -18,6 +18,14 @@ const ClassAttributor = Parchment.ClassAttributor
 const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style')
 
 export default class Toolbar extends BaseModule {
+  static Icons = {
+    AlignLeft: IconAlignLeft,
+    AlignCenter: IconAlignCenter,
+    AlignRight: IconAlignRight,
+    FloatFull: IconFloatFull,
+    Edit: IconPencil
+  }
+
   onCreate () {
     // Setup Toolbar
     this.toolbar = document.createElement('div')
@@ -30,30 +38,31 @@ export default class Toolbar extends BaseModule {
   }
 
   _defineAlignments () {
+    const Icons = this.constructor.Icons
     this.alignments = [
       {
-        icon: IconAlignLeft,
+        icon: Icons.AlignLeft,
         apply: () => {
           ImageFormatClass.add(this.activeEle, 'left')
         },
         isApplied: () => ImageFormatClass.value(this.activeEle) === 'left'
       },
       {
-        icon: IconAlignCenter,
+        icon: Icons.AlignCenter,
         apply: () => {
           ImageFormatClass.add(this.activeEle, 'center')
         },
         isApplied: () => ImageFormatClass.value(this.activeEle) === 'center'
       },
       {
-        icon: IconAlignRight,
+        icon: Icons.AlignRight,
         apply: () => {
           ImageFormatClass.add(this.activeEle, 'right')
         },
         isApplied: () => ImageFormatClass.value(this.activeEle) === 'right'
       },
       {
-        icon: IconFloatFull,
+        icon: Icons.FloatFull,
         apply: () => {
           ImageFormatClass.add(this.activeEle, 'full')
         },
@@ -63,6 +72,7 @@ export default class Toolbar extends BaseModule {
   }
 
   _addToolbarButtons () {
+    const Icons = this.constructor.Icons
     const buttons = []
     this.alignments.forEach((alignment, idx) => {
       const button = document.createElement('span')
@@ -99,7 +109,7 @@ export default class Toolbar extends BaseModule {
 
     // Edit button
     const button = document.createElement('span')
-    button.innerHTML = IconPencil
+    button.innerHTML = Icons.Edit
     Object.assign(button.style, this.options.styles.toolbarButton)
     button.style.borderLeftWidth = '0'
     button.addEventListener('click', () => {
