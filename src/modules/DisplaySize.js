@@ -4,9 +4,7 @@ export default class DisplaySize extends BaseModule {
   onCreate () {
     // Create the container to hold the size display
     this.display = document.createElement('div')
-
-    // Apply styles
-    Object.assign(this.display.style, this.options.styles.display)
+    this.display.className = 'ql-resize-display'
 
     // Attach it
     this.overlay.appendChild(this.display)

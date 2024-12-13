@@ -31,7 +31,6 @@ export default class QuillResize {
 
     // Apply options to default options
     this.options = Object.assign({}, DefaultOptions, options)
-    this.options.styles = Object.assign({}, DefaultOptions.styles, options.styles)
 
     // (see above about moduleClasses)
     if (moduleClasses !== false) {
@@ -216,8 +215,8 @@ export default class QuillResize {
 
     // Create and add the overlay
     this.overlay = document.createElement('div')
+    this.overlay.className = 'ql-resize-overlay'
     // this.overlay.setAttribute('title', "Double-click to select image");
-    Object.assign(this.overlay.style, this.options.styles.overlay)
     this.overlay.addEventListener('dblclick', this.handleEdit.bind(this), false)
 
     this.quill.container.appendChild(this.overlay)

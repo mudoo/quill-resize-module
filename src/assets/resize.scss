@@ -1,0 +1,112 @@
+.ql-resize-overlay {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px dashed #444;
+  pointer-events: none;
+}
+
+.ql-resize-toolbar {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  left: 0;
+  height: 0;
+  min-width: 120px;
+  text-align: center;
+  color: #333;
+  box-sizing: border-box;
+  cursor: default;
+  pointer-events: all;
+
+  button {
+    display: inline-block;
+    min-width: 24px;
+    height: 24px;
+    padding: 2px;
+    background-color: #fff;
+    border: 1px solid #999;
+    vertical-align: middle;
+
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+    &:last-child {
+      border-bottom-right-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    &:not(:first-child) {
+      border-left: none;
+    }
+
+    &.active {
+      filter: invert(20%);
+    }
+  }
+
+  svg {
+    width: 18px;
+  }
+}
+
+.ql-resize-handle {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  background-color: white;
+  border: 1px solid #777;
+  box-sizing: border-box;
+  opacity: 0.80;
+  pointer-events: all;
+
+  &.tl {
+    top: -6px;
+    left: -6px;
+    cursor: nwse-resize;
+  }
+  &.tr {
+    top: -6px;
+    right: -6px;
+    cursor: nesw-resize;
+  }
+  &.br {
+    right: -6px;
+    bottom: -6px;
+    cursor: nwse-resize;
+  }
+  &.bl {
+    left: -6px;
+    bottom: -6px;
+    cursor: nwse-resize;
+  }
+}
+
+.ql-resize-display {
+  position: absolute;
+  padding: 4px 8px;
+  text-align: center;
+  background-color: white;
+  color: #333;
+  border: 1px solid #777;
+  box-sizing: border-box;
+  opacity: 0.80;
+  cursor: default;
+  line-height: 1;
+}
+
+.ql-resize-style-left {
+    float: left;
+    margin: 0 1em 1em 0;
+}
+.ql-resize-style-center {
+    display: block;
+    margin: auto;
+}
+.ql-resize-style-right {
+    float: right;
+    margin: 0 0 1em 1em;
+}
+.ql-resize-style-full {
+    width: 100% !important;
+}

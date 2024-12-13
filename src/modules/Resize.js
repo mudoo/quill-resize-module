@@ -7,12 +7,10 @@ export default class Resize extends BaseModule {
     this.boxes = []
 
     // add 4 resize handles
-    this.addBox('nwse-resize') // top left
-    this.addBox('nesw-resize') // top right
-    this.addBox('nwse-resize') // bottom right
-    this.addBox('nesw-resize') // bottom left
-
-    this.positionBoxes()
+    this.addBox('tl') // top left
+    this.addBox('tr') // top right
+    this.addBox('br') // bottom right
+    this.addBox('bl') // bottom left
   }
 
   onDestroy () {
@@ -20,34 +18,10 @@ export default class Resize extends BaseModule {
     this.setCursor('')
   }
 
-  positionBoxes () {
-    const handleXOffset = `${-parseFloat(this.options.styles.handle.width) /
-      2}px`
-    const handleYOffset = `${-parseFloat(this.options.styles.handle.height) /
-      2}px`
-
-    // set the top and left for each drag handle
-    ;[
-      { left: handleXOffset, top: handleYOffset }, // top left
-      { right: handleXOffset, top: handleYOffset }, // top right
-      { right: handleXOffset, bottom: handleYOffset }, // bottom right
-      { left: handleXOffset, bottom: handleYOffset } // bottom left
-    ].forEach((pos, idx) => {
-      Object.assign(this.boxes[idx].style, pos)
-    })
-  }
-
-  addBox (cursor) {
+  addBox (place) {
     // create div element for resize handle
     const box = document.createElement('div')
-
-    // Star with the specified styles
-    Object.assign(box.style, this.options.styles.handle)
-    box.style.cursor = cursor
-
-    // Set the width/height to use 'px'
-    box.style.width = `${this.options.styles.handle.width}px`
-    box.style.height = `${this.options.styles.handle.height}px`
+    box.className = `ql-resize-handle ${place}`
 
     // listen for mousedown on each box
     box.addEventListener('mousedown', this.handleMousedown.bind(this), false)
@@ -72,7 +46,8 @@ export default class Resize extends BaseModule {
     // store the natural size
     this.naturalSize = this.getNaturalSize()
     // set the proper cursor everywhere
-    this.setCursor(this.dragBox.style.cursor)
+    const cursor = window.getComputedStyle(this.dragBox).cursor
+    this.setCursor(cursor)
 
     this.handleDragProxy = evt => this.handleDrag(evt)
     this.handleMouseupProxy = evt => this.handleMouseup(evt)
@@ -198,7 +173,7 @@ export default class Resize extends BaseModule {
 
   setCursor (value) {
     [document.body, this.activeEle].forEach(el => {
-      el.style.cursor = value // eslint-disable-line no-param-reassign
+      el.style.cursor = `${value} !important` // eslint-disable-line no-param-reassign
     })
   }
 }

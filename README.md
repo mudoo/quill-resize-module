@@ -7,7 +7,9 @@ This module is original forked from <https://github.com/whatcould/quill-image-re
 ## Changed V2
 1. Support Quill2
 2. Removed formats/image formats/placeholder
-3. Add `embedTags` option for custom embed element
+3. Removed `options.styles`
+4. Add `embedTags` option for custom embed element
+4. Add `tools` option for custom toolbar
 
 ## Features
  - Image resize
@@ -92,7 +94,35 @@ const quill = new Quill(editor, {
 });
 ```
 
-Each module is described below.
+Customize the toolbar buttons with "tools" option.
+
+For example, add handler for image alt attribute:
+
+```javascript
+const quill = new Quill(editor, {
+    // ...
+    modules: {
+        // ...
+        resize: {
+            tools: [
+              'left', 'right',
+              {
+                text: 'Alt',
+                verify (activeEle) {
+                    return (activeEle && activeEle.tagName === 'IMG')
+                },
+                handler (evt, button, activeEle) {
+                    let alt = activeEle.alt || ''
+                    alt = window.prompt('Alt for image', alt)
+                    if (alt == null) return
+                    activeEle.setAttribute('alt', alt)
+                }
+              }
+            ]
+        }
+    }
+});
+```
 
 #### `Resize` - Resize the element
 
@@ -119,72 +149,6 @@ var quill = new Quill(editor, {
                         ratio: .5625  // keep width/height ratio. (ratio=height/width)
                     }
                 }
-            },
-            styles: {
-                handle: {
-                    backgroundColor: 'black',
-                    border: 'none',
-                    color: white
-                    // other camelCase styles for size display
-                }
-            }
-        }
-    }
-});
-```
-
-#### `DisplaySize` - Display pixel size
-
-Shows the size of the image in pixels near the bottom right of the image.
-
-The look and feel can be controlled with options:
-
-```javascript
-var quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            // ...
-            styles: {
-                display: {
-                    backgroundColor: 'black',
-                    border: 'none',
-                    color: white
-                    // other camelCase styles for size display
-                }
-            }
-        }
-    }
-});
-```
-
-#### `Toolbar` - Image alignment tools
-
-Displays a toolbar below the image, where the user can select an alignment for the image.
-
-The look and feel can be controlled with options:
-
-```javascript
-var quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            styles: {
-                // ...
-                toolbar: {
-                    backgroundColor: 'black',
-                    border: 'none',
-                    color: white
-                    // other camelCase styles for size display
-                },
-                toolbarButton: {
-                    // ...
-                },
-                toolbarButtonSvg: {
-                    // ...
-                },
             }
         }
     }

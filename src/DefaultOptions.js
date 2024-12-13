@@ -4,6 +4,7 @@ export default {
   selectedClass: 'selected',
   activeClass: 'active',
   embedTags: ['VIDEO', 'IFRAME'],
+  tools: ['left', 'center', 'right', 'full', 'edit'],
 
   parchment: {
     image: {
@@ -19,58 +20,5 @@ export default {
         ratio: 0.5625
       }
     }
-  },
-
-  styles: {
-    overlay: {
-      position: 'absolute',
-      boxSizing: 'border-box',
-      border: '1px dashed #444',
-      pointerEvents: 'none'
-    },
-    handle: {
-      position: 'absolute',
-      height: '12px',
-      width: '12px',
-      backgroundColor: 'white',
-      border: '1px solid #777',
-      boxSizing: 'border-box',
-      opacity: '0.80',
-      pointerEvents: 'all'
-    },
-    display: {
-      position: 'absolute',
-      padding: '4px 8px',
-      textAlign: 'center',
-      backgroundColor: 'white',
-      color: '#333',
-      border: '1px solid #777',
-      boxSizing: 'border-box',
-      opacity: '0.80',
-      cursor: 'default',
-      lineHeight: '1'
-    },
-    toolbar: {
-      position: 'absolute',
-      top: '-12px',
-      right: '0',
-      left: '0',
-      height: '0',
-      minWidth: '120px',
-      textAlign: 'center',
-      color: '#333',
-      boxSizing: 'border-box',
-      cursor: 'default',
-      pointerEvents: 'all'
-    },
-    toolbarButton: {
-      display: 'inline-block',
-      width: '24px',
-      height: '24px',
-      background: 'white',
-      border: '1px solid #999',
-      verticalAlign: 'middle'
-    },
-    toolbarButtonSvg: {}
   }
 }

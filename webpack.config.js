@@ -97,9 +97,9 @@ module.exports = () => {
       mode: 'development',
       entry: {
         index: './demo/index.js'
-      }
+      },
+      devtool: 'source-map'
     })
-    config.mode = 'development'
     config.plugins.push(
       new HtmlWebpackPlugin({
         chunks: ['index'],

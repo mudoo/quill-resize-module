@@ -19,106 +19,97 @@ const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style')
 
 export default class Toolbar extends BaseModule {
   static Icons = {
-    AlignLeft: IconAlignLeft,
-    AlignCenter: IconAlignCenter,
-    AlignRight: IconAlignRight,
-    FloatFull: IconFloatFull,
-    Edit: IconPencil
+    left: IconAlignLeft,
+    center: IconAlignCenter,
+    right: IconAlignRight,
+    full: IconFloatFull,
+    edit: IconPencil
+  }
+
+  static Tools = {
+    left: {
+      apply (activeEle) {
+        ImageFormatClass.add(activeEle, 'left')
+      },
+      isApplied (activeEle) {
+        return ImageFormatClass.value(activeEle) === 'left'
+      }
+    },
+    center: {
+      apply (activeEle) {
+        ImageFormatClass.add(activeEle, 'center')
+      },
+      isApplied (activeEle) {
+        return ImageFormatClass.value(activeEle) === 'center'
+      }
+    },
+    right: {
+      apply (activeEle) {
+        ImageFormatClass.add(activeEle, 'right')
+      },
+      isApplied (activeEle) {
+        return ImageFormatClass.value(activeEle) === 'right'
+      }
+    },
+    full: {
+      apply (activeEle) {
+        ImageFormatClass.add(activeEle, 'full')
+      },
+      isApplied (activeEle) {
+        return ImageFormatClass.value(activeEle) === 'full'
+      }
+    },
+    edit: {
+      handler (evt, button, activeEle) {
+        this.quill.emitter.emit('resize-edit', activeEle, this.blot)
+      }
+    }
   }
 
   onCreate () {
     // Setup Toolbar
     this.toolbar = document.createElement('div')
-    Object.assign(this.toolbar.style, this.options.styles.toolbar)
+    this.toolbar.className = 'ql-resize-toolbar'
     this.overlay.appendChild(this.toolbar)
 
     // Setup Buttons
-    this._defineAlignments()
     this._addToolbarButtons()
-  }
-
-  _defineAlignments () {
-    const Icons = this.constructor.Icons
-    this.alignments = [
-      {
-        icon: Icons.AlignLeft,
-        apply: () => {
-          ImageFormatClass.add(this.activeEle, 'left')
-        },
-        isApplied: () => ImageFormatClass.value(this.activeEle) === 'left'
-      },
-      {
-        icon: Icons.AlignCenter,
-        apply: () => {
-          ImageFormatClass.add(this.activeEle, 'center')
-        },
-        isApplied: () => ImageFormatClass.value(this.activeEle) === 'center'
-      },
-      {
-        icon: Icons.AlignRight,
-        apply: () => {
-          ImageFormatClass.add(this.activeEle, 'right')
-        },
-        isApplied: () => ImageFormatClass.value(this.activeEle) === 'right'
-      },
-      {
-        icon: Icons.FloatFull,
-        apply: () => {
-          ImageFormatClass.add(this.activeEle, 'full')
-        },
-        isApplied: () => ImageFormatClass.value(this.activeEle) === 'full'
-      }
-    ]
   }
 
   _addToolbarButtons () {
     const Icons = this.constructor.Icons
+    const Tools = this.constructor.Tools
     const buttons = []
-    this.alignments.forEach((alignment, idx) => {
-      const button = document.createElement('span')
+    this.options.tools.forEach((t) => {
+      const tool = Tools[t] || t
+      if (tool.verify && tool.verify.call(this, this.activeEle) === false) return
+
+      const button = document.createElement('button')
       buttons.push(button)
-      button.innerHTML = alignment.icon
-      button.addEventListener('click', () => {
+      button.innerHTML = ((tool.icon || '') + (tool.text || '')) || Icons[t]
+      button.addEventListener('click', (evt) => {
+        if (tool.handler && tool.handler.call(this, evt, button, this.activeEle) !== true) return
+
         // deselect all buttons
-        buttons.forEach(button => (button.style.filter = ''))
-        if (alignment.isApplied()) {
+        buttons.forEach(button => (button.classList.remove('active')))
+        if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
           // If applied, unapply
           ImageFormatClass.remove(this.activeEle)
         } else {
           // otherwise, select button and apply
-          this._selectButton(button)
-          alignment.apply()
+          button.classList.add('active')
+          tool.apply && tool.apply.call(this, this.activeEle)
         }
+
         // image may change position; redraw drag handles
         this.requestUpdate()
       })
-      Object.assign(button.style, this.options.styles.toolbarButton)
-      if (idx > 0) {
-        button.style.borderLeftWidth = '0'
-      }
-      Object.assign(
-        button.children[0].style,
-        this.options.styles.toolbarButtonSvg
-      )
-      if (alignment.isApplied()) {
+
+      if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
         // select button if previously applied
-        this._selectButton(button)
+        button.classList.add('active')
       }
       this.toolbar.appendChild(button)
     })
-
-    // Edit button
-    const button = document.createElement('span')
-    button.innerHTML = Icons.Edit
-    Object.assign(button.style, this.options.styles.toolbarButton)
-    button.style.borderLeftWidth = '0'
-    button.addEventListener('click', () => {
-      this.quill.emitter.emit('resize-edit', this.activeEle, this.blot)
-    })
-    this.toolbar.appendChild(button)
-  }
-
-  _selectButton (button) {
-    button.style.filter = 'invert(20%)'
   }
 }

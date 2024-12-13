@@ -1,4 +1,4 @@
 import QuillResize from './QuillResize'
-import './assets/resize.css'
+import './assets/resize.scss'
 
 export default QuillResize
