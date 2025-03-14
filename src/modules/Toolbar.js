@@ -88,6 +88,9 @@ export default class Toolbar extends BaseModule {
       button.type = 'button'
       buttons.push(button)
       button.innerHTML = ((tool.icon || '') + (tool.text || '')) || Icons[t]
+      if(t.className){
+        button.classList.add(t.className);
+      }
       button.addEventListener('click', (evt) => {
         if (tool.handler && tool.handler.call(this, evt, button, this.activeEle) !== true) return
 
