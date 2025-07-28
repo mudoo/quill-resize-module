@@ -11,11 +11,24 @@ const Quill = window.Quill || _Quill
 
 const Parchment = Quill.import('parchment')
 
+const ALIGNMENT_CLASSES = {
+  LEFT: 'left',
+  RIGHT: 'right',
+  CENTER: 'center',
+  FULL: 'full'
+};
+
 // Quill.js 2.x support
 const ClassAttributor = Parchment.ClassAttributor
   ? Parchment.ClassAttributor
   : Parchment.Attributor.Class
-const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style')
+
+const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
+  scope: Parchment.Scope.BLOCK,
+  whitelist: Object.values(ALIGNMENT_CLASSES)
+})
+
+Quill.register(ImageFormatClass, true);
 
 export default class Toolbar extends BaseModule {
   static Icons = {
@@ -28,35 +41,27 @@ export default class Toolbar extends BaseModule {
 
   static Tools = {
     left: {
-      apply (activeEle) {
-        ImageFormatClass.add(activeEle, 'left')
-      },
+      toolClass: ALIGNMENT_CLASSES.LEFT,
       isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === 'left'
+        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.LEFT
       }
     },
     center: {
-      apply (activeEle) {
-        ImageFormatClass.add(activeEle, 'center')
-      },
+      toolClass: ALIGNMENT_CLASSES.CENTER,
       isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === 'center'
+        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.CENTER
       }
     },
     right: {
-      apply (activeEle) {
-        ImageFormatClass.add(activeEle, 'right')
-      },
+      toolClass: ALIGNMENT_CLASSES.RIGHT,
       isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === 'right'
+        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.RIGHT
       }
     },
     full: {
-      apply (activeEle) {
-        ImageFormatClass.add(activeEle, 'full')
-      },
+      toolClass: ALIGNMENT_CLASSES.FULL,
       isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === 'full'
+        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.FULL
       }
     },
     edit: {
@@ -99,7 +104,11 @@ export default class Toolbar extends BaseModule {
         } else {
           // otherwise, select button and apply
           button.classList.add('active')
-          tool.apply && tool.apply.call(this, this.activeEle)
+
+          if (tool.toolClass) {
+            const blotIndex = this.quill.getIndex(this.blot);
+            this.quill.formatLine(blotIndex, 1, "imagestyle", tool.toolClass);
+          }
         }
 
         // image may change position; redraw drag handles

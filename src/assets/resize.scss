@@ -95,18 +95,18 @@
   line-height: 1;
 }
 
-.ql-resize-style-left {
+.ql-resize-style-left img {
     float: left;
     margin: 0 1em 1em 0;
 }
-.ql-resize-style-center {
+.ql-resize-style-center img {
     display: block;
     margin: auto;
 }
-.ql-resize-style-right {
+.ql-resize-style-right img {
     float: right;
     margin: 0 0 1em 1em;
 }
-.ql-resize-style-full {
+.ql-resize-style-full img {
     width: 100% !important;
 }
