@@ -16,7 +16,7 @@ const ALIGNMENT_CLASSES = {
   RIGHT: 'right',
   CENTER: 'center',
   FULL: 'full'
-};
+}
 
 // Quill.js 2.x support
 const ClassAttributor = Parchment.ClassAttributor
@@ -28,7 +28,7 @@ const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
   whitelist: Object.values(ALIGNMENT_CLASSES)
 })
 
-Quill.register(ImageFormatClass, true);
+Quill.register(ImageFormatClass, true)
 
 export default class Toolbar extends BaseModule {
   static Icons = {
@@ -106,8 +106,8 @@ export default class Toolbar extends BaseModule {
           button.classList.add('active')
 
           if (tool.toolClass) {
-            const blotIndex = this.quill.getIndex(this.blot);
-            this.quill.formatLine(blotIndex, 1, "imagestyle", tool.toolClass);
+            const blotIndex = this.quill.getIndex(this.blot)
+            this.quill.formatLine(blotIndex, 1, "imagestyle", tool.toolClass)
           }
         }
 
