@@ -108,6 +108,11 @@ const quill = new Quill(editor, {
               'left', 'right',
               {
                 text: 'Alt',
+                // set attributes
+                attrs: {
+                  title: 'Set image alt',
+                  class: 'btn-alt'
+                },
                 verify (activeEle) {
                     return (activeEle && activeEle.tagName === 'IMG')
                 },

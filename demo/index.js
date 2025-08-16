@@ -26,6 +26,10 @@ const demoEditor = new Quill('#editor', {
         'left', 'center', 'right', 'full', 'edit',
         {
           text: 'Alt',
+          attrs: {
+            title: 'Set image alt',
+            class: 'btn-alt'
+          },
           verify (activeEle) {
             return (activeEle && activeEle.tagName === 'IMG')
           },
@@ -52,6 +56,16 @@ document.querySelector('.btn-content').addEventListener('click', function () {
 })
 document.querySelector('.btn-text').addEventListener('click', function () {
   $result.value = demoEditor.getText()
+})
+document.querySelector(".btn-set-html").addEventListener("click", function () {
+  const contents = demoEditor.clipboard.convert({
+    html: `${$result.value}<p><br></p>`,
+    text: "\n",
+  })
+  demoEditor.setContents(contents)
+})
+document.querySelector(".btn-set-content").addEventListener("click", function () {
+  demoEditor.setContents(JSON.parse($result.value));
 })
 document.querySelector('.btn-undo').addEventListener('click', function () {
   demoEditor.history.undo()

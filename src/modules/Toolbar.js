@@ -93,6 +93,12 @@ export default class Toolbar extends BaseModule {
       button.type = 'button'
       buttons.push(button)
       button.innerHTML = ((tool.icon || '') + (tool.text || '')) || Icons[t]
+      if (typeof t === 'string') button.className = `ql-resize-toolbar-${t}`
+      if (tool.attrs) {
+        Object.keys(tool.attrs).forEach((key) => {
+          button.setAttribute(key, tool.attrs[key])
+        })
+      }
       button.addEventListener('click', (evt) => {
         if (tool.handler && tool.handler.call(this, evt, button, this.activeEle) !== true) return
 

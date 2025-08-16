@@ -32,7 +32,6 @@ export default class Resize extends BaseModule {
   }
 
   handleMousedown (evt) {
-    this.blot.handling && this.blot.handling(true)
     // note which box
     this.dragBox = evt.target
     // note starting mousedown position
@@ -64,7 +63,6 @@ export default class Resize extends BaseModule {
 
     // reset cursor everywhere
     this.setCursor('')
-    this.blot.handling && this.blot.handling(false)
     // stop listening for movement and mouseup
     document.removeEventListener('mousemove', this.handleDragProxy)
     document.removeEventListener('mouseup', this.handleMouseupProxy)
