@@ -24,7 +24,7 @@ const ClassAttributor = Parchment.ClassAttributor
   : Parchment.Attributor.Class
 
 const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
-  scope: Parchment.Scope.BLOCK,
+  scope: Parchment.Scope.INLINE,
   whitelist: Object.values(ALIGNMENT_CLASSES)
 })
 
@@ -113,7 +113,7 @@ export default class Toolbar extends BaseModule {
 
           if (tool.toolClass) {
             const blotIndex = this.quill.getIndex(this.blot)
-            this.quill.formatLine(blotIndex, 1, "imagestyle", tool.toolClass)
+            this.quill.formatText(blotIndex, 1, "imagestyle", tool.toolClass)
           }
         }
 
