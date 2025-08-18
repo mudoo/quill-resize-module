@@ -23,12 +23,20 @@ const ClassAttributor = Parchment.ClassAttributor
   ? Parchment.ClassAttributor
   : Parchment.Attributor.Class
 
-const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
-  scope: Parchment.Scope.INLINE,
+const IMAGE_FORMAT_ATTRIBUTOR = 'imagestyle'
+const ImageFormatClass = new ClassAttributor(IMAGE_FORMAT_ATTRIBUTOR, 'ql-resize-style', {
+  scope: Parchment.Scope.INLINE_BLOT,
+  whitelist: Object.values(ALIGNMENT_CLASSES)
+})
+
+const VIDEO_FORMAT_ATTRIBUTOR = 'videostyle'
+const VideoFormatClass = new ClassAttributor(VIDEO_FORMAT_ATTRIBUTOR, 'ql-resize-style', {
+  scope: Parchment.Scope.BLOCK_BLOT,
   whitelist: Object.values(ALIGNMENT_CLASSES)
 })
 
 Quill.register(ImageFormatClass, true)
+Quill.register(VideoFormatClass, true)
 
 export default class Toolbar extends BaseModule {
   static Icons = {
@@ -112,8 +120,7 @@ export default class Toolbar extends BaseModule {
           button.classList.add('active')
 
           if (tool.toolClass) {
-            const blotIndex = this.quill.getIndex(this.blot)
-            this.quill.formatText(blotIndex, 1, "imagestyle", tool.toolClass)
+            this._applyToolFormatting(tool.toolClass)
           }
         }
 
@@ -127,5 +134,17 @@ export default class Toolbar extends BaseModule {
       }
       this.toolbar.appendChild(button)
     })
+  }
+
+  _applyToolFormatting(toolClass) {
+    const blotIndex = this.quill.getIndex(this.blot)
+
+    if (this.blot.statics.scope === Parchment.Scope.INLINE_BLOT) {
+      // Format image
+      this.quill.formatText(blotIndex, 1, IMAGE_FORMAT_ATTRIBUTOR, toolClass)
+    } else if (this.blot.statics.scope === Parchment.Scope.BLOCK_BLOT) {
+      // Format video
+      this.quill.formatLine(blotIndex, 1, VIDEO_FORMAT_ATTRIBUTOR, toolClass)
+    }
   }
 }
