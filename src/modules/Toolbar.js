@@ -23,12 +23,20 @@ const ClassAttributor = Parchment.ClassAttributor
   ? Parchment.ClassAttributor
   : Parchment.Attributor.Class
 
-const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style', {
+const INLINE_FORMAT_ATTRIBUTOR = 'resize-inline'
+const InlineFormatClass = new ClassAttributor(INLINE_FORMAT_ATTRIBUTOR, 'ql-resize-style', {
+  scope: Parchment.Scope.INLINE,
+  whitelist: Object.values(ALIGNMENT_CLASSES)
+})
+
+const BLOCK_FORMAT_ATTRIBUTOR = 'resize-block'
+const BlockFormatClass = new ClassAttributor(BLOCK_FORMAT_ATTRIBUTOR, 'ql-resize-style', {
   scope: Parchment.Scope.BLOCK,
   whitelist: Object.values(ALIGNMENT_CLASSES)
 })
 
-Quill.register(ImageFormatClass, true)
+Quill.register(InlineFormatClass, true)
+Quill.register(BlockFormatClass, true)
 
 export default class Toolbar extends BaseModule {
   static Icons = {
@@ -42,26 +50,26 @@ export default class Toolbar extends BaseModule {
   static Tools = {
     left: {
       toolClass: ALIGNMENT_CLASSES.LEFT,
-      isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.LEFT
+      isApplied (activeEle, blot) {
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.LEFT
       }
     },
     center: {
       toolClass: ALIGNMENT_CLASSES.CENTER,
-      isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.CENTER
+      isApplied (activeEle, blot) {
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.CENTER
       }
     },
     right: {
       toolClass: ALIGNMENT_CLASSES.RIGHT,
-      isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.RIGHT
+      isApplied (activeEle, blot) {
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.RIGHT
       }
     },
     full: {
       toolClass: ALIGNMENT_CLASSES.FULL,
-      isApplied (activeEle) {
-        return ImageFormatClass.value(activeEle) === ALIGNMENT_CLASSES.FULL
+      isApplied (activeEle, blot) {
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.FULL
       }
     },
     edit: {
@@ -104,16 +112,15 @@ export default class Toolbar extends BaseModule {
 
         // deselect all buttons
         buttons.forEach(button => (button.classList.remove('active')))
-        if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
+        if (tool.isApplied && tool.isApplied.call(this, this.activeEle, this.blot)) {
           // If applied, unapply
-          ImageFormatClass.remove(this.activeEle)
+          this._applyToolFormatting('')
         } else {
           // otherwise, select button and apply
           button.classList.add('active')
 
           if (tool.toolClass) {
-            const blotIndex = this.quill.getIndex(this.blot)
-            this.quill.formatLine(blotIndex, 1, "imagestyle", tool.toolClass)
+            this._applyToolFormatting(tool.toolClass)
           }
         }
 
@@ -121,11 +128,34 @@ export default class Toolbar extends BaseModule {
         this.requestUpdate()
       })
 
-      if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
+      if (tool.isApplied && tool.isApplied.call(this, this.activeEle, this.blot)) {
         // select button if previously applied
         button.classList.add('active')
       }
       this.toolbar.appendChild(button)
     })
+  }
+
+  _getFormatValue (activeEle, blot) {
+    if (blot.statics.scope === Parchment.Scope.INLINE_BLOT) {
+      // return InlineFormatClass.value(activeEle)
+      const blotIndex = this.quill.getIndex(blot)
+      const formats = this.quill.getFormat(blotIndex, 1)
+      return formats[INLINE_FORMAT_ATTRIBUTOR]
+    } else if (blot.statics.scope === Parchment.Scope.BLOCK_BLOT) {
+      return BlockFormatClass.value(activeEle)
+    }
+  }
+
+  _applyToolFormatting (toolClass) {
+    const blotIndex = this.quill.getIndex(this.blot)
+
+    if (this.blot.statics.scope === Parchment.Scope.INLINE_BLOT) {
+      // Format inline blot
+      this.quill.formatText(blotIndex, 1, INLINE_FORMAT_ATTRIBUTOR, toolClass)
+    } else if (this.blot.statics.scope === Parchment.Scope.BLOCK_BLOT) {
+      // Format block blot
+      this.quill.formatLine(blotIndex, 1, BLOCK_FORMAT_ATTRIBUTOR, toolClass)
+    }
   }
 }
