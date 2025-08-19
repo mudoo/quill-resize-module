@@ -1,6 +1,6 @@
 {
   "name": "quill-resize-module",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A module for Quill rich text editor to allow images/iframe/video and custom elements to be resized.",
   "main": "dist/resize.js",
   "module": "src/index.js",
@@ -10,7 +10,8 @@
     "watch": "webpack --watch",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production"
+    "build:prod": "webpack --mode=production --node-env=production",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
