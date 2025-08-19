@@ -102,6 +102,7 @@
 .ql-resize-style-center {
     display: block;
     margin: auto;
+    text-align: center;
 }
 .ql-resize-style-right {
     float: right;
@@ -109,4 +110,7 @@
 }
 .ql-resize-style-full {
     width: 100% !important;
+    > * {
+      width: 100%;
+    }
 }
