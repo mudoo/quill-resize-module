@@ -95,7 +95,7 @@ export default class Toolbar extends BaseModule {
     const buttons = []
     this.options.tools.forEach((t) => {
       const tool = Tools[t] || t
-      if (tool.verify && tool.verify.call(this, this.activeEle) === false) return
+      if (tool.verify && tool.verify.call(this, this.activeEle, this.blot) === false) return
 
       const button = document.createElement('button')
       button.type = 'button'
@@ -108,7 +108,7 @@ export default class Toolbar extends BaseModule {
         })
       }
       button.addEventListener('click', (evt) => {
-        if (tool.handler && tool.handler.call(this, evt, button, this.activeEle) !== true) return
+        if (tool.handler && tool.handler.call(this, evt, button, this.activeEle, this.blot) !== true) return
 
         // deselect all buttons
         buttons.forEach(button => (button.classList.remove('active')))

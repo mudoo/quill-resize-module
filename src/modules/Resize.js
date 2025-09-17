@@ -60,6 +60,7 @@ export default class Resize extends BaseModule {
     const calcSize = this.calcSize(evt, this.blotOptions.limit)
     Object.assign(this.activeEle, calcSize)
     Object.assign(this.activeEle.style, { width: null, height: null })
+    this.options.onChangeSize && this.options.onChangeSize(this.blot, this.activeEle, calcSize)
 
     // reset cursor everywhere
     this.setCursor('')
