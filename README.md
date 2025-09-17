@@ -68,91 +68,103 @@ var quill = new Quill(editor, {
 
 ### Config
 
-For the default experience, pass an empty object, like so:
-```javascript
-var quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {}
-    }
-});
-```
-
-Functionality is broken down into modules, which can be mixed and matched as you like. For example,
-the default is to include all modules:
+Here's a complete configuration example showing all available options:
 
 ```javascript
 const quill = new Quill(editor, {
-    // ...
     modules: {
-        // ...
         resize: {
-            modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
-        }
-    }
-});
-```
+            // Enable feature modules
+            modules: ['DisplaySize', 'Toolbar', 'Resize', 'Keyboard'],
 
-Customize the toolbar buttons with "tools" option.
+            // Enable keyboard arrow keys for selection
+            keyboardSelect: true,
 
-For example, add handler for image alt attribute:
+            // CSS classes for selected and active states
+            selectedClass: 'selected',
+            activeClass: 'active',
 
-```javascript
-const quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            tools: [
-              'left', 'right',
-              {
-                text: 'Alt',
-                // set attributes
-                attrs: {
-                  title: 'Set image alt',
-                  class: 'btn-alt'
-                },
-                verify (activeEle) {
-                    return (activeEle && activeEle.tagName === 'IMG')
-                },
-                handler (evt, button, activeEle) {
-                    let alt = activeEle.alt || ''
-                    alt = window.prompt('Alt for image', alt)
-                    if (alt == null) return
-                    activeEle.setAttribute('alt', alt)
-                }
-              }
-            ]
-        }
-    }
-});
-```
+            // Resizable embedded tags (video and iframe by default)
+            embedTags: ['VIDEO', 'IFRAME'],
 
-#### `Resize` - Resize the element
+            // Toolbar buttons (default: left align, center, right align, full width, edit)
+            tools: ['left', 'center', 'right', 'full', 'edit'],
 
-Adds handles to the element's corners which can be dragged with the mouse to resize the element.
-
-The look and feel can be controlled with options:
-
-```javascript
-var quill = new Quill(editor, {
-    // ...
-    modules: {
-        // ...
-        resize: {
-            // ...
-            // set parchment key to enable resize module
+            // Parchment configuration: set attributes and limits for different element types
             parchment: {
+                // Image configuration
                 image: {
-                    attribute: ['width'],  // ['width', 'height']
+                    attribute: ['width'],  // Adjustable attributes
                     limit: {
-                        minWidth: 200,
-                        maxWidth: 600,
-                        minHeight: 200,
-                        maxHeight: 450,
-                        ratio: .5625  // keep width/height ratio. (ratio=height/width)
+                        minWidth: 100      // Minimum width limit
                     }
+                },
+                // Video configuration
+                video: {
+                    attribute: ['width', 'height'],  // Adjustable attributes
+                    limit: {
+                        minWidth: 200,     // Minimum width limit
+                        ratio: 0.5625      // Width/height ratio limit (16:9)
+                    }
+                }
+            },
+
+            // Event callbacks
+            onActive: function (blot, target) {
+                // Triggered when an element is activated
+            },
+
+            onInactive: function (blot, target) {
+                // Triggered when an element is deactivated
+            },
+
+            onChangeSize: function (blot, target, size) {
+                // Triggered when element size changes
+            }
+        }
+    }
+});
+```
+
+You can use only specific modules based on your needs. For example, if you only want resize and size display functionality:
+
+```javascript
+const quill = new Quill(editor, {
+    modules: {
+        resize: {
+            modules: ['Resize', 'DisplaySize']
+        }
+    }
+});
+```
+
+### Module Details
+
+#### `Resize` Module - Element Resizing
+
+This module adds drag handles to elements, allowing size adjustment via mouse. The behavior is controlled through the `parchment` configuration for different element types:
+
+```javascript
+const quill = new Quill(editor, {
+    modules: {
+        resize: {
+            parchment: {
+                // Image element configuration
+                image: {
+                    // Adjustable attributes: ['width'] or ['width', 'height']
+                    attribute: ['width'],
+                    // Size limits
+                    limit: {
+                        minWidth: 200,     // Minimum width
+                        maxWidth: 600,     // Maximum width
+                        minHeight: 200,    // Minimum height
+                        maxHeight: 450,    // Maximum height
+                        ratio: 0.5625      // Width/height ratio (e.g., 16:9 = 0.5625)
+                    }
+                },
+                // Similar configuration can be added for other element types
+                video: {
+                    // ...
                 }
             }
         }
@@ -160,12 +172,82 @@ var quill = new Quill(editor, {
 });
 ```
 
-#### `BaseModule` - Include your own custom module
+#### `Toolbar` Module - Toolbar
 
-You can write your own module by extending the `BaseModule` class, and then including it in
-the module setup.
+The toolbar module provides quick action buttons that can be customized through the `tools` option:
 
-For example,
+1. Predefined buttons:
+- `left`: Left align
+- `center`: Center align
+- `right`: Right align
+- `full`: Full width
+- `edit`: Edit button
+
+2. Custom button example:
+
+```javascript
+const quill = new Quill(editor, {
+    modules: {
+        resize: {
+            tools: [
+                'left', 'right',  // Use predefined buttons
+                {
+                    text: 'Alt',  // Button text
+                    // Custom button attributes
+                    attrs: {
+                        title: 'Set image alt',
+                        class: 'btn-alt'
+                    },
+                    // Button display condition
+                    verify (activeEle) {
+                        return activeEle?.tagName === 'IMG';
+                    },
+                    // Button click handler
+                    handler (evt, button, activeEle) {
+                        let alt = activeEle.alt || '';
+                        alt = window.prompt('Alt for image', alt);
+                        if (alt != null) {
+                            activeEle.setAttribute('alt', alt);
+                        }
+                    }
+                }
+            ]
+        }
+    }
+});
+```
+
+#### `DisplaySize` Module - Size Display
+
+Shows current size information while resizing elements. No additional configuration needed. Included in the default module list:
+
+```javascript
+const quill = new Quill(editor, {
+    modules: {
+        resize: {
+            modules: ['Resize', 'DisplaySize']
+        }
+    }
+});
+```
+
+#### `Keyboard` Module - Keyboard Support
+
+Enables element selection and manipulation using keyboard arrow keys. Can be controlled using the `keyboardSelect` option:
+
+```javascript
+const quill = new Quill(editor, {
+    modules: {
+        resize: {
+            keyboardSelect: true  // Enable keyboard arrow key selection
+        }
+    }
+});
+```
+
+#### Custom Module Development
+
+You can create your own module by extending the `BaseModule` class. Here's a complete example:
 
 ```javascript
 import QuillResize from 'quill-resize-module';
@@ -175,13 +257,12 @@ class MyModule extends QuillResize.Modules.Base {
     // See src/modules/BaseModule.js for documentation on the various lifecycle callbacks
 }
 
-var quill = new Quill(editor, {
-    // ...
+const quill = new Quill(editor, {
     modules: {
-        // ...
+        // Other modules...
         resize: {
-            modules: [ MyModule, QuillResize.Modules.Resize ],
-            // ...
+            modules: [MyModule, QuillResize.Modules.Resize],
+            // Other configuration...
         }
     }
 });
