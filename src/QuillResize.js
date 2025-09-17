@@ -64,11 +64,6 @@ export default class QuillResize {
 
     this.modules = []
 
-    // inject keyboard event
-    if (this.options.keyboardSelect) {
-      Keyboard.injectInit(this.quill)
-    }
-
     // create embed elements style
     if (this.options.embedTags) {
       this.initializeEmbed()

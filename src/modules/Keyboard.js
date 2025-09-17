@@ -75,6 +75,11 @@ export default class Keyboard extends BaseModule {
   }
 
   onCreate (e) {
+    // inject keyboard event
+    if (this.options.keyboardSelect) {
+      Keyboard.injectInit(this.quill)
+    }
+
     this.keyboardProxy = evt => this.keyboardHandle(evt)
     document.addEventListener('keydown', this.keyboardProxy, true)
   }
