@@ -44,17 +44,17 @@ const demoEditor = new Quill('#editor', {
 
       // Triggered when an element is activated (selected)
       onActive: function (blot, target) {
-        console.log('Element activated:', blot, target)
+        console.log('Element activated:', this.quill, blot, target)
       },
 
       // Triggered when an element loses active state
       onInactive: function (blot, target) {
-        console.log('Element deactivated:', blot, target)
+        console.log('Element deactivated:', this.quill, blot, target)
       },
 
       // Triggered when element size changed
       onChangeSize: function (blot, target, size) {
-        console.log('Size changed:', blot, target, size)
+        console.log('Size changed:', this.quill, blot, target, size)
       }
     }
   }
