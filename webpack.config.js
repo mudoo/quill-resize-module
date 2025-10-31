@@ -22,10 +22,10 @@ const bannerPack = new webpack.BannerPlugin({
 const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
-    library: 'QuillResize',
-    libraryTarget: 'umd',
+    // filename is overriden for production to produce an ESM file (.mjs)
     filename: '[name].js'
   },
+  // experiments are enabled per-config below (only the ESM config will set outputModule)
   devServer: {
     open: true,
     host: 'localhost'
@@ -82,16 +82,54 @@ const config = {
 
 module.exports = () => {
   if (isProduction) {
-    Object.assign(config, {
+    // Create a UMD build (historical file) and an ESM build (.mjs).
+    // We shallow-copy the base config and override the output and externals per-target.
+    const base = Object.assign({}, config)
+
+    // UMD build (dist/resize.js)
+    const umdConfig = Object.assign({}, base, {
       mode: 'production',
       entry: {
         resize: './src/index.js'
       },
-      // 发布排除quill库
+      output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'resize.js',
+        library: {
+          name: 'QuillResize',
+          type: 'umd'
+        }
+      },
       externals: {
         quill: 'Quill'
       }
     })
+
+    // ESM build (dist/resize.mjs)
+    const esmConfig = Object.assign({}, base, {
+      mode: 'production',
+      entry: {
+        resize: './src/index.js'
+      },
+      // enable ESM output only for the ESM config
+      experiments: {
+        outputModule: true
+      },
+      output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'resize.mjs',
+        library: {
+          type: 'module'
+        }
+      },
+      // Emit ESM-style externals so the bundle contains `import 'quill'` specifier.
+      externalsType: 'module',
+      externals: {
+        quill: 'quill'
+      }
+    })
+
+    return [umdConfig, esmConfig]
   } else {
     Object.assign(config, {
       mode: 'development',
