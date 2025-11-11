@@ -144,9 +144,16 @@ export default class QuillResize {
     if (show) {
       evt.preventDefault()
       // evt.stopPropagation()
+
+      // 能够播放视频并调整其大小
+      this.activeEle.style.pointerEvents = 'all'
+
       return
     }
     if (this.activeEle) {
+      // 以便能够再次选择视频进行调整大小
+      this.activeEle.style = null
+
       // clicked on a non image
       this.hide()
     }
