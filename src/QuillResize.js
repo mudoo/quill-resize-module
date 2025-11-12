@@ -144,9 +144,25 @@ export default class QuillResize {
     if (show) {
       evt.preventDefault()
       // evt.stopPropagation()
+
+      // 能够播放视频并调整其大小
+      // to be able to play the video and resize it too
+      this.activeEle.style.pointerEvents = 'all'
+      if (this.lastActiveEle !== this.activeEle) {
+        // 以便能够再次选择视频进行调整大小
+        // to be able to select the video for resize again
+        if (this.lastActiveEle) this.lastActiveEle.style = null
+        this.lastActiveEle = this.activeEle
+      }
+
       return
     }
     if (this.activeEle) {
+      // 以便能够再次选择视频进行调整大小
+      // to be able to select the video for resize again
+      this.activeEle.style = null
+      if (this.lastActiveEle) this.lastActiveEle.style = null
+
       // clicked on a non image
       this.hide()
     }
