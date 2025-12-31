@@ -6,3 +6,4 @@ node_modules
 .www
 .cache
 .history
+dist

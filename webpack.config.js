@@ -46,8 +46,14 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.(ts|tsx)$/i,
+        loader: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.(js|jsx)$/i,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.css$/i,
@@ -70,6 +76,9 @@ const config = {
       // Learn more about loaders from https://webpack.js.org/loaders/
     ]
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  },
   optimization: {
     minimize: true,
     minimizer: [
@@ -85,7 +94,7 @@ module.exports = () => {
     Object.assign(config, {
       mode: 'production',
       entry: {
-        resize: './src/index.js'
+        resize: './src/index.ts'
       },
       // 发布排除quill库
       externals: {
@@ -96,7 +105,7 @@ module.exports = () => {
     Object.assign(config, {
       mode: 'development',
       entry: {
-        index: './demo/index.js'
+        index: './demo/index.ts'
       },
       devtool: 'source-map'
     })
