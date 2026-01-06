@@ -48,7 +48,12 @@ const config = {
       {
         test: /\.(ts|tsx)$/i,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: isProduction
+          ? {}
+          : {
+              configFile: 'tsconfig.dev.json'
+            }
       },
       {
         test: /\.(js|jsx)$/i,

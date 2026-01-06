@@ -11,7 +11,6 @@
     "watch": "webpack --watch",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
     "prepublish": "npm run build"
   },
   "repository": {
