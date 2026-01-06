@@ -40,7 +40,7 @@ export default class Keyboard extends BaseModule {
 
   static injectInit(quill: Quill): void {
     // left/right
-    const bindings = (quill.keyboard as any).bindings;
+    const bindings = quill.keyboard.bindings;
     bindings[this.keys.LEFT].unshift(
       this.makeArrowHandler(this.keys.LEFT, false)
     );
@@ -170,7 +170,7 @@ export default class Keyboard extends BaseModule {
   // 转发event到quill
   dispatchEvent(evt: Event): void {
     const event = new (evt.constructor as any)(evt);
-    (event as any).fromResize = true;
+    event.fromResize = true;
     this.quill.root.dispatchEvent(event);
   }
 }

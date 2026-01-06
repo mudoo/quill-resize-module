@@ -48,9 +48,9 @@ interface ToolConfig {
   icon?: string;
   text?: string;
   attrs?: { [key: string]: string };
-  verify?: (activeEle: HTMLElement, blot: any) => boolean;
-  isApplied?: (activeEle: HTMLElement, blot: any) => boolean;
-  handler?: (evt: MouseEvent, button: HTMLButtonElement, activeEle: HTMLElement, blot: any) => boolean | void;
+  verify?: (this: Toolbar, activeEle: HTMLElement, blot: any) => boolean;
+  isApplied?: (this: Toolbar, activeEle: HTMLElement, blot: any) => boolean;
+  handler?: (this: Toolbar, evt: MouseEvent, button: HTMLButtonElement, activeEle: HTMLElement, blot: any) => boolean | void;
 }
 
 export default class Toolbar extends BaseModule {
@@ -66,30 +66,30 @@ export default class Toolbar extends BaseModule {
     left: {
       toolClass: ALIGNMENT_CLASSES.LEFT,
       isApplied(activeEle: HTMLElement, blot: any): boolean {
-        return (this as any)._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.LEFT;
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.LEFT;
       }
     },
     center: {
       toolClass: ALIGNMENT_CLASSES.CENTER,
       isApplied(activeEle: HTMLElement, blot: any): boolean {
-        return (this as any)._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.CENTER;
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.CENTER;
       }
     },
     right: {
       toolClass: ALIGNMENT_CLASSES.RIGHT,
       isApplied(activeEle: HTMLElement, blot: any): boolean {
-        return (this as any)._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.RIGHT;
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.RIGHT;
       }
     },
     full: {
       toolClass: ALIGNMENT_CLASSES.FULL,
       isApplied(activeEle: HTMLElement, blot: any): boolean {
-        return (this as any)._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.FULL;
+        return this._getFormatValue(activeEle, blot) === ALIGNMENT_CLASSES.FULL;
       }
     },
     edit: {
       handler(evt: MouseEvent, button: HTMLButtonElement, activeEle: HTMLElement, blot: any): void {
-        (this as any).quill.emitter.emit('resize-edit', activeEle, blot);
+        this.quill.emitter.emit('resize-edit', activeEle, blot);
       }
     }
   };

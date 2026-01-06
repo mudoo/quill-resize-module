@@ -1,5 +1,3 @@
-import Quill from 'quill';
-
 export type ModuleName = 'DisplaySize' | 'Toolbar' | 'Resize' | 'Keyboard';
 
 export interface SizeLimit {

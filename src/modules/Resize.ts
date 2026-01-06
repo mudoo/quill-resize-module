@@ -81,7 +81,7 @@ export default class Resize extends BaseModule {
     const calcSize = this.calcSize(evt, this.blotOptions.limit);
     Object.assign(this.activeEle, calcSize);
     Object.assign(this.activeEle.style, { width: null, height: null });
-    this.options.onChangeSize && this.options.onChangeSize.call(this, this.blot, this.activeEle, calcSize as any);
+    this.options.onChangeSize && this.options.onChangeSize.call(this, this.blot, this.activeEle, calcSize);
 
     // reset cursor everywhere
     this.setCursor('');
@@ -114,7 +114,7 @@ export default class Resize extends BaseModule {
     let direction = 1;
 
     ;(this.blotOptions.attribute || ['width']).forEach(key => {
-      size[key] = (this.preDragSize as any)[key];
+      size[key] = this.preDragSize[key];
     });
 
     // left-side
@@ -178,8 +178,8 @@ export default class Resize extends BaseModule {
     let size: [number, number] = [0, 0];
     if (!ele.getAttribute('data-size')) {
       size = [
-        (ele as any).naturalWidth || ele.offsetWidth,
-        (ele as any).naturalHeight || ele.offsetHeight
+        (ele as HTMLImageElement).naturalWidth || ele.offsetWidth,
+        (ele as HTMLImageElement).naturalHeight || ele.offsetHeight
       ];
       ele.setAttribute('data-size', size[0] + ',' + size[1]);
     } else {
@@ -194,7 +194,7 @@ export default class Resize extends BaseModule {
 
   setCursor(value: string): void {
     [document.body, this.activeEle].forEach(el => {
-      (el.style as any).cursor = `${value} !important`; // eslint-disable-line no-param-reassign
+      el.style.cursor = `${value} !important`; // eslint-disable-line no-param-reassign
     });
   }
 }

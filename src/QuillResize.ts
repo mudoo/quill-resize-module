@@ -95,7 +95,7 @@ export default class QuillResize {
     this.removeModules();
 
     this.modules = this.moduleClasses.map(
-      ModuleClass => new ((QuillResize.Modules as any)[ModuleClass] || ModuleClass)(this)
+      ModuleClass => new (QuillResize.Modules[ModuleClass] || ModuleClass)(this)
     );
 
     this.modules.forEach(module => {
@@ -135,7 +135,7 @@ export default class QuillResize {
 
   handleEdit(): void {
     if (!this.blot) return;
-    const index = this.blot.offset((this.quill as any).scroll);
+    const index = this.blot.offset(this.quill.scroll);
     this.hide();
     this.quill.focus();
     this.quill.setSelection(index, 1);
@@ -157,7 +157,7 @@ export default class QuillResize {
       }
     }
     if (target && target.tagName) {
-      blot = (_Quill as any).find(target);
+      blot = _Quill.find(target);
       if (blot) {
         show = this.judgeShow(blot, target);
       }
@@ -225,7 +225,7 @@ export default class QuillResize {
       this.hideOverlay();
     }
 
-    this.quill.setSelection(null as any);
+    this.quill.setSelection(null);
 
     // prevent spurious text selection
     this.setUserSelect('none');
@@ -298,7 +298,7 @@ export default class QuillResize {
       return;
     }
     const LeafBlot = (Parchment as any).Leaf || (Parchment as any).LeafBlot;
-    const leaves = (this.quill.scroll as any).descendants(LeafBlot, range.index, range.length);
+    const leaves = this.quill.scroll.descendants(LeafBlot, range.index, range.length);
     const blots = leaves.filter((blot: any) => {
       const canBeHandle = !!this.options.parchment![blot.statics.blotName];
       if (canBeHandle) blot.domNode.classList.add(this.options.selectedClass!);
@@ -335,12 +335,12 @@ export default class QuillResize {
       'msUserSelect'
     ].forEach(prop => {
       // set on contenteditable element and <html>
-      (this.quill.root.style as any)[prop] = value;
-      (document.documentElement.style as any)[prop] = value;
+      this.quill.root.style[prop] = value;
+      document.documentElement.style[prop] = value;
     });
   }
 }
 
 if (window.Quill) {
-  window.Quill.register('modules/resize', QuillResize as any);
+  window.Quill.register('modules/resize', QuillResize);
 }

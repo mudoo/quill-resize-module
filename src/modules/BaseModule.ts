@@ -1,5 +1,6 @@
 import Quill from 'quill';
 import { QuillResizeOptions } from '../DefaultOptions';
+import QuillResize from '../QuillResize';
 
 export default class BaseModule {
   resizer: any;
@@ -10,7 +11,7 @@ export default class BaseModule {
   options: QuillResizeOptions;
   requestUpdate: () => void;
 
-  constructor(resizer: any) {
+  constructor(resizer: QuillResize) {
     this.resizer = resizer;
     this.quill = resizer.quill;
     this.overlay = resizer.overlay;
