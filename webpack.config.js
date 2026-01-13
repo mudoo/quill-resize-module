@@ -19,12 +19,9 @@ const bannerPack = new webpack.BannerPlugin({
   entryOnly: true
 })
 
-const config = {
+const baseConfig = {
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    library: 'QuillResize',
-    libraryTarget: 'umd',
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'dist')
   },
   devServer: {
     open: true,
@@ -96,24 +93,77 @@ const config = {
 
 module.exports = () => {
   if (isProduction) {
-    Object.assign(config, {
+    // UMD 格式配置
+    const umdConfig = {
+      ...baseConfig,
       mode: 'production',
       entry: {
         resize: './src/index.ts'
       },
+      output: {
+        ...baseConfig.output,
+        library: 'QuillResize',
+        libraryTarget: 'umd',
+        filename: '[name].js',
+        globalObject: 'this'
+      },
       // 发布排除quill库
       externals: {
-        quill: 'Quill'
+        quill: {
+          commonjs: 'quill',
+          commonjs2: 'quill',
+          amd: 'quill',
+          root: 'Quill'
+        }
       }
-    })
+    }
+
+    // ESM 格式配置
+    const esmConfig = {
+      ...baseConfig,
+      mode: 'production',
+      entry: {
+        'resize.esm': './src/index.ts'
+      },
+      output: {
+        ...baseConfig.output,
+        library: {
+          type: 'module'
+        },
+        filename: '[name].js',
+        module: true,
+        environment: {
+          module: true
+        }
+      },
+      experiments: {
+        outputModule: true
+      },
+      optimization: {
+        minimize: false
+      },
+      // 发布排除quill库
+      externals: {
+        quill: 'quill'
+      }
+    }
+
+    return [umdConfig, esmConfig]
   } else {
-    Object.assign(config, {
+    const config = {
+      ...baseConfig,
       mode: 'development',
       entry: {
         index: './demo/index.ts'
       },
+      output: {
+        ...baseConfig.output,
+        library: 'QuillResize',
+        libraryTarget: 'umd',
+        filename: '[name].js'
+      },
       devtool: 'source-map'
-    })
+    }
     config.plugins.push(
       new HtmlWebpackPlugin({
         chunks: ['index'],
@@ -121,6 +171,6 @@ module.exports = () => {
         template: './demo/index.html'
       })
     )
+    return config
   }
-  return config
 }
