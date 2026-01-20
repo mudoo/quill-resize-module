@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require('path')
@@ -14,18 +15,18 @@ const stylesHandler = MiniCssExtractPlugin.loader
 const bannerPack = new webpack.BannerPlugin({
   banner: [
     `Quill Resize Module v${PKG.version}`,
-    'https://github.com/mudoo/quill-resize-module'
+    'https://github.com/mudoo/quill-resize-module',
   ].join('\n'),
-  entryOnly: true
+  entryOnly: true,
 })
 
 const baseConfig = {
   output: {
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
     open: true,
-    host: 'localhost'
+    host: 'localhost',
   },
   plugins: [
     bannerPack,
@@ -34,8 +35,8 @@ const baseConfig = {
     // }),
 
     new MiniCssExtractPlugin({
-      filename: 'resize.css'
-    })
+      filename: 'resize.css',
+    }),
 
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -49,46 +50,46 @@ const baseConfig = {
         options: isProduction
           ? {}
           : {
-              configFile: 'tsconfig.dev.json'
-            }
+              configFile: 'tsconfig.dev.json',
+            },
       },
       {
         test: /\.(js|jsx)$/i,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/i,
-        use: [stylesHandler, 'css-loader']
+        use: [stylesHandler, 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [stylesHandler, 'css-loader', 'sass-loader']
+        use: [stylesHandler, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(eot|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: 'asset'
+        type: 'asset',
       },
       {
         test: /\.svg$/,
-        type: 'asset/source'
-      }
+        type: 'asset/source',
+      },
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
-    ]
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   optimization: {
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        extractComments: false // 不将注释提取到单独的文件中
-      })
-    ]
-  }
+        extractComments: false, // 不将注释提取到单独的文件中
+      }),
+    ],
+  },
 }
 
 module.exports = () => {
@@ -98,14 +99,14 @@ module.exports = () => {
       ...baseConfig,
       mode: 'production',
       entry: {
-        resize: './src/index.ts'
+        resize: './src/index.ts',
       },
       output: {
         ...baseConfig.output,
         library: 'QuillResize',
         libraryTarget: 'umd',
         filename: '[name].js',
-        globalObject: 'this'
+        globalObject: 'this',
       },
       // 发布排除quill库
       externals: {
@@ -113,9 +114,9 @@ module.exports = () => {
           commonjs: 'quill',
           commonjs2: 'quill',
           amd: 'quill',
-          root: 'Quill'
-        }
-      }
+          root: 'Quill',
+        },
+      },
     }
 
     // ESM 格式配置
@@ -123,29 +124,29 @@ module.exports = () => {
       ...baseConfig,
       mode: 'production',
       entry: {
-        'resize.esm': './src/index.ts'
+        'resize.esm': './src/index.ts',
       },
       output: {
         ...baseConfig.output,
         library: {
-          type: 'module'
+          type: 'module',
         },
         filename: '[name].js',
         module: true,
         environment: {
-          module: true
-        }
+          module: true,
+        },
       },
       experiments: {
-        outputModule: true
+        outputModule: true,
       },
       optimization: {
-        minimize: false
+        minimize: false,
       },
       // 发布排除quill库
       externals: {
-        quill: 'quill'
-      }
+        quill: 'quill',
+      },
     }
 
     return [umdConfig, esmConfig]
@@ -154,22 +155,22 @@ module.exports = () => {
       ...baseConfig,
       mode: 'development',
       entry: {
-        index: './demo/index.ts'
+        index: './demo/index.ts',
       },
       output: {
         ...baseConfig.output,
         library: 'QuillResize',
         libraryTarget: 'umd',
-        filename: '[name].js'
+        filename: '[name].js',
       },
-      devtool: 'source-map'
+      devtool: 'source-map',
     }
     config.plugins.push(
       new HtmlWebpackPlugin({
         chunks: ['index'],
         filename: 'index.html',
-        template: './demo/index.html'
-      })
+        template: './demo/index.html',
+      }),
     )
     return config
   }

@@ -49,17 +49,17 @@ const defaultOptions: QuillResizeOptions = {
     image: {
       attribute: ['width'],
       limit: {
-        minWidth: 100
-      }
+        minWidth: 100,
+      },
     },
     video: {
       attribute: ['width', 'height'],
       limit: {
         minWidth: 200,
-        ratio: 0.5625
-      }
-    }
-  }
-};
+        ratio: 0.5625,
+      },
+    },
+  },
+}
 
-export default defaultOptions;
+export default defaultOptions

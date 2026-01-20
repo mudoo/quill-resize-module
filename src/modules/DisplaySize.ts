@@ -1,51 +1,51 @@
-import BaseModule from './BaseModule';
+import BaseModule from './BaseModule'
 
 export default class DisplaySize extends BaseModule {
-  display: HTMLElement | null = null;
+  display: HTMLElement | null = null
 
-  onCreate(): void {
+  onCreate (): void {
     // Create the container to hold the size display
-    this.display = document.createElement('div');
-    this.display.className = 'ql-resize-display';
+    this.display = document.createElement('div')
+    this.display.className = 'ql-resize-display'
 
     // Attach it
-    this.overlay.appendChild(this.display);
+    this.overlay.appendChild(this.display)
   }
 
-  onUpdate(): void {
+  onUpdate (): void {
     if (!this.display || !this.activeEle) {
-      return;
+      return
     }
 
-    const size = this.getCurrentSize();
-    this.display.innerHTML = size.join(' &times; ');
+    const size = this.getCurrentSize()
+    this.display.innerHTML = size.join(' &times; ')
     if (size[0] > 120 && size[1] > 30) {
       // position on top of image
       Object.assign(this.display.style, {
         right: '4px',
         bottom: '4px',
-        left: 'auto'
-      });
+        left: 'auto',
+      })
     } else if (this.activeEle.style.float === 'right') {
       // position off bottom left
-      const displayRect = this.display.getBoundingClientRect();
+      const displayRect = this.display.getBoundingClientRect()
       Object.assign(this.display.style, {
         right: 'auto',
         bottom: `-${displayRect.height + 4}px`,
-        left: `-${displayRect.width + 4}px`
-      });
+        left: `-${displayRect.width + 4}px`,
+      })
     } else {
       // position off bottom right
-      const displayRect = this.display.getBoundingClientRect();
+      const displayRect = this.display.getBoundingClientRect()
       Object.assign(this.display.style, {
         right: `-${displayRect.width + 4}px`,
         bottom: `-${displayRect.height + 4}px`,
-        left: 'auto'
-      });
+        left: 'auto',
+      })
     }
   }
 
-  getCurrentSize(): [number, number] {
-    return [this.activeEle.offsetWidth, this.activeEle.offsetHeight];
+  getCurrentSize (): [number, number] {
+    return [this.activeEle.offsetWidth, this.activeEle.offsetHeight]
   }
 }

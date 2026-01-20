@@ -3,6 +3,7 @@ import '../src/assets/resize.scss'
 
 import Resize from '../src/index'
 import type { QuillResizeOptions } from '../src/DefaultOptions'
+import '../src/types'
 
 import _Quill from 'quill'
 const Quill = window.Quill || _Quill
@@ -20,19 +21,19 @@ const resizeConfig: QuillResizeOptions = {
       text: 'Alt',
       attrs: {
         title: 'Set image alt',
-        class: 'btn-alt'
+        class: 'btn-alt',
       },
       verify (activeEle) {
         return (activeEle && activeEle.tagName === 'IMG')
       },
       handler (evt, button, activeEle) {
         const imgEle = activeEle as HTMLImageElement
-        let alt = imgEle.alt || ''
+        const alt = imgEle.alt || ''
         const newAlt = window.prompt('Alt for image', alt)
         if (newAlt == null) return
         imgEle.setAttribute('alt', newAlt)
-      }
-    }
+      },
+    },
   ],
 
   // Triggered when an element is activated (selected)
@@ -48,7 +49,7 @@ const resizeConfig: QuillResizeOptions = {
   // Triggered when element size changed
   onChangeSize: function (blot, target, size) {
     console.log('Size changed:', this.quill, blot, target, size)
-  }
+  },
 }
 
 const demoEditor = new Quill('#editor', {
@@ -59,10 +60,10 @@ const demoEditor = new Quill('#editor', {
       ['bold', 'italic', 'underline', 'strike', { align: [] }, { color: [] }],
       [{ list: 'ordered' }, { list: 'bullet' }],
       ['link', 'image', 'video'],
-      ['clean']
+      ['clean'],
     ],
-    resize: resizeConfig
-  }
+    resize: resizeConfig,
+  },
 })
 
 const $result = document.querySelector('#result') as HTMLTextAreaElement
@@ -80,7 +81,7 @@ document.querySelector('.btn-text')!.addEventListener('click', function () {
 document.querySelector('.btn-set-html')!.addEventListener('click', function () {
   const contents = demoEditor.clipboard.convert({
     html: `${$result.value}<p><br></p>`,
-    text: '\n'
+    text: '\n',
   })
   demoEditor.setContents(contents)
 })

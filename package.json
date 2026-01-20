@@ -19,6 +19,7 @@
     "watch": "webpack --watch",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
+    "lint": "tsc --noEmit&eslint --ext .js,.ts --fix src",
     "prepublish": "npm run build",
     "version:beta": "npm version prerelease --preid=beta",
     "publish:beta": "npm publish --tag beta"
@@ -58,6 +59,8 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.26.0",
     "@types/node": "^25.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
     "@webpack-cli/generators": "^3.0.7",
     "babel-loader": "^9.2.1",
     "babel-plugin-transform-object-assign": "^6.22.0",
