@@ -3,7 +3,6 @@ import '../src/assets/resize.scss'
 
 import Resize from '../src/index'
 import type { QuillResizeOptions } from '../src/DefaultOptions'
-import '../src/types'
 
 import _Quill from 'quill'
 const Quill = window.Quill || _Quill
