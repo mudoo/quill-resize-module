@@ -46,18 +46,24 @@ export default class Resize extends BaseModule {
 
     // listen for mousedown on each box
     box.addEventListener('mousedown', this.handleMousedown.bind(this), false)
+    box.addEventListener('touchstart', this.handleMousedown.bind(this), { passive: false })
     // add drag handle to document
     this.overlay.appendChild(box)
     // keep track of drag handle
     this.boxes.push(box)
   }
 
-  handleMousedown (evt: MouseEvent): void {
+  handleMousedown (evt: MouseEvent | TouchEvent): void {
     // note which box
     this.dragBox = evt.target as HTMLElement
     // note starting mousedown position
-    this.dragStartX = evt.clientX
-    this.dragStartY = evt.clientY
+    if (evt instanceof TouchEvent) {
+      this.dragStartX = evt.changedTouches[0].clientX
+      this.dragStartY = evt.changedTouches[0].clientY
+    } else {
+      this.dragStartX = evt.clientX
+      this.dragStartY = evt.clientY
+    }
     // store the width before the drag
     this.preDragSize = {
       width: this.activeEle.offsetWidth,
@@ -69,14 +75,19 @@ export default class Resize extends BaseModule {
     const cursor = window.getComputedStyle(this.dragBox).cursor
     this.setCursor(cursor)
 
-    this.handleDragProxy = (evt: MouseEvent) => this.handleDrag(evt)
-    this.handleMouseupProxy = (evt: MouseEvent) => this.handleMouseup(evt)
+    this.handleDragProxy = (evt: MouseEvent | TouchEvent) => this.handleDrag(evt)
+    this.handleMouseupProxy = (evt: MouseEvent | TouchEvent) => this.handleMouseup(evt)
     // listen for movement and mouseup
-    document.addEventListener('mousemove', this.handleDragProxy, false)
-    document.addEventListener('mouseup', this.handleMouseupProxy, false)
+    document.addEventListener('mousemove', this.handleDragProxy)
+    document.addEventListener('touchmove', this.handleDragProxy, { passive: false })
+    document.addEventListener('mouseup', this.handleMouseupProxy, true)
+    document.addEventListener('touchend', this.handleMouseupProxy, true)
+    document.addEventListener('touchcancel', this.handleMouseupProxy, true)
   }
 
-  handleMouseup (evt: MouseEvent): void {
+  handleMouseup (evt: MouseEvent | TouchEvent): void {
+    evt.stopPropagation()
+
     // save size, clear style
     const calcSize = this.calcSize(evt, this.blotOptions.limit)
     Object.assign(this.activeEle, calcSize)
@@ -87,13 +98,20 @@ export default class Resize extends BaseModule {
     this.setCursor('')
     // stop listening for movement and mouseup
     document.removeEventListener('mousemove', this.handleDragProxy)
-    document.removeEventListener('mouseup', this.handleMouseupProxy)
+    document.removeEventListener('touchmove', this.handleDragProxy)
+    document.removeEventListener('mouseup', this.handleMouseupProxy, true)
+    document.removeEventListener('touchend', this.handleMouseupProxy, true)
+    document.removeEventListener('touchcancel', this.handleMouseupProxy, true)
   }
 
-  handleDrag (evt: MouseEvent): void {
+  handleDrag (evt: MouseEvent | TouchEvent): void {
     if (!this.activeEle || !this.blot) {
       // activeEle not set yet
       return
+    }
+
+    if (evt instanceof TouchEvent && evt.cancelable) {
+      evt.preventDefault()
     }
 
     const limit: SizeLimit & { unit?: boolean } = {
@@ -105,10 +123,19 @@ export default class Resize extends BaseModule {
     this.requestUpdate()
   }
 
-  calcSize (evt: MouseEvent, limit: SizeLimit & { unit?: boolean } = {}): SizeResult {
-    // update size
-    const deltaX = evt.clientX - this.dragStartX
-    const deltaY = evt.clientY - this.dragStartY
+  calcSize (evt: MouseEvent | TouchEvent, limit: SizeLimit & { unit?: boolean } = {}): SizeResult {
+    let clientX: number, clientY: number
+
+    if (evt instanceof TouchEvent) {
+      clientX = evt.changedTouches[0].clientX
+      clientY = evt.changedTouches[0].clientY
+    } else {
+      clientX = evt.clientX
+      clientY = evt.clientY
+    }
+
+    const deltaX = clientX - this.dragStartX
+    const deltaY = clientY - this.dragStartY
 
     const size: any = {}
     let direction = 1
