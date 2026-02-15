@@ -18,6 +18,7 @@ const Parchment = _Quill.import('parchment')
  */
 export default class QuillResize {
   static Modules = { Base, DisplaySize, Toolbar, Resize, Keyboard }
+  static version = __VERSION__
 
   quill: Quill
   options: QuillResizeOptions

@@ -66,7 +66,7 @@ const demoEditor = new Quill('#editor', {
 })
 
 const $result = document.querySelector('#result') as HTMLTextAreaElement
-$result.value = `Quill V${Quill.version}`
+$result.value = `Quill V${Quill.version}\nResize Module V${Resize.version}\n`
 document.querySelector('.btn-html')!.addEventListener('click', function () {
   $result.value = demoEditor.root.innerHTML
 })

@@ -18,6 +18,11 @@ const bannerPack = new webpack.BannerPlugin({
     'https://github.com/mudoo/quill-resize-module',
   ].join('\n'),
   entryOnly: true,
+  exclude: /\.css$/,
+})
+
+const definePlugin = new webpack.DefinePlugin({
+  __VERSION__: JSON.stringify(PKG.version),
 })
 
 const baseConfig = {
@@ -30,6 +35,7 @@ const baseConfig = {
   },
   plugins: [
     bannerPack,
+    definePlugin,
     // new HtmlWebpackPlugin({
     //   template: "index.html",
     // }),
