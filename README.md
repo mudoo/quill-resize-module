@@ -1,6 +1,6 @@
 # Quill Resize Module
 
-A module for Quill rich text editor to allow images/iframe/video and custom elements to be resized.
+A module for Quill rich text editor that allows images/iframes/videos and custom embedded elements to be resized.
 
 This module is original forked from <https://github.com/whatcould/quill-image-resize-module>.
 
@@ -8,18 +8,20 @@ This module is original forked from <https://github.com/whatcould/quill-image-re
 1. Support Quill2
 2. Removed formats/image formats/placeholder
 3. Removed `options.styles`
-4. Add `embedTags` option for custom embed element
-4. Add `tools` option for custom toolbar
+4. Added `embedTags` option for custom embedded elements
+5. Added `tools` option for custom toolbar buttons
 
 ## Features
- - Image resize
- - Embed resize (Default to iframe/video tag)
- - Custom any elements resize
+- Image resizing
+- Embedded element resizing (defaults to iframe and video)
+- Resize any custom elements
+- Touch device support
 
- - Limit minWidth/maxWidth/minHeight/maxHeight
- - Limit Width/Height ratio
- - Selected embed element style
- - Direction key support
+- Min/max width and height limits
+- Aspect ratio constraints
+- Selected embedded element styling
+- Arrow key support
+
 
 ## Demo
 
