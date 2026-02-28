@@ -57,12 +57,12 @@ export default class Resize extends BaseModule {
     // note which box
     this.dragBox = evt.target as HTMLElement
     // note starting mousedown position
-    if (evt instanceof TouchEvent) {
+    if (window.TouchEvent && evt instanceof TouchEvent) {
       this.dragStartX = evt.changedTouches[0].clientX
       this.dragStartY = evt.changedTouches[0].clientY
     } else {
-      this.dragStartX = evt.clientX
-      this.dragStartY = evt.clientY
+      this.dragStartX = (evt as MouseEvent).clientX
+      this.dragStartY = (evt as MouseEvent).clientY
     }
     // store the width before the drag
     this.preDragSize = {
@@ -110,7 +110,7 @@ export default class Resize extends BaseModule {
       return
     }
 
-    if (evt instanceof TouchEvent && evt.cancelable) {
+    if (window.TouchEvent && evt instanceof TouchEvent && evt.cancelable) {
       evt.preventDefault()
     }
 
@@ -126,12 +126,12 @@ export default class Resize extends BaseModule {
   calcSize (evt: MouseEvent | TouchEvent, limit: SizeLimit & { unit?: boolean } = {}): SizeResult {
     let clientX: number, clientY: number
 
-    if (evt instanceof TouchEvent) {
+    if (window.TouchEvent && evt instanceof TouchEvent) {
       clientX = evt.changedTouches[0].clientX
       clientY = evt.changedTouches[0].clientY
     } else {
-      clientX = evt.clientX
-      clientY = evt.clientY
+      clientX = (evt as MouseEvent).clientX
+      clientY = (evt as MouseEvent).clientY
     }
 
     const deltaX = clientX - this.dragStartX
