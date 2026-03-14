@@ -35,6 +35,7 @@ This module is original forked from <https://github.com/whatcould/quill-image-re
 ```javascript
 import Quill from 'quill';
 import QuillResize from 'quill-resize-module';
+import 'quill-resize-module/dist/resize.css'
 Quill.register('modules/resize', QuillResize);
 
 const quill = new Quill(editor, {
